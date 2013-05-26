@@ -77,7 +77,7 @@ class ProductoModel extends CI_Model {
         if ($query->num_rows() > 0) {
             $data[""] = "Todas las categorias";
             foreach ($query->result_array() as $row) {
-                $data[$row['categoria']] = strtoupper($row['categoria']);
+                $data[$row['categoria']] = ($row['categoria']);
             }
             return $data;
         }
@@ -93,7 +93,7 @@ class ProductoModel extends CI_Model {
         if ($query->num_rows() > 0) {
             $ciudades[""] = "Todos";
             foreach ($query->result_array() as $row) {
-                $ciudades[$row['nombre']] = strtoupper($row['nombre']);
+                $ciudades[$row['nombre']] = ($row['nombre']);
             }
             return $ciudades;
         }
@@ -112,6 +112,45 @@ class ProductoModel extends CI_Model {
         } else {
             return FALSE;
         }
+    }
+     
+    function busquedaAvanzada($categoria,$desde,$hasta, $ciudad){
+        
+        $data = array();
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->from('producto');
+        $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
+        //$this->db->join('cuidad', 'usuarios.id_ciudad=cuidad.id');
+
+        if($categoria!=""){
+            $this->db->where('categoria', $categoria);
+        }
+        if($desde != ""){
+                $this->db->where('fechaingreso >=', $desde);  
+                
+        }
+        if($hasta != ""){
+                $this->db->where('fechaingreso <=', $hasta); 
+                echo "entre3";
+        }
+        if($ciudad!=""){
+                $this->db->where('cuidad.nombre', $ciudad);  
+                echo "entre4";
+        }  
+        $consulta = $this->db->get();
+        
+        echo "estoy antes de la condicion ";
+        if ($consulta->num_rows() > 0) {
+            
+            $data = $consulta;
+            
+            foreach ($data->result() as $producto):
+                echo '';
+            endforeach;
+            
+        }
+        $consulta->free_result();
+        return $data; 
     }
 
 }
