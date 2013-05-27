@@ -120,7 +120,7 @@ class ProductoModel extends CI_Model {
         $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
-        //$this->db->join('cuidad', 'usuarios.id_ciudad=cuidad.id');
+        $this->db->join('cuidad', 'usuarios.id_ciudad=cuidad.id');
 
         if($categoria!=""){
             $this->db->where('categoria', $categoria);
@@ -131,11 +131,9 @@ class ProductoModel extends CI_Model {
         }
         if($hasta != ""){
                 $this->db->where('fechaingreso <=', $hasta); 
-                echo "entre3";
         }
         if($ciudad!=""){
                 $this->db->where('cuidad.nombre', $ciudad);  
-                echo "entre4";
         }  
         $consulta = $this->db->get();
         
