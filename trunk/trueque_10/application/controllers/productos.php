@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-
+//
 class Productos extends CI_Controller {
 	
 	function Productos(){

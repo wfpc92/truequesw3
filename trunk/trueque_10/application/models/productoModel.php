@@ -2,7 +2,7 @@
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-
+//
 class ProductoModel extends CI_Model {
 
     function __construct() {
@@ -136,8 +136,6 @@ class ProductoModel extends CI_Model {
                 $this->db->where('cuidad.nombre', $ciudad);  
         }  
         $consulta = $this->db->get();
-        
-        echo "estoy antes de la condicion ";
         if ($consulta->num_rows() > 0) {
             
             $data = $consulta;

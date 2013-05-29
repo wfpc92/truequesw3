@@ -37,7 +37,7 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-
+//
 $route['default_controller'] = "productos";
 $route['404_override'] = '';
 

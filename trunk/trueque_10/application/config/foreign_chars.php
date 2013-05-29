@@ -7,6 +7,7 @@
 | conversion used by the Text helper
 |
 */
+//
 $foreign_characters = array(
 	'/ä|æ|ǽ/' => 'ae',
 	'/ö|œ/' => 'oe',
