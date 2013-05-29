@@ -50,7 +50,7 @@
            </div>
        </div>
         
-        <p><a href="#" class="more"><</a><a href="#" class="more">></a></p>
+        
 
 
         <div style="clear: both;">&nbsp;</div>
