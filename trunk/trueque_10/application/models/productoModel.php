@@ -8,7 +8,7 @@ class ProductoModel extends CI_Model {
     function __construct() {
         parent::__construct();
     }
-
+    
     function getProductos() {
         $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
@@ -20,6 +20,24 @@ class ProductoModel extends CI_Model {
             return FALSE;
         }
     }
+    
+    
+    //PAGINACION
+    function getTodosProductos($limit,$start){
+        $this->db->limit($limit,$start);
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->from('producto');
+        $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
+        $data = $this->db->get();
+        return $data;
+    }
+      
+    function getNumProductos(){
+        return $this->db->count_all('producto');
+    }
+    
+    
+    //FIN_PAGINACION
 
     function getProducto($id) {
         $data = array();
@@ -36,12 +54,16 @@ class ProductoModel extends CI_Model {
         return $data;
     }
 
-    public function buscarProductos($criterio) {
+    public function buscarProductos($criterio,$limit,$start) {
         /* creamos una variable array vacia */
         $data = array();
         $this->load->helper('string');
         /* se hace la consulta sobre la base de datos */
         $valores = explode(" ", $criterio);
+        
+        $this->db->limit($limit,$start);
+        
+        
         $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
@@ -69,6 +91,35 @@ class ProductoModel extends CI_Model {
         $consulta->free_result();
         return $data;
     }
+    
+    //PAGINACION 
+    public function numBuscarProducto($criterio) {
+        /* creamos una variable array vacia */
+        $this->load->helper('string');
+        /* se hace la consulta sobre la base de datos */
+        $valores = explode(" ", $criterio);
+
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->from('producto');
+        $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
+        $this->db->like('producto.nombre', $criterio);
+        foreach ($valores as $valor):
+            $this->db->or_like('producto.nombre', $valor);
+            $this->db->or_like('descripcion', $valor);
+            $this->db->or_like('categoria', $valor);
+        endforeach;
+        /* nos aseguramos de que pare de buscar cuando encuentre el primer resultado puesto
+          a que estamos buscando la tupla   con su llave asi que solo habra un resultado */
+        /* obtenemos y guardamos el resultado de la consulta
+          dentro de la variable consulta */
+
+        $consulta = $this->db->get();
+
+        return $consulta->num_rows();
+    }
+    
+    
+    //FIN_PAGINACION
 
     function cargarCategoria() {
         $sql = "SELECT DISTINCT categoria FROM producto";
@@ -148,5 +199,18 @@ class ProductoModel extends CI_Model {
         $consulta->free_result();
         return $data; 
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        
 
 }

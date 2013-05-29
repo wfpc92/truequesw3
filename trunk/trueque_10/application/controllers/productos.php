@@ -25,8 +25,26 @@ class Productos extends CI_Controller {
             {
                 $data['sesion']='sesionLogin';
                 $data['menu']='menuEstandar';
-            }
-        $data['productos'] = $this->productoModel->getProductos();
+            }   
+        
+        //PAGINACION...
+        $this->load->library('pagination');
+	 
+	 $opciones = array();
+	 $opciones['per_page'] =5;
+	 $opciones['base_url'] = base_url().'productos/index';
+	 $opciones['total_rows'] = $this->productoModel->getNumProductos();
+	 $opciones['uri_segment'] = 3;
+         $opciones['num_links'] = 3;
+         $opciones['first_link'] = 'Primero';
+         $opciones['last_link'] = 'Ultimo';
+         
+               
+	 $this->pagination->initialize($opciones);
+         $productos = $this->productoModel->getTodosProductos($opciones['per_page'], $this->uri->segment(3));
+         $data['productos'] = $productos;
+        //FIN_PAGINACION...
+  
         $this->load->view('plantilla', $data);
 	}
 	public function verProducto($id) {
@@ -71,7 +89,10 @@ class Productos extends CI_Controller {
     }
     
     public function buscarProducto(){
+        
+        static  $criterio;
         $criterio=  $this->input->post('buscar');
+        
         $data['title']='Trueque Buscar Producto';
 		$data['sidebar']='sidebarCategorias';
 		$data['contenido'] = 'contenido';
@@ -88,7 +109,28 @@ class Productos extends CI_Controller {
         		$data['sesion']='sesionLogin';
         		$data['menu']='menuEstandar';
         	}
-        $data['productos'] = $this->productoModel->buscarProductos($criterio);
+       // $data['productos'] = $this->productoModel->buscarProductos($criterio);
+        //PAGINACION
+        $cantidad = $this->productoModel->numBuscarProducto($criterio);
+        $this->load->library('pagination');
+	 
+	 $opciones = array();
+	 $opciones['per_page'] =2;
+	 $opciones['base_url'] = base_url().'productos/buscarProducto';
+	 //$opciones['total_rows'] = $productos->num_rows();
+         $opciones['total_rows'] = $cantidad;
+  
+	 $opciones['uri_segment'] = 3;
+         $opciones['num_links'] = 3;
+         $opciones['first_link'] = 'Primero';
+         $opciones['last_link'] = 'Ultimo';
+         
+	 $this->pagination->initialize($opciones);
+         $productos = $this->productoModel->buscarProductos($criterio,$opciones['per_page'], $this->uri->segment(3));
+         $data['productos'] = $productos;
+        //FIN_PAGINACION
+        
+  
         $this->load->view('plantilla', $data);
     }
     public function busquedaAvanzada(){

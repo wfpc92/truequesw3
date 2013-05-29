@@ -60,7 +60,7 @@
 	<div id="search" style="padding-top: 130px;">
             <!-- </*?php /*$valor="computador";?*/> -->
             <?php echo form_open('productos/buscarProducto') ?>
-            <?php echo form_input('buscar', ''); ?>  
+            <?php echo form_input('buscar',''); ?>  
             <?php echo form_submit('btnBuscar', 'Buscar'); ?> 
             <?php echo anchor('productos/busquedaAvanzada', 'Busqueda avanzada') ?> 
             <?php echo form_close(); ?>                             
