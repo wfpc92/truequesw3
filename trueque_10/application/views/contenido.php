@@ -1,7 +1,5 @@
 <h2>Productos Destacados</h2><br/>
-        <p><a href="#" class="more"><</a><a href="#" class="more">></a></p>
-
-
+      
         <div id="main" >
             <br/><br/>
             <ul>
@@ -37,5 +35,8 @@
                 <?php endif; ?>
             </ul>
         </div>
-        <p><a href="#" class="more"><</a><a href="#" class="more">></a></p>
+         <!---PAGINACION-->
+       <p class =" paginacion"><?php echo $this->pagination->create_links(); ?></ p>
+        <!---FIN_PAGINACION-->
+       
         <div style="clear: both;">&nbsp;</div>
