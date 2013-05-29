@@ -132,8 +132,8 @@ class ProductoModel extends CI_Model {
             }
             return $data;
         }
+         $query->free_result();
         return $data;
-        $query->free_result();
     }
 
     function cargarCiudad() {
@@ -148,8 +148,8 @@ class ProductoModel extends CI_Model {
             }
             return $ciudades;
         }
-        return $ciudades;
         $query->free_result();
+        return $ciudades;
     }
 
     function getMisProductos($id) {

@@ -1,6 +1,4 @@
-       <p><a href="#" class="more"><</a><a href="#" class="more">></a></p>
-       
-       <div id="titulo" >
+      <div id="titulo" >
            </br></br></br>
            <h2 >Busqueda Avanzada </h2>
            </br></br></br>

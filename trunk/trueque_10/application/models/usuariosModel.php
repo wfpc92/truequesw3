@@ -41,4 +41,20 @@ class usuariosModel extends CI_Model {
         	return FALSE;
         }
     }
+    function getUsuario($id){
+		$data = array();
+		$this->db->select('usuario_id,nombre,apellido,email,id_ciudad');
+		$this->db->where('usuario_id',$id);
+		$this->db->limit(1);
+		$consulta = $this->db->get('usuarios');
+		if($consulta->num_rows() > 0){
+			$data =$consulta->row();
+		}
+		$consulta->free_result();
+		return $data;
+	}
+        function setUsuario($data,$ciudad=null){
+			$this->db->where('usuario_id',$data['usuario_id']);
+			$this->db->update('usuarios',$data);
+	}
 }
