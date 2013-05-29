@@ -1,21 +1,31 @@
-        <p><a href="#" class="more"><</a><a href="#" class="more">></a></p>
-       <h2 >Busqueda Avanzada </h2>
+       <p><a href="#" class="more"><</a><a href="#" class="more">></a></p>
+       
+       <div id="titulo" >
+           </br></br></br>
+           <h2 >Busqueda Avanzada </h2>
+           </br></br></br>
+       </div>
+       
        <div id="formulario">
             <?php 
                 echo form_open('productos/busquedaAvanzadaProducto');
-                echo form_label("Categoria" );
+                echo form_label("Categoria " );
                 echo form_dropdown('categorias', $categoria);  
             ?>
        </div>
        <br/>
-       <font >fecha de publicacion  </font>
-       <br/><br/>
-       <div>
+       <div >
+            </br></br>
+            <font align="center">fecha de publicacion  </font>
+            <br/><br/>
+       </div>
+       <div >
                 <td>desde: </td>
-                <td><input type="text" id="fechaIngreso" size="20" name= "fechaIngreso" readonly/></td>   
+                <td><input type="text" id="fechaIngreso" size="20" name= "fechaIngreso" readonly/></td> 
+                </br></br>
           
        </div>
-        <div>
+        <div >
                 <td>hasta : </td>
                 <td><input type="text" id="hasta" size="20" name="hasta" readonly/></td>
        </div>
@@ -30,7 +40,7 @@
        </div>
        <div>
            <br/>
-           <div >
+           <div align="center">
                
                <?php
                     echo form_open('productos/index');
