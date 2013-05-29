@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+//
 class MiCuenta extends CI_Controller {
 	function _construct(){
 		parent::_construct();

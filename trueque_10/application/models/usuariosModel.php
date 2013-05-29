@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+//
 class usuariosModel extends CI_Model {
 	//este es el constructor de la clase
 	function __construct(){
