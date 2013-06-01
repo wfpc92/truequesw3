@@ -57,5 +57,29 @@ class MiCuenta extends CI_Controller {
     public function hacerTrueque(){
 
     }
+    
+    public function misProductos(){
+        $this->load->model('productoModel');
+        $usuarioActual=$this->session->all_userdata();
+         if(isset($usuarioActual['nombre']))
+            {
+                $data['sesion']='sesionUsuario';
+                $data['menu']='menuUsuario';
+                $data['contenido']='misProductos';
+                $data['usuarioActual'] = $usuarioActual;
+                $data['sidebar']='sidebarMiCuenta';
+                $productos = $this->productoModel->getMisProductos($usuarioActual['usuario_id']);
+                $data['productos'] = $productos;
+            }   
+            else
+            {
+                $data['sesion']='sesionLogin';
+                $data['menu']='menuEstandar';
+                $data['contenido']='contenido';
+                $data['sidebar']='sidebarCategorias';
+            }
+            $this->load->view('plantilla', $data);
+    }
+    
 }
 ?>
