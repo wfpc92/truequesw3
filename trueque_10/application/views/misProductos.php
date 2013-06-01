@@ -1,4 +1,3 @@
-        <p><a href="#" class="more"><</a><a href="#" class="more">></a></p>
         <div id="main" >
             <br/><br/>
             <ul>
@@ -26,11 +25,9 @@
                         </li>
                         <hr/>
                     <?php endforeach; ?>
-
                 <?php else: ?>
                     <p>No has publicado ningun producto</p>
                 <?php endif; ?>
             </ul>
         </div>
-        <p><a href="#" class="more"><</a><a href="#" class="more">></a></p>
         <div style="clear: both;">&nbsp;</div>
