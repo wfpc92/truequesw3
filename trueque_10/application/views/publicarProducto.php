@@ -1,82 +1,40 @@
-<?php if(isset($errores)) print_r($errores); ?>
-<?php 
-  $atributos = array(
-    'id' => 'formRegistroUsuario'
-  ); 
-  echo form_open('usuarios/registrar', $atributos);
-?>
-<h1> Publicar Producto</h1>
-<table id="publicar ">
-  <tr>
-    <td><br/>* Nombre: </td>
-    <td> <?php 
-      $data_form = array(
-                          'name'        => 'nombre',
-                          'id'          => 'nombre',
-                          'size'        => '40',
-                          'value' => set_value('nombre')
-                        );
-      echo form_input($data_form);?>
-    </td>
-  </tr>
-  <tr>
-    <td><br/><label for="apellido">* Apellido: </label></td>
-    <td><?php 
-      $data_form = array(
-                          'name'        => 'apellido',
-                          'id'          => 'apellido',
-                          'size'        => '40',
-                          'value' => set_value('apellido')
-                        );
-      echo form_input($data_form);?>
-    </td>
-  </tr>
-  <tr>
-    <td><br/><label for="email">* E-mail: </label></td>
-    <td><?php
-      $data_form = array(
-                          'name'        => 'email',
-                          'id'          => 'email',
-                          'size'        => '40',
-                          'value' => set_value('email')
-                        ); 
-      echo form_input($data_form);?>
-    </td>
-  </tr>
-  <tr>
-    <td><br/><label for="email">* Confirmar E-mail: </label></td>
-    <td><?php
-      $data_form = array(
-                          'name'        => 'confirmaremail',
-                          'id'          => 'confirmaremail',
-                          'size'        => '40'
-                        ); 
-      echo form_input($data_form);?>
-    </td>
-  </tr>
-  <tr>
-    <td><br/><label for="contrasena">* Contraseña: </label></td>
-    <td><?php 
-      $data_form = array(
-                          'name'        => 'contrasena',
-                          'id'          => 'contrasena',
-                          'size'        => '40'
-                        );
-      echo form_password($data_form);?></td>
-  </tr>
-  <tr>
-    <td><br/><label for="confirmacontrasena">* Confirmar Contraseña: </label></td>
-    <td><?php
-      $data_form = array(
-                          'name'        => 'confirmarcontrasena',
-                          'id'          => 'confirmarcontrasena',
-                          'size'        => '40'
-                        ); 
-      echo form_password($data_form);?></td>
-  </tr> 
-</table>
-   <tr>
-        <td><br/><input id = "registrarse" type="submit" value="Registrarme" /></td>
-        <button id = "cancelar" onclick="location.href='<?php echo base_url(); ?>'; return false;"> Cancelar</button>
-    </tr>
-<?php echo form_close();?>
+    
+    <h1> Publicar Producto</h1>
+    </br>
+    <div id="imagenProducto">
+	<img id ="imagenProducto" src="" width="200" height="200">
+	<div id="filename"></div>
+	<?php 
+            $data = array(
+            	'name' => 'imagen',
+              	'id' => 'imagen',
+              	'size' => '2',
+              	'type' => 'file',
+              	'onchange'=> 'readURL(this);',
+              	'accept' => 'image/gif, image/jpeg, image/png'
+            );
+            //echo form_input($data);
+	?>
+    </div>
+    <div id ="botonImagen"><?php echo form_input($data); ?></div>
+    <table id="formulario-publicar">
+        <span><?php echo validation_errors(); ?></span>
+        <tr>
+		<?php echo form_open('miCuenta/publicarProducto')?>
+		<td><label for="nombreProducto">* Nombre: </label></td>
+		<td><?php echo form_input('productos[nombre]','','size ="40" id ="nombreProducto"');?></td>
+	</tr>
+	<tr>
+		<td><br/><label for="descripcion"> * Descripcion: </label></td>
+		<td><?php echo form_textarea('productos[descripcion]','','size="40" id="descripcion"');?></td>
+	</tr>
+        <tr>
+            <td><br/><?php echo form_label(" * Categoria " ); ?></td>
+            <td><?php echo form_dropdown('categorias', $categoria); ?></td>  
+	</tr>
+	<tr>
+		<td><br/><input id ="botonPublicar" type="submit" value="Publicar" /></td>
+		<?php echo form_close();?>
+        </tr>
+
+    </table>
