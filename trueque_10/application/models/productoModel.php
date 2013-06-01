@@ -11,9 +11,10 @@ class ProductoModel extends CI_Model {
     }
 
     function getProductos() {
-        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
+        $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
         $data = $this->db->get();
         if ($data->num_rows() > 0) {
             return $data;
@@ -25,9 +26,10 @@ class ProductoModel extends CI_Model {
     //PAGINACION
     function getTodosProductos($limit, $start) {
         $this->db->limit($limit, $start);
-        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
+        $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
         $data = $this->db->get();
         return $data;
     }
@@ -40,9 +42,10 @@ class ProductoModel extends CI_Model {
 
     function getProducto($id) {
         $data = array();
-        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
+        $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
         $this->db->where('producto_id', $id);
         $this->db->limit(1);
         $consulta = $this->db->get();
@@ -63,14 +66,15 @@ class ProductoModel extends CI_Model {
         $this->db->limit($limit, $start);
 
 
-        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
+        $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
         $this->db->like('producto.nombre', $criterio);
         foreach ($valores as $valor):
             $this->db->or_like('producto.nombre', $valor);
             $this->db->or_like('descripcion', $valor);
-            $this->db->or_like('categoria', $valor);
+            $this->db->or_like('categoria.nombre', $valor);
         endforeach;
         /* nos aseguramos de que pare de buscar cuando encuentre el primer resultado puesto
           a que estamos buscando la tupla   con su llave asi que solo habra un resultado */
@@ -98,14 +102,15 @@ class ProductoModel extends CI_Model {
         /* se hace la consulta sobre la base de datos */
         $valores = explode(" ", $criterio);
 
-        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
+        $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
         $this->db->like('producto.nombre', $criterio);
         foreach ($valores as $valor):
             $this->db->or_like('producto.nombre', $valor);
             $this->db->or_like('descripcion', $valor);
-            $this->db->or_like('categoria', $valor);
+            $this->db->or_like('categoria.nombre', $valor);
         endforeach;
         /* nos aseguramos de que pare de buscar cuando encuentre el primer resultado puesto
           a que estamos buscando la tupla   con su llave asi que solo habra un resultado */
@@ -120,13 +125,13 @@ class ProductoModel extends CI_Model {
     //FIN_PAGINACION
 
     function cargarCategoria() {
-        $sql = "SELECT DISTINCT categoria FROM producto";
+        $sql = "SELECT nombre FROM categoria";
         $query = $this->db->query($sql);
         $data = array();
         if ($query->num_rows() > 0) {
-            $data[""] = "Todas las categorias";
+            $data[""] = "Todas las Categorias";
             foreach ($query->result_array() as $row) {
-                $data[$row['categoria']] = ($row['categoria']);
+                $data[$row['nombre']] = ($row['nombre']);
             }
             return $data;
         }
@@ -151,9 +156,10 @@ class ProductoModel extends CI_Model {
     }
 
     function getMisProductos($id) {
-        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
+        $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
         $this->db->where('producto.usuario_id', $id);
         $data = $this->db->get();
         if ($data->num_rows() > 0) {
@@ -166,10 +172,11 @@ class ProductoModel extends CI_Model {
     function busquedaAvanzada($categoria, $desde, $hasta, $ciudad) {
 
         $data = array();
-        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
         $this->db->join('cuidad', 'usuarios.id_ciudad=cuidad.id');
+        $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
 
         if ($categoria != "") {
             $this->db->where('categoria', $categoria);
