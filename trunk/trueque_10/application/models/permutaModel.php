@@ -10,11 +10,12 @@ class PermutaModel extends CI_Model {
     }
 
     function getPermutas() {
-        $this->db->select('producto_recibe, producto_solicita, fechapermuta, nombre, descripcion, categoria, imagen,fechaingreso');
+        $this->db->select('producto_recibe, producto_solicita, fechapermuta, nombre, descripcion, categoria.nombre, imagen,fechaingreso');
         $this->db->from('permuta');
         $this->db->join('producto', 'producto.producto_id = producto_recibe');
         $this->db->join('producto', 'producto.producto_id = producto_solicita');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
+        $this->db->join('categoria', 'categoria.categoria_id = producto.categoria_id');
        
         $data = $this->db->get();
         if ($data->num_rows() > 0) {
