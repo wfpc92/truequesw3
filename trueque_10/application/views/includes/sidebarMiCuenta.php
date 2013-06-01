@@ -7,7 +7,7 @@
 			<li>
 				<h2>Mi Cuenta</h2>
 				<ul>
-					<li><?php echo anchor('miCuenta','Mis Productos')?></li>
+					<li><?php echo anchor('miCuenta/misProductos','Mis Productos')?></li>
 					<li><?php echo anchor('miCuenta','Publicar Producto')?></li>
 					<li><?php echo anchor('miCuenta','Propuestas Recibidas')?></li>
 					<li><?php echo anchor('miCuenta','Propuestas Enviadas')?></li>
