@@ -19,11 +19,12 @@
 					<li><a href="#">Camaras</a></li>
 					<li><a href="#">Celulares</a></li>
 					<li><a href="#">Computadores</a></li>
+                                        <li><a href="#">Videojuegos</a></li>
 					<li><a href="#">Joyas</a></li>
 					<li><a href="#">Casas</a></li>
-					<li><a href="#">Ropa</a></li>
 					<li><a href="#">Juguetes</a></li>
 					<li><a href="#">Licores</a></li>
+                                        <li><a href="#">Otras</a></li>
 				</ul>
 			</li>
 		</ul>
