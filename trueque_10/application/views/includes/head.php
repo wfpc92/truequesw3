@@ -19,7 +19,7 @@
     $(document).ready(function(){ 
         $( "#fechaIngreso" ).datepicker({
               showOn: 'both',
-              buttonImage: 'http://localhost/trueque_tutorial/images/calendar.png',
+              buttonImage: 'http://localhost/trueque_10/images/calendar.png',
               buttonImageOnly: true,
               changeYear: true,
               dateFormat: 'yy-mm-dd',
@@ -35,7 +35,7 @@
     $(document).ready(function(){ 
         $( "#hasta" ).datepicker({
               showOn: 'both',
-              buttonImage: 'http://localhost/trueque_tutorial/images/calendar.png',                  
+              buttonImage: 'http://localhost/trueque_10/images/calendar.png',                  
               buttonImageOnly: true,
               changeYear: true,
               dateFormat: 'yy-mm-dd',

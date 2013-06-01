@@ -22,19 +22,19 @@
                     <td><?php echo $usuario->apellido; ?></td>
                     <td><?php echo $usuario->email; ?></td>
                     <td> <?php echo $usuario->nivel; ?></td>
-                     <td> <?php
-                        echo anchor('administrar/updateUsuario/' . $usuario->usuario_id, 'editar', 'class="link-opc"');
-                        echo " ";
-                        echo anchor('administrar/deleteUsuario/' . $usuario->email, 'eliminar');
-                        ?>
+                    <td> <?php
+        echo anchor('administrar/updateUsuario/' . $usuario->usuario_id, 'editar', 'class="link-opc"');
+        echo " ";
+        echo anchor('administrar/deleteUsuario/' . $usuario->usuario_id, 'eliminar');
+                ?>
                     </td>
                 </tr>
-    <?php endforeach; ?>
-<?php else: ?>
+            <?php endforeach; ?>
+        <?php else: ?>
             <tr>
                 <td colspan="4" align="center"> No hay libros</td>
             </tr>
-<?php endif; ?>
+        <?php endif; ?>
     </tbody>
 </table>
 <br/>
