@@ -2,13 +2,14 @@
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
+
 //
 class ProductoModel extends CI_Model {
 
     function __construct() {
         parent::__construct();
     }
-    
+
     function getProductos() {
         $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
@@ -20,23 +21,21 @@ class ProductoModel extends CI_Model {
             return FALSE;
         }
     }
-    
-    
+
     //PAGINACION
-    function getTodosProductos($limit,$start){
-        $this->db->limit($limit,$start);
+    function getTodosProductos($limit, $start) {
+        $this->db->limit($limit, $start);
         $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
         $data = $this->db->get();
         return $data;
     }
-      
-    function getNumProductos(){
+
+    function getNumProductos() {
         return $this->db->count_all('producto');
     }
-    
-    
+
     //FIN_PAGINACION
 
     function getProducto($id) {
@@ -54,16 +53,16 @@ class ProductoModel extends CI_Model {
         return $data;
     }
 
-    public function buscarProductos($criterio,$limit,$start) {
+    public function buscarProductos($criterio, $limit, $start) {
         /* creamos una variable array vacia */
         $data = array();
         $this->load->helper('string');
         /* se hace la consulta sobre la base de datos */
         $valores = explode(" ", $criterio);
-        
-        $this->db->limit($limit,$start);
-        
-        
+
+        $this->db->limit($limit, $start);
+
+
         $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
@@ -91,7 +90,7 @@ class ProductoModel extends CI_Model {
         $consulta->free_result();
         return $data;
     }
-    
+
     //PAGINACION 
     public function numBuscarProducto($criterio) {
         /* creamos una variable array vacia */
@@ -117,8 +116,7 @@ class ProductoModel extends CI_Model {
 
         return $consulta->num_rows();
     }
-    
-    
+
     //FIN_PAGINACION
 
     function cargarCategoria() {
@@ -132,19 +130,19 @@ class ProductoModel extends CI_Model {
             }
             return $data;
         }
-         $query->free_result();
+        $query->free_result();
         return $data;
     }
 
     function cargarCiudad() {
 
-        $sql = "SELECT nombre FROM cuidad";
+        $sql = "SELECT id, nombre FROM cuidad";
         $query = $this->db->query($sql);
         $ciudades = array();
         if ($query->num_rows() > 0) {
             $ciudades[""] = "Todos";
             foreach ($query->result_array() as $row) {
-                $ciudades[$row['nombre']] = ($row['nombre']);
+                $ciudades[$row['id']] = ($row['nombre']);
             }
             return $ciudades;
         }
@@ -164,53 +162,38 @@ class ProductoModel extends CI_Model {
             return FALSE;
         }
     }
-     
-    function busquedaAvanzada($categoria,$desde,$hasta, $ciudad){
-        
+
+    function busquedaAvanzada($categoria, $desde, $hasta, $ciudad) {
+
         $data = array();
         $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
         $this->db->join('cuidad', 'usuarios.id_ciudad=cuidad.id');
 
-        if($categoria!=""){
+        if ($categoria != "") {
             $this->db->where('categoria', $categoria);
         }
-        if($desde != ""){
-                $this->db->where('fechaingreso >=', $desde);  
-                
+        if ($desde != "") {
+            $this->db->where('fechaingreso >=', $desde);
         }
-        if($hasta != ""){
-                $this->db->where('fechaingreso <=', $hasta); 
+        if ($hasta != "") {
+            $this->db->where('fechaingreso <=', $hasta);
         }
-        if($ciudad!=""){
-                $this->db->where('cuidad.nombre', $ciudad);  
-        }  
+        if ($ciudad != "") {
+            $this->db->where('cuidad.nombre', $ciudad);
+        }
         $consulta = $this->db->get();
         if ($consulta->num_rows() > 0) {
-            
+
             $data = $consulta;
-            
+
             foreach ($data->result() as $producto):
                 echo '';
             endforeach;
-            
         }
         $consulta->free_result();
-        return $data; 
+        return $data;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        
 
 }
