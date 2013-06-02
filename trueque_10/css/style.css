@@ -536,3 +536,25 @@ a:hover {
     margin-left: 0px;
     float: right;  
 }
+
+/*Publicar Imagen*/
+
+#imagenProducto {
+    margin-left : 10%;
+    margin-bottom: 2%;
+}
+
+#botonImagen {
+    margin-left : 18.5%;
+    margin-bottom : 2%;
+}
+
+#formulario-publicar {
+    border-collapse: separate;
+    border-spacing: 10px 20px;
+}
+
+#botonPublicar {
+    /*margin-left : 80%;*/
+}
+
