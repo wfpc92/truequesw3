@@ -145,7 +145,7 @@ class ProductoModel extends CI_Model {
         $query = $this->db->query($sql);
         $ciudades = array();
         if ($query->num_rows() > 0) {
-            $ciudades[""] = "Todos";
+            $ciudades[""] = "Todos las ciudades";
             foreach ($query->result_array() as $row) {
                 $ciudades[$row['id']] = ($row['nombre']);
             }
