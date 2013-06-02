@@ -81,5 +81,28 @@ class MiCuenta extends CI_Controller {
             $this->load->view('plantilla', $data);
     }
     
+    public function publicarProducto(){
+        $this->load->model('productoModel');
+        $usuarioActual=$this->session->all_userdata();
+         if(isset($usuarioActual['nombre']))
+            {
+                $data['sesion']='sesionUsuario';
+                $data['menu']='menuUsuario';
+                $data['contenido']='publicarProducto';
+                $data['usuarioActual'] = $usuarioActual;
+                $data['sidebar']='sidebarMiCuenta';
+                $data['categoria'] = $this->productoModel->cargarCategoria();
+                
+            }   
+            else
+            {
+                $data['sesion']='sesionLogin';
+                $data['menu']='menuEstandar';
+                $data['contenido']='contenido';
+                $data['sidebar']='sidebarCategorias';
+            }
+            $this->load->view('plantilla', $data);
+    }
+    
 }
 ?>
