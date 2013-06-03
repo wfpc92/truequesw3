@@ -13,54 +13,38 @@ class Administrar extends CI_Controller {
     public function index() {
         $this->load->model('usuariosModel');
         $this->load->model('productoModel');
-        $data['title'] = 'Trueque Mi Cuenta';
         $usuarioActual = $this->session->all_userdata();
-        if (isset($usuarioActual['nombre'])) {
+        if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 0) {
+            $data['title'] = 'Crud Usuarios';
             $data['sesion'] = 'sesionUsuario';
-            $data['menu'] = 'menuUsuario';
-            $data['contenido'] = 'adminUsuarios';
+            $data['contenido'] = 'administrador/adminUsuarios';
             $data['usuarioActual'] = $usuarioActual;
-            $data['sidebar'] = 'sidebarMiCuenta';
             $data['usuarios'] = $this->usuariosModel->getUsuarios();
-            if ($usuarioActual['usuario_nivel'] == 0) {
-                $data['menu'] = 'menuAdministrador';
-                $data['sidebar'] = 'sidebarAdministrar';
-            }
+            $data['menu'] = 'menuAdministrador';
+            $data['sidebar'] = 'sidebarAdministrar';
+            $this->load->view('plantilla', $data);
         } else {
-            $data['sesion'] = 'sesionLogin';
-            $data['menu'] = 'menuEstandar';
-            $data['contenido'] = 'contenido';
-            $data['sidebar'] = 'sidebarCategorias';
+            redirect(base_url());
         }
-
-        $this->load->view('plantilla', $data);
     }
 
     public function updateUsuario($id) {
         $this->load->model('usuariosModel');
         $this->load->model('productoModel');
-        $data['title'] = 'Editar Usuario';
         $usuarioActual = $this->session->all_userdata();
-        if (isset($usuarioActual['nombre'])) {
+        if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 0) {
+            $data['title'] = 'Editar Usuario';
             $data['sesion'] = 'sesionUsuario';
-            $data['menu'] = 'menuUsuario';
-            $data['contenido'] = 'editarUsuario';
+            $data['contenido'] = 'administrador/editarUsuario';
             $data['usuarioActual'] = $usuarioActual;
-            $data['sidebar'] = 'sidebarMiCuenta';
-            $data['usuarios'] = $this->usuariosModel->getUsuarios();
-            if ($usuarioActual['usuario_nivel'] == 0) {
-                $data['menu'] = 'menuAdministrador';
-                $data['sidebar'] = 'sidebarAdministrar';
-            }
+            $data['menu'] = 'menuAdministrador';
+            $data['sidebar'] = 'sidebarAdministrar';
+            $data['usuario'] = $this->usuariosModel->getUsuario($id);
+            $data['ciudades'] = $this->productoModel->cargarCiudad();
+            $this->load->view('plantilla', $data);
         } else {
-            $data['sesion'] = 'sesionLogin';
-            $data['menu'] = 'menuEstandar';
-            $data['contenido'] = 'contenido';
-            $data['sidebar'] = 'sidebarCategorias';
+            redirect(base_url());
         }
-        $data['usuario'] = $this->usuariosModel->getUsuario($id);
-        $data['ciudades'] = $this->productoModel->cargarCiudad();
-        $this->load->view('plantilla', $data);
     }
 
     public function guardarUsuario() {
@@ -75,27 +59,19 @@ class Administrar extends CI_Controller {
     public function deleteUsuario($id) {
         $this->load->model('usuariosModel');
         $this->load->model('productoModel');
-        $data['title'] = 'Eliminar Usuario';
         $usuarioActual = $this->session->all_userdata();
-        if (isset($usuarioActual['nombre'])) {
+        if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 0) {
+            $data['title'] = 'Eliminar Usuario';
             $data['sesion'] = 'sesionUsuario';
-            $data['menu'] = 'menuUsuario';
-            $data['contenido'] = 'borrarUsuario';
+            $data['contenido'] = 'administrador/borrarUsuario';
             $data['usuarioActual'] = $usuarioActual;
-            $data['sidebar'] = 'sidebarMiCuenta';
-            $data['usuarios'] = $this->usuariosModel->getUsuarios();
-            if ($usuarioActual['usuario_nivel'] == 0) {
-                $data['menu'] = 'menuAdministrador';
-                $data['sidebar'] = 'sidebarAdministrar';
-            }
+            $data['menu'] = 'menuAdministrador';
+            $data['sidebar'] = 'sidebarAdministrar';
+            $data['usuario'] = $this->usuariosModel->getUsuario($id);
+            $this->load->view('plantilla', $data);
         } else {
-            $data['sesion'] = 'sesionLogin';
-            $data['menu'] = 'menuEstandar';
-            $data['contenido'] = 'contenido';
-            $data['sidebar'] = 'sidebarCategorias';
+            redirect(base_url());
         }
-        $data['usuario'] = $this->usuariosModel->getUsuario($id);
-        $this->load->view('plantilla', $data);
     }
 
     public function borrarUsuario() {
