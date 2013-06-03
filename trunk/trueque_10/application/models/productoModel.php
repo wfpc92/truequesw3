@@ -11,7 +11,7 @@ class ProductoModel extends CI_Model {
     }
 
     function getProductos() {
-        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
         $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
@@ -26,7 +26,7 @@ class ProductoModel extends CI_Model {
     //PAGINACION
     function getTodosProductos($limit, $start) {
         $this->db->limit($limit, $start);
-        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
         $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
@@ -42,7 +42,7 @@ class ProductoModel extends CI_Model {
 
     function getProducto($id) {
         $data = array();
-        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
         $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
@@ -66,7 +66,7 @@ class ProductoModel extends CI_Model {
         $this->db->limit($limit, $start);
 
 
-        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
         $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
@@ -102,7 +102,7 @@ class ProductoModel extends CI_Model {
         /* se hace la consulta sobre la base de datos */
         $valores = explode(" ", $criterio);
 
-        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
         $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
@@ -125,13 +125,13 @@ class ProductoModel extends CI_Model {
     //FIN_PAGINACION
 
     function cargarCategoria() {
-        $sql = "SELECT nombre FROM categoria";
+        $sql = "SELECT nombre,categoria_id FROM categoria";
         $query = $this->db->query($sql);
         $data = array();
         if ($query->num_rows() > 0) {
             $data[""] = "Todas las Categorias";
             foreach ($query->result_array() as $row) {
-                $data[$row['nombre']] = ($row['nombre']);
+                $data[$row['categoria_id']] = ($row['nombre']);
             }
             return $data;
         }
@@ -156,7 +156,7 @@ class ProductoModel extends CI_Model {
     }
 
     function getMisProductos($id) {
-        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
         $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
@@ -172,7 +172,7 @@ class ProductoModel extends CI_Model {
     function busquedaAvanzada($categoria, $desde, $hasta, $ciudad) {
 
         $data = array();
-        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
         $this->db->join('cuidad', 'usuarios.id_ciudad=cuidad.id');
@@ -201,6 +201,11 @@ class ProductoModel extends CI_Model {
         }
         $consulta->free_result();
         return $data;
+    }
+    
+    public function agregarProducto($data){
+        $this->db->insert('producto',$data);
+        return TRUE;
     }
 
 }
