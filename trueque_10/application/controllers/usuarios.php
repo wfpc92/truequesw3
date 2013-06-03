@@ -16,7 +16,7 @@ class Usuarios extends CI_Controller {
 	function registrar(){
         $data['sesion']='sesionLogin';
         $data['menu']='menuEstandar';
-        $data['contenido']='usuario/registrar';
+        $data['contenido']='estandar/registrar';
         $data['title']='Trueque Registrar';
         $data['sidebar']='sidebarCategorias';
 		if($_POST) {
@@ -72,12 +72,7 @@ class Usuarios extends CI_Controller {
                     	$this->session->set_userdata('usuario_id', $id);
                     	$this->session->set_userdata('nombre', $_POST['nombre']);
                     	$this->session->set_userdata('usuario_nivel', 1);
-                        $usuarioActual = $this->usuariosModel->login($_POST['email'], $_POST['contrasena']);
-                        $data['sesion']='sesionUsuario';
-                        $data['menu']='menuUsuario';
-                        $data['usuarioActual']=$usuarioActual;
-                        $data['contenido']='contenido';
-                        $data['productos'] = $this->productoModel->getProductos();
+                        redirect(base_url());
                     }
             }
 		}
@@ -90,31 +85,14 @@ class Usuarios extends CI_Controller {
             $contrasena = $this->input->post('contrasena', true);
             $usuarioActual = $this->usuariosModel->login($email, $contrasena);
             if(!$usuarioActual) {
-                $data['errorSesion'] = "Usuario y/o Contraseña erroneos.";
-                $data['contenido']='contenido';
-                $data['title']='Trueque Inicio';
-                $data['sidebar']='sidebarCategorias';
-                $data['sesion']='sesionLogin';
-                $data['menu']='menuEstandar';
+                redirect(base_url());
             } else {
                 $this->session->set_userdata('usuario_id', $usuarioActual['usuario_id']);
                 $this->session->set_userdata('usuario_nivel', $usuarioActual['nivel']);
                 $this->session->set_userdata('nombre', $usuarioActual['nombre']);
-                $data['contenido']='contenido';
-                $data['title']='Trueque Inicio';
-                $data['sidebar']='sidebarCategorias';
-                $data['sesion']='sesionUsuario';
-                $data['usuarioActual']=$usuarioActual;
-                if($usuarioActual['nivel'] == 0) {
-                        $data['menu']='menuAdministrador';
-                } else {
-                        $data['menu']='menuUsuario';
-                }
+                redirect(base_url());
             }
         }
-        $data['productos'] = $this->productoModel->getProductos();
-        $this->load->view("plantilla",$data);
-        
     }
 
     public function logout() {
@@ -123,7 +101,7 @@ class Usuarios extends CI_Controller {
     }
 
     public function email(){
-        $data['contenido']='usuario/email';
+        $data['contenido']='estandar/email';
         $data['title']='Trueque enviar Contrasena';
         $data['sidebar']='sidebarCategorias';
         $data['sesion']='sesionLogin';
