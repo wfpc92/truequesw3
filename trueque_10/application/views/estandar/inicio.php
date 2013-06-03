@@ -19,7 +19,7 @@
                             echo img($image_properties);
                             ?>
                         </li>
-                        <li style="width: 40%; float:left;">
+                        <li style="width: 30%; float: left; padding-right: 20%;">
                             <br/>
                             <h3><?php echo anchor('productos/verProducto/' . $producto->producto_id, $producto->p_nombre); ?>
                             </h3>
@@ -29,7 +29,7 @@
                             <b>Propietario: </b>
                         <u><?php echo anchor('productos/verUsuario/' . $producto->u_id, $producto->u_nombre . ' ' . $producto->u_apellido); ?></u>
                 </li>
-                <li style="width: 5%; float: right; padding-top: 10%;padding-left:5%;">
+                <li style="width: 20%; float: right; padding-right:5%; ">
                     <button><?php echo anchor('miCuenta/truequear/' . $producto->producto_id, 'truequear') ?></button>
                 </li>
             </ul>
