@@ -1,7 +1,7 @@
 <ul>
 				<li><a href="#" class="more"> Inicio</a><br/><br/>
 			<li>
-				<h2>Bienvenid@</h2>
+				<h2>Informacion</h2>
 				<p>Aqui va un pequeño mensaje de bienvenida para los usuarios</p>
 			</li>
 			<li>

@@ -74,4 +74,4 @@
         </div>
 <div id="page">
 	
-	<div id="content" >
+	<div id="content" style="width: 80%;">
