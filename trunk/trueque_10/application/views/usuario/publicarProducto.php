@@ -16,7 +16,7 @@
             <td><?php echo form_dropdown('categoria', $categoria); ?></td>  
 	</tr>
 	<tr>
-		<td><br/><input id ="botonPublicar" type="submit" value="Publicar" /></td>
+		<td><br/><input id ="botonPublicar" type="submit" value="Siguiente" /></td>
 		<?php echo form_close();?>
         </tr>
 

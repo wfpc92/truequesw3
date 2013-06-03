@@ -83,8 +83,8 @@ class MiCuenta extends CI_Controller {
                         'rules' => 'trim|required'
                     ),
                     array(
-                        'field' => 'categorias',
-                        'label' => 'categorias',
+                        'field' => 'categoria',
+                        'label' => 'categoria',
                         'rules' => 'trim|callback_seleccionar'
                     ),
                     array(
@@ -150,7 +150,7 @@ class MiCuenta extends CI_Controller {
     }
 
     function seleccionar($str) {
-        if ($str == "0") {
+        if ($str == "") {
             $this->form_validation->set_message('seleccionar', 'El campo %s No se ha seleccionado');
             return FALSE;
         } else {

@@ -4,12 +4,6 @@
     </head>
     <body>
         <?php
-        echo $producto['nombre'];
-        echo $producto['descripcion'];
-        echo $producto['categoria_id'];
-        echo $producto['fechaingreso'];
-        echo $producto['usuario_id'];
-        echo $producto['categoria_id'];
         if (isset($error)) {
             echo $error;
         }
