@@ -179,12 +179,6 @@ class Productos extends CI_Controller {
 
         $hasta = $_POST['hasta'];
         $ciudad = $_POST['ciudades'];
-
-        //echo 'en el controlador'.$categoria;
-        //echo $categoria;
-        //$busquedaAvanzada['data']=$this->productoModel->busquedaAvanzadaProducto($categoria,$desde,$hasta, $ciudad);
-        //$this->load->view('Borrador',$busquedaAvanzada);
-
         $data['productos'] = $this->productoModel->busquedaAvanzada($categoria, $desde, $hasta, $ciudad);
         $this->load->view('plantilla', $data);
     }
