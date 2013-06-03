@@ -1,5 +1,5 @@
 	</div>
-	<div id="sidebar">
+        <div id="sidebar" style="width: 20%;">
 		<?php $this->load->view('includes/'.$sidebar);?>
 	</div>
 	<!-- end #sidebar -->
