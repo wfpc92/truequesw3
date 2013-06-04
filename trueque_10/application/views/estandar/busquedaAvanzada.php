@@ -1,7 +1,7 @@
       
   
 
-     <table width="430"  align="left">
+      <table width="430"  align="center" >
          <tr>
              <td width="200" align="center">
                   <br/><br/>
@@ -18,7 +18,7 @@
             ?>
        </div>
 
-<table id="registrar" width="500"  align="left">
+<table id="registrar" width="500"  align="center">
     <tr >
 		<td width="200" align="right">  Categoria: </td>
 		<td> <?php echo form_dropdown('categorias', $categoria);?></td>
@@ -46,17 +46,21 @@
     
 </table>
 
-<table align="center" width="180">
+<table align="center" width="250" border="0">
     <tr>
         <td align="right">
          <br/>
          <?php
-                    echo form_open('productos/index');
-                    echo form_button('btnCancelar','Cancelar');
+                    //echo form_open('productos/index');
+                    //echo form_button('btnCancelar','Cancelar');
+                   
                     echo form_submit('btnBuscar', 'Buscar' ); 
                     echo form_close();
                     echo form_close();
-                ?>
+                ?>  
+              <a href="productos/index"><button> cancelar</button></a>
+         
+              
             </td>
     </tr>
 </table>
