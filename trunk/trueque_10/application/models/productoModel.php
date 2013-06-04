@@ -207,5 +207,27 @@ class ProductoModel extends CI_Model {
         $this->db->insert('producto',$data);
         return TRUE;
     }
+    
+    /*sidebar*/
+    function getCamaras($limit,$start,$categoria){
+        $this->db->limit($limit, $start);
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->from('producto');
+        $this->db->where('categoria.categoria_id', $categoria);
+        $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
+        $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
+        $data = $this->db->get();
+        return $data;
+    }
+    
+    function getNumProductosCategoria($categoria){
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->from('producto');
+        $this->db->where('categoria.categoria_id', $categoria);
+        $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
+        $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
+        $data = $this->db->get();
+        return $data->num_rows();
+    }
 
 }
