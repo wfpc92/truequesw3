@@ -42,7 +42,7 @@ class ProductoModel extends CI_Model {
 
     function getProducto($id) {
         $data = array();
-        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->select('producto_id, imagen, producto.categoria_id AS categoria_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
         $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
@@ -207,6 +207,17 @@ class ProductoModel extends CI_Model {
         $this->db->insert('producto',$data);
         return TRUE;
     }
+    public function editarProducto($data,$id){
+        $this->db->where('producto_id', $id);
+        $this->db->update('producto', $data);
+        return TRUE;
+    }
+    function borrarProducto($id) {
+        $this->db->where('producto_id', $id);
+        $this->db->limit(1);
+        $this->db->delete('producto');
+        return TRUE;
+    }
     
     /*sidebar*/
     function getCamaras($limit,$start,$categoria){
@@ -229,5 +240,4 @@ class ProductoModel extends CI_Model {
         $data = $this->db->get();
         return $data->num_rows();
     }
-
 }

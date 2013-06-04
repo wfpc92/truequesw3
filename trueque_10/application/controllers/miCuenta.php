@@ -109,8 +109,15 @@ class MiCuenta extends CI_Controller {
                         'fechaingreso' => $fechaActual,
                         'usuario_id' => $usuarioActual['usuario_id']
                     );
-                    $data['producto'] = $producto;
-                    $data['contenido'] = 'usuario/publicarImagen';
+                    if (isset($_POST['producto_id'])){
+                        $producto['producto_id']=$_POST['producto_id'];
+                        $producto['imagen']= $_POST['imagen'];
+                        $data['producto'] = $producto;
+                        $data['contenido'] = 'usuario/editarImagenProducto';
+                    }else{
+                            $data['producto'] = $producto;
+                         $data['contenido'] = 'usuario/publicarImagen';
+                    }
                 }
             }
             $this->load->view("plantilla", $data);
@@ -129,24 +136,23 @@ class MiCuenta extends CI_Controller {
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload()) {
             $error = array('error' => $this->upload->display_errors());
-            $this->load->view('usuario/publicarImagen', $error);
+            if($_POST['producto_id']){
+                $this->load->view('usuario/editarImagenProducto', $error);
+            }else{
+                $this->load->view('usuario/publicarImagen', $error);
+            }
         } else {
             $this->load->model('productoModel');
             $data = array('upload_data' => $this->upload->data());
             $aux = $this->upload->data();
             $producto['imagen'] = base_url().'/images/'.$aux['file_name'];
-            echo $producto['imagen'];
-            $this->productoModel->agregarProducto($producto);
+            if(isset( $_POST['producto_id'])){
+                $this->productoModel->editarProducto($producto,$_POST['producto_id']);
+            }else{
+                $this->productoModel->agregarProducto($producto);
+            }
             redirect('miCuenta');
         }
-        echo $producto['nombre'];
-        echo $producto['descripcion'];
-        echo $producto['fechaingreso'];
-        echo $producto['usuario_id'];
-    }
-
-    public function hacerTrueque() {
-        
     }
 
     function seleccionar($str) {
@@ -158,9 +164,49 @@ class MiCuenta extends CI_Controller {
         }
     }
     function editarProducto($id){
-        
+        $usuarioActual = $this->session->all_userdata();
+        if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
+            $data['title'] = 'Editar Producto';
+            $data['sidebar'] = 'sidebarMiCuenta';
+            $data['contenido'] = 'usuario/editarProducto';
+            $data['sesion'] = 'sesionUsuario';
+            $data['menu'] = 'menuUsuario';
+            $data['usuarioActual'] = $usuarioActual;
+            $data['sesion'] = 'sesionLogin';
+            $data['menu'] = 'menuEstandar';
+            $this->load->model('productoModel');
+            $data['producto'] = $this->productoModel->getProducto($id);
+            $data['categoria'] = $this->productoModel->cargarCategoria();
+            $this->load->view('plantilla', $data);
+        } else {
+            redirect(base_url());
+        }
+    }
+        function borrarProducto($id){
+        $usuarioActual = $this->session->all_userdata();
+        if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
+            $data['title'] = 'Editar Producto';
+            $data['sidebar'] = 'sidebarMiCuenta';
+            $data['contenido'] = 'usuario/borrarProducto';
+            $data['sesion'] = 'sesionUsuario';
+            $data['menu'] = 'menuUsuario';
+            $data['usuarioActual'] = $usuarioActual;
+            $data['sesion'] = 'sesionLogin';
+            $data['menu'] = 'menuEstandar';
+            $this->load->model('productoModel');
+            $data['producto'] = $this->productoModel->getProducto($id);
+            $data['categoria'] = $this->productoModel->cargarCategoria();
+            $this->load->view('plantilla', $data);
+        } else {
+            redirect(base_url());
+        }
+        }
+        public function borrarProductoBd() {
+        $this->load->model('productoModel');
+        $id = $this->input->post('producto_id');
+        $this->productoModel->borrarProducto($id);
+        redirect('miCuenta');
     }
 
 }
-
 ?>
