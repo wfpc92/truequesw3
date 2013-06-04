@@ -26,7 +26,10 @@
                             <b>Fecha Publicaci&oacute;n: </b><?php echo $producto->fechaingreso; ?><br/>
                         </li>
                 <li style="width: 20%; float: right; padding-right: 5%;">
-                    <button><?php echo anchor('miCuenta/editarProducto/' . $producto->producto_id, 'Editar') ?></button>
+                    <button><?php echo anchor('miCuenta/editarProducto/'.$producto->producto_id, 'Editar') ?></button>
+                </li>
+                <li style="width: 20%; float: right; padding-right: 5%;">
+                    <button><?php echo anchor('miCuenta/borrarProducto/'.$producto->producto_id, 'Eliminar') ?></button>
                 </li>
             </ul>
         </li>
