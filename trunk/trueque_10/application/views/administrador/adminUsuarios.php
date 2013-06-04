@@ -38,3 +38,4 @@
     </tbody>
 </table>
 <br/>
+<div colspan="6" align="center"><p><?php echo $paginacion; ?></p></div>

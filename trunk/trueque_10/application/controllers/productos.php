@@ -5,10 +5,10 @@ if (!defined('BASEPATH'))
 
 //
 class Productos extends CI_Controller {
-
     function Productos() {
         parent::__construct();
         $this->load->model('productoModel');
+        $this->load->library('pagination');
     }
 
     public function index() {
@@ -29,23 +29,19 @@ class Productos extends CI_Controller {
         }
 
         //PAGINACION...
-        $this->load->library('pagination');
-
         $opciones = array();
         $opciones['per_page'] = 5;
-        $opciones['base_url'] = base_url() . 'productos/index';
+        $opciones['base_url'] = base_url().'productos/index/';
         $opciones['total_rows'] = $this->productoModel->getNumProductos();
         $opciones['uri_segment'] = 3;
         $opciones['num_links'] = 3;
         $opciones['first_link'] = 'Primero';
         $opciones['last_link'] = 'Ultimo';
-
-
         $this->pagination->initialize($opciones);
         $productos = $this->productoModel->getTodosProductos($opciones['per_page'], $this->uri->segment(3));
         $data['productos'] = $productos;
+        $data['paginacion']= $this->pagination->create_links();
         //FIN_PAGINACION...
-
         $this->load->view('plantilla', $data);
     }
 
@@ -91,8 +87,13 @@ class Productos extends CI_Controller {
     public function buscarProducto() {
 
         static $criterio;
-        $criterio = $this->input->post('buscar');
-
+        if(isset($_POST['buscar'])){
+            $criterio = $this->input->post('buscar');
+             $this->session->set_userdata('buscar',$criterio);
+        }
+        else{
+            $criterio=$this->session->userdata('buscar');
+        }
         $data['title'] = 'Trueque Buscar Producto';
         $data['sidebar'] = 'sidebarCategorias';
         $data['contenido'] = 'estandar/inicio';
@@ -108,7 +109,6 @@ class Productos extends CI_Controller {
             $data['sesion'] = 'sesionLogin';
             $data['menu'] = 'menuEstandar';
         }
-        // $data['productos'] = $this->productoModel->buscarProductos($criterio);
         //PAGINACION
         $cantidad = $this->productoModel->numBuscarProducto($criterio);
         $this->load->library('pagination');
@@ -116,9 +116,7 @@ class Productos extends CI_Controller {
         $opciones = array();
         $opciones['per_page'] = 2;
         $opciones['base_url'] = base_url() . 'productos/buscarProducto';
-        //$opciones['total_rows'] = $productos->num_rows();
         $opciones['total_rows'] = $cantidad;
-
         $opciones['uri_segment'] = 3;
         $opciones['num_links'] = 3;
         $opciones['first_link'] = 'Primero';
@@ -127,6 +125,7 @@ class Productos extends CI_Controller {
         $this->pagination->initialize($opciones);
         $productos = $this->productoModel->buscarProductos($criterio, $opciones['per_page'], $this->uri->segment(3));
         $data['productos'] = $productos;
+        $data['paginacion']= $this->pagination->create_links();
         //FIN_PAGINACION
 
 
@@ -176,81 +175,14 @@ class Productos extends CI_Controller {
 
         $categoria = $_POST['categorias'];
         $desde = $_POST['fechaIngreso'];
-
         $hasta = $_POST['hasta'];
         $ciudad = $_POST['ciudades'];
-        $data['productos'] = $this->productoModel->busquedaAvanzada($categoria, $desde, $hasta, $ciudad);
+        $productos = $this->productoModel->busquedaAvanzada($categoria, $desde, $hasta, $ciudad);
+        $data['productos'] = $productos;
+        
         $this->load->view('plantilla', $data);
     }
-    
-    /*sidebar*/
-    
-    function getAntiguedades(){
-        $this->getProductosSide(1);
-    }
-
-    function getCamaras(){
-        $this->getProductosSide(2);
-    }
-    
-    function getCasas(){
-        $this->getProductosSide(3);
-    }
-    
-    function getCelulares(){
-        $this->getProductosSide(4);
-    }
-    
-    function getCine(){
-        $this->getProductosSide(5);
-    }
-    
-    function getComputadores(){
-        $this->getProductosSide(6);
-    }
-    
-    function getDeporte(){
-        $this->getProductosSide(7);
-    }
-    
-    function getElectrodomesticos(){
-        $this->getProductosSide(8);
-    }
-    
-    function getJoyas(){
-        $this->getProductosSide(9);
-    }
-    
-    function getJuguetes(){
-        $this->getProductosSide(10);
-    }
-    
-    function getLibros(){
-        $this->getProductosSide(11);
-    }
-    
-    function getLicores(){
-        $this->getProductosSide(12);
-    }
-    
-    function getMusica(){
-        $this->getProductosSide(13);
-    }
-    
-    function getVehiculos(){
-        $this->getProductosSide(14);
-    }
-    
-    function getVideojuegos(){
-        $this->getProductosSide(15);
-    }
-    
-    function getOtros(){
-        $this->getProductosSide(16);
-    }
-    
-    public function getProductosSide($categoria){
-
+    public function getProductosSide($categoria=null){
          $data['contenido'] = 'estandar/inicio';
          $data['title'] = 'Trueque Inicio';
          $data['sidebar'] = 'sidebarCategorias';
@@ -267,11 +199,17 @@ class Productos extends CI_Controller {
             $data['menu'] = 'menuEstandar';
         }
         //PAGINACION...
-        $this->load->library('pagination');
-
+        if(isset($categoria) && $categoria!=null && $categoria!=$this->session->userdata('numProdPag')){
+            $categoria=  $this->obtenerIdCategoria($categoria);
+            $this->session->set_userdata('categoria',$categoria);
+            $this->session->set_userdata('numProdPag',5);
+        }
+        else{
+            $categoria=$this->session->userdata('categoria');
+        }
         $opciones = array();
         $opciones['per_page'] = 5;
-        $opciones['base_url'] = base_url() . 'productos/index';
+        $opciones['base_url'] = base_url(). 'productos/getProductosSide';
         $opciones['total_rows'] = $this->productoModel->getNumProductosCategoria($categoria);
         $opciones['uri_segment'] = 3;
         $opciones['num_links'] = 3;
@@ -282,12 +220,66 @@ class Productos extends CI_Controller {
         $this->pagination->initialize($opciones);
         $productos = $this->productoModel->getCamaras($opciones['per_page'], $this->uri->segment(3),$categoria);
         $data['productos'] = $productos;
+        $data['paginacion']= $this->pagination->create_links();
         //FIN_PAGINACION...
 
         $this->load->view('plantilla', $data);
 
   
     }
-    
-
+    public function obtenerIdCategoria($nombre){
+        echo $nombre;
+        $categoria="";
+        switch ($nombre){
+                case "cine":
+                    $categoria=1;
+                    break;
+                case "electrodomesticos":
+                    $categoria=2;
+                    break;
+                case "videojuegos":
+                    $categoria=3;
+                    break;
+                case "vehiculos":
+                    $categoria=4;
+                    break;
+                case "musica":
+                    $categoria=5;
+                    break;
+                case "antiguedades":
+                    $categoria=6;
+                    break;
+                case "deportes":
+                    $categoria=7;
+                    break;
+                case "libros":
+                    $categoria=8;
+                    break;
+                case "camaras":
+                    $categoria=9;
+                    break;
+                case "celulares":
+                    $categoria=10;
+                    break;
+                case "computadores":
+                    $categoria=11;
+                    break;
+                case "joyas":
+                    $categoria=12;
+                    break;
+                case "casas":
+                    $categoria=13;
+                    break;
+                case "juguetes":
+                    $categoria=14;
+                    break;
+                case "licores":
+                    $categoria=15;
+                    break;
+                case "otras":
+                    $categoria=16;
+                    break;
+            }
+            return $categoria;
+    }
 }

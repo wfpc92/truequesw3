@@ -45,7 +45,7 @@
 </ul>
 </div>
 <!---PAGINACION-->
-<p class =" paginacion"><?php echo $this->pagination->create_links(); ?></ p>
+<p class =" paginacion"><?php echo $paginacion; ?></ p>
     <!---FIN_PAGINACION-->
 
 <div style="clear: both;">&nbsp;</div>

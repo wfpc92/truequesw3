@@ -43,3 +43,4 @@
 <?php endif; ?>
 </ul>
 </div>
+<p class =" paginacion"><?php echo $paginacion; ?></ p>

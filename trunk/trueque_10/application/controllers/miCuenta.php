@@ -12,6 +12,7 @@ class MiCuenta extends CI_Controller {
 
     public function index() {
         $this->load->model('productoModel');
+        $this->load->library('pagination');
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
             $data['title'] = 'Trueque Mi Cuenta';
@@ -20,7 +21,21 @@ class MiCuenta extends CI_Controller {
             $data['contenido'] = 'usuario/misProductos';
             $data['usuarioActual'] = $usuarioActual;
             $data['sidebar'] = 'sidebarMiCuenta';
-            $data['productos'] = $this->productoModel->getMisProductos($usuarioActual['usuario_id']);
+            
+            //PAGINACION...
+            $opciones = array();
+            $opciones['per_page'] = 5;
+            $opciones['base_url'] = base_url().'miCuenta/index/';
+            $opciones['total_rows'] = $this->productoModel->numMisProductos($usuarioActual['usuario_id']);;
+            $opciones['uri_segment'] = 3;
+            $opciones['num_links'] = 3;
+            $opciones['first_link'] = 'Primero';
+            $opciones['last_link'] = 'Ultimo';
+            $this->pagination->initialize($opciones);
+            $data['paginacion']= $this->pagination->create_links();
+            $data['productos'] = $this->productoModel->getMisProductos($usuarioActual['usuario_id'],$opciones['per_page'], $this->uri->segment(3));
+            //FIN_PAGINACION...
+            
             $this->load->view('plantilla', $data);
         } else {
             redirect(base_url());
