@@ -29,7 +29,7 @@
                                 <b>Propietario: </b><u><?php echo anchor('productos/verUsuario/' . $producto->u_id, $producto->u_nombre . ' ' . $producto->u_apellido); ?></u>
                         </p>
                         </li>
-                        <hr/>
+                        <hr class="separador"/>
                     <?php endforeach; ?>
 
                 <?php else: ?>
