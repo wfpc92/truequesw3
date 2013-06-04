@@ -9,21 +9,21 @@
 				<ul>
 					<li><a href="#">Resutados De La Busqueda</a></li>
 					<li><?php echo anchor('productos','Todas las Categorias')?></li>
-                                        <li><?php echo anchor('productos/getAntiguedades','Antiguedades')?></li>
-                                        <li><?php echo anchor('productos/getCamaras','Camaras')?></li>
-                                        <li><?php echo anchor('productos/getCasas','Casas')?></li>
-                                        <li><?php echo anchor('productos/getCelulares','Celulares')?></li>
-                                        <li><?php echo anchor('productos/getCine','Cine')?></li>
-                                        <li><?php echo anchor('productos/getComputadores','Computadores')?></li>
-                                        <li><?php echo anchor('productos/getDeporte','Deporte')?></li>
-                                        <li><?php echo anchor('productos/getElectrodomesticos','Electrodomesticos')?></li>
-					<li><?php echo anchor('productos/getJoyas','Joyas')?></li>
-                                        <li><?php echo anchor('productos/getJuguetes','Juguetes')?></li>
-                                        <li><?php echo anchor('productos/getLibros','Libros')?></li>
-                                        <li><?php echo anchor('productos/getMusica','Musica')?></li>
-                                        <li><?php echo anchor('productos/getVehiculos','Vehiculos')?></li>
-                                        <li><?php echo anchor('productos/getVideojuegos','Videojuegos')?></li>
-                                        <li><?php echo anchor('productos/getOtros','Otros')?></li>
+                                        <li><?php echo anchor('productos/getProductosSide/antiguedades','Antiguedades')?></li>
+                                        <li><?php echo anchor('productos/getProductosSide/camaras','Camaras')?></li>
+                                        <li><?php echo anchor('productos/getProductosSide/casas','Casas')?></li>
+                                        <li><?php echo anchor('productos/getProductosSide/celulares','Celulares')?></li>
+                                        <li><?php echo anchor('productos/getProductosSide/cine','Cine')?></li>
+                                        <li><?php echo anchor('productos/getProductosSide/computadores','Computadores')?></li>
+                                        <li><?php echo anchor('productos/getProductosSide/deportes','Deporte')?></li>
+                                        <li><?php echo anchor('productos/getProductosSide/electrodomesticos','Electrodomesticos')?></li>
+					<li><?php echo anchor('productos/getProductosSide/joyas','Joyas')?></li>
+                                        <li><?php echo anchor('productos/getProductosSide/juguetes','Juguetes')?></li>
+                                        <li><?php echo anchor('productos/getProductosSide/libros','Libros')?></li>
+                                        <li><?php echo anchor('productos/getProductosSide/musica','Musica')?></li>
+                                        <li><?php echo anchor('productos/getProductosSide/vehiculos','Vehiculos')?></li>
+                                        <li><?php echo anchor('productos/getProductosSide/videojuegos','Videojuegos')?></li>
+                                        <li><?php echo anchor('productos/getProductosSide/otros','Otros')?></li>
 				</ul>
 			</li>
 		</ul>

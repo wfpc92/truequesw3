@@ -14,12 +14,21 @@ class usuariosModel extends CI_Model {
 
     /* obtener la lista de los libros desde la base de datos */
 
-    function getUsuarios() {
+    function getUsuarios($limit,$start) {
+        $this->db->limit($limit, $start);
+        $data = $this->db->get('usuarios');
+        if ($data->num_rows() > 0) {
+            return $data;
+        } else {
+            return FALSE;
+        }
+    }
+    function numUsuarios() {
         /* dentro de la variable data se van a guardar las tuplas correspondientes a la consulta get sobre la tabla usuarios en la base de datos */
         $data = $this->db->get('usuarios');
         /* se comprueba si se obtiene algun resultado y se retorna */
         if ($data->num_rows() > 0) {
-            return $data;
+            return $data->num_rows();
         } else {
             return FALSE;
         }
