@@ -110,7 +110,7 @@ class ProductoModel extends CI_Model {
     //FIN_PAGINACION
 
     function cargarCategoria() {
-        $sql = "SELECT nombre,categoria_id FROM categoria";
+        $sql = "SELECT nombre,categoria_id FROM categoria ORDER BY nombre";
         $query = $this->db->query($sql);
         $data = array();
         if ($query->num_rows() > 0) {
@@ -126,7 +126,7 @@ class ProductoModel extends CI_Model {
 
     function cargarCiudad() {
 
-        $sql = "SELECT id, nombre FROM cuidad";
+        $sql = "SELECT id, nombre FROM cuidad ORDER BY nombre";
         $query = $this->db->query($sql);
         $ciudades = array();
         if ($query->num_rows() > 0) {
