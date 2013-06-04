@@ -9,7 +9,7 @@
 				<ul>
 					<li><?php echo anchor('miCuenta','Mis Productos')?></li>
 					<li><?php echo anchor('miCuenta/publicarProducto','Publicar Producto')?></li>
-					<li><?php echo anchor('miCuenta','Propuestas Recibidas')?></li>
+					<li><?php echo anchor('permutas/index','Propuestas Recibidas')?></li>
 					<li><?php echo anchor('miCuenta','Propuestas Enviadas')?></li>
 				</ul>
 			</li>
