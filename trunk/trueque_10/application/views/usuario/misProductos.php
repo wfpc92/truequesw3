@@ -34,7 +34,7 @@
             </ul>
         </li>
         <li>
-            <hr/>
+            <hr class="separador"/>
         </li>
     <?php endforeach; ?>
 
