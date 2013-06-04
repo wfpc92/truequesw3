@@ -12,7 +12,7 @@ class Permutas extends CI_Controller {
     }
 
     public function index() {
-        $data['contenido'] = 'permutas';
+        $data['contenido'] = 'usuario/propuestasRecibidas';
         $data['title'] = 'Ver Permutas';
         $data['sidebar'] = 'sidebarCategorias';
         $usuarioActual = $this->session->all_userdata();
@@ -27,9 +27,23 @@ class Permutas extends CI_Controller {
             $data['sesion'] = 'sesionLogin';
             $data['menu'] = 'menuEstandar';
         }
-        $data['permutas'] = $this->permutaModel->getPermutas();
+        $current= $usuarioActual['usuario_id'];
+        $data['permutas'] = $this->permutaModel->getPermutas($current);
         $this->load->view('plantilla', $data);
     }
+    
+    function permutar($peticion){
+        $this->permutaModel->hacerPermuta($peticion);
+        redirect('permutas');
+        
+    }
+    
+    function rechazar($peticion){
+        $this->permutaModel->rechazarPermuta($peticion);
+        redirect('permutas');
+        
+    }
+    
 
     /*
       public function verProducto($id) {
