@@ -111,7 +111,7 @@
                     <br/>
 
                 </li>
-                <hr/>
+                <hr class="separador"/>
             <?php endforeach; ?>
 
         <?php else: ?>
