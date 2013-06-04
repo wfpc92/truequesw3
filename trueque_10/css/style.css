@@ -181,6 +181,10 @@ a:hover {
 	border-right: 1px solid #1A1A18; 
 }
 
+#menu li:hover{
+    background: white; 
+    color: black;
+}
 #menu a {
 	display: block;
 	height: 30px;
@@ -193,6 +197,10 @@ a:hover {
 	font-weight: bold;
 	color: #FFFFFF;
 	border: none;
+}
+
+#menu a:hover{
+    color: black;    
 }
 /*.current_page_item{
 	background-color:yellow;
@@ -336,6 +344,11 @@ a:hover {
 	border-bottom: 1px solid #E3E5E3;
 	padding: 5px 0px;
 	border-left: none;
+        
+}
+
+#sidebar li li:hover{
+        background: #eee;    
 }
 
 #sidebar li li a {
@@ -370,7 +383,7 @@ a:hover {
 
 #sidebar a:hover {
 	text-decoration: underline;
-	color: #FFFFFF;
+	
 }
 
 /* Calendar */
@@ -558,3 +571,21 @@ a:hover {
     /*margin-left : 80%;*/
 }
 
+#main li img.resize_permuta{
+    height:120px;
+    width:auto;
+}
+#main li img.resize_permuta{
+    height:auto;
+    width:140px;
+}
+
+
+#main li img.resize_rechazar_aceptar{
+    height:40px;
+    width:auto;
+}
+#main li img.resize_rechazar_aceptar{
+    height:auto;
+    width:160px;
+}
