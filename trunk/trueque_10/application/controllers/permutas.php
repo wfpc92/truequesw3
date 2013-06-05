@@ -43,4 +43,24 @@ class Permutas extends CI_Controller {
         redirect('permutas');
         
     }
+    function permutasEnviadas(){
+        $data['contenido'] = 'usuario/propuestasEnviadas';
+        $data['title'] = 'Ver Permutas Enviadas';
+        $data['sidebar'] = 'sidebarMiCuenta';
+        $usuarioActual = $this->session->all_userdata();
+        if (isset($usuarioActual['nombre'])) {
+            $data['sesion'] = 'sesionUsuario';
+            $data['menu'] = 'menuUsuario';
+            $data['usuarioActual'] = $usuarioActual;
+            if ($usuarioActual['usuario_nivel'] == 0) {
+                $data['menu'] = 'menuAdministrador';
+            }
+        } else {
+            $data['sesion'] = 'sesionLogin';
+            $data['menu'] = 'menuEstandar';
+        }
+        $current= $usuarioActual['usuario_id'];
+        $data['permutas'] = $this->permutaModel->getPermutasEnviadas($current);
+        $this->load->view('plantilla', $data);
+    }
 }
