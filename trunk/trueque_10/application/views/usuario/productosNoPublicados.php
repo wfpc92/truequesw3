@@ -32,7 +32,7 @@
                     <button><?php echo anchor('miCuenta/borrarProducto/'.$producto->producto_id, 'Eliminar') ?></button>
                 </li>
                 <li style="width: 20%; float: right; padding-right: 5%;">
-                    <button><?php echo anchor('miCuenta/darDeBaja/'.$producto->producto_id, 'Dejar de Publicar') ?></button>
+                    <button><?php echo anchor('miCuenta/darDeAlta/'.$producto->producto_id, 'Publicar') ?></button>
                 </li>
             </ul>
         </li>

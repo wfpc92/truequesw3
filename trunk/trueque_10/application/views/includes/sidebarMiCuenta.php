@@ -7,8 +7,9 @@
 			<li>
 				<h2>Mi Cuenta</h2>
 				<ul>
-					<li><?php echo anchor('miCuenta','Mis Productos')?></li>
-					<li><?php echo anchor('miCuenta/publicarProducto','Publicar Producto')?></li>
+					<li><?php echo anchor('miCuenta','Productos Publicados')?></li>
+					<li><?php echo anchor('miCuenta/productosNoPublicados','Productos sin Publicar')?></li>
+                                        <li><?php echo anchor('miCuenta/publicarProducto','Publicar Producto')?></li>
 					<li><?php echo anchor('permutas/index','Propuestas Recibidas')?></li>
 					<li><?php echo anchor('permutas/permutasEnviadas','Propuestas Enviadas')?></li>
                                         <li><?php echo anchor('miCuenta/editarInformacion','Editar Informacion')?></li>

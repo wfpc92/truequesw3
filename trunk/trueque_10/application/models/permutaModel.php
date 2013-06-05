@@ -20,7 +20,7 @@ class PermutaModel extends CI_Model {
         $this->db->join('usuarios AS usu_solicita', 'p2.usuario_id = usu_solicita.usuario_id');
         $this->db->where('usu_recibe.usuario_id',  $current);
         $this->db->where('per.fechapermuta',  '0000-00-00');
-        
+        $this->db->where('p1.estado_publicacion',1);
         
         
 
@@ -37,8 +37,9 @@ class PermutaModel extends CI_Model {
         list($recibe, $solicita, $usu_recibe, $usu_solicita) = explode(".", $peticion);  
         
         $query = $this->db->query('UPDATE permuta SET fechapermuta = CURRENT_TIMESTAMP WHERE producto_recibe = '.$recibe.' AND producto_solicita = '.$solicita); 
-        $query1=  $this->db->query('update producto set usuario_id='.$usu_solicita.' where producto_id='.$recibe);
-        $query2=  $this->db->query('update producto set usuario_id='.$usu_recibe.' where producto_id='.$solicita);
+        $query1=  $this->db->query('update producto set usuario_id='.$usu_solicita.', estado_publicacion = 0 where producto_id='.$recibe);
+        $query2=  $this->db->query('update producto set usuario_id='.$usu_recibe.', estado_publicacion = 0 where producto_id='.$solicita);
+        
     }
     
     

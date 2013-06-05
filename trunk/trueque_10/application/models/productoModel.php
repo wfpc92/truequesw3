@@ -30,6 +30,7 @@ class ProductoModel extends CI_Model {
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
         $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
+        $this->db->where('estado_publicacion',1);
         $data = $this->db->get();
         return $data;
     }
@@ -59,23 +60,27 @@ class ProductoModel extends CI_Model {
     public function buscarProductos($criterio, $limit, $start) {
         /* creamos una variable array vacia */
         $data = array();
+        /* creamos una variable array vacia */
         $this->load->helper('string');
         /* se hace la consulta sobre la base de datos */
         $valores = explode(" ", $criterio);
-        $this->db->limit($limit, $start);
-
-
-        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
-        $this->db->from('producto');
-        $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
-        $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
-        $this->db->like('producto.nombre', $criterio);
-        foreach ($valores as $valor):
-            $this->db->or_like('producto.nombre', $valor);
-            $this->db->or_like('descripcion', $valor);
-            $this->db->or_like('categoria.nombre', $valor);
+        $query = "SELECT `producto_id`, `producto`.`nombre` AS p_nombre, `descripcion`, ";
+        $query = $query." `categoria`.`nombre` AS categoria, `imagen`, `fechaingreso`, ";
+        $query = $query." `usuarios`.`usuario_id` AS u_id, `usuarios`.`nombre` AS u_nombre, "; 
+        $query = $query." `usuarios`.`apellido` AS u_apellido "; 
+        $query = $query." FROM (`producto`) JOIN `usuarios` ON `producto`.`usuario_id` = `usuarios`.`usuario_id` ";
+        $query = $query." JOIN `categoria` ON `categoria`.`categoria_id` = `producto`.`categoria_id` "; 
+        $query = $query." WHERE `estado_publicacion` = 1 "; 
+        $query = $query." AND (`producto`.`nombre` LIKE '%".$criterio."%'";
+        foreach ($valores as $valor): 
+            $query = $query.' OR `producto`.`nombre` LIKE \'%'.$valor.'%\''; 
+            $query = $query.' OR `descripcion` LIKE \'%'.$valor.'%\''; 
+            $query = $query.' OR `categoria`.`nombre` LIKE \'%'.$valor.'%\'';
         endforeach;
-        $consulta = $this->db->get();
+        $query=$query.")";
+        //echo $query;
+        $consulta =$this->db->query($query);
+        //= $this->db->get();
         foreach ($consulta->result() as $prod):
             echo '';
         endforeach;
@@ -92,18 +97,22 @@ class ProductoModel extends CI_Model {
         $this->load->helper('string');
         /* se hace la consulta sobre la base de datos */
         $valores = explode(" ", $criterio);
-
-        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
-        $this->db->from('producto');
-        $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
-        $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
-        $this->db->like('producto.nombre', $criterio);
-        foreach ($valores as $valor):
-            $this->db->or_like('producto.nombre', $valor);
-            $this->db->or_like('descripcion', $valor);
-            $this->db->or_like('categoria.nombre', $valor);
+        $query = "SELECT `producto_id`, `producto`.`nombre` AS p_nombre, `descripcion`, ";
+        $query = $query." `categoria`.`nombre` AS categoria, `imagen`, `fechaingreso`, ";
+        $query = $query." `usuarios`.`usuario_id` AS u_id, `usuarios`.`nombre` AS u_nombre, "; 
+        $query = $query." `usuarios`.`apellido` AS u_apellido "; 
+        $query = $query." FROM (`producto`) JOIN `usuarios` ON `producto`.`usuario_id` = `usuarios`.`usuario_id` ";
+        $query = $query." JOIN `categoria` ON `categoria`.`categoria_id` = `producto`.`categoria_id` "; 
+        $query = $query." WHERE `estado_publicacion` = 1 "; 
+        $query = $query." AND `producto`.`nombre` LIKE '%".$criterio."%'";
+        foreach ($valores as $valor): 
+            $query = $query.' OR `producto`.`nombre` LIKE \'%'.$valor.'%\''; 
+            $query = $query.' OR `descripcion` LIKE \'%'.$valor.'%\''; 
+            $query = $query.' OR `categoria`.`nombre` LIKE \'%'.$valor.'%\'';
         endforeach;
-        $consulta = $this->db->get();
+        //echo $query;
+        $consulta=$this->db->query($query);
+        //$consulta = $this->db->get();
         return $consulta->num_rows();
     }
 
@@ -147,6 +156,7 @@ class ProductoModel extends CI_Model {
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
         $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
         $this->db->where('producto.usuario_id', $id);
+        $this->db->where('estado_publicacion',1);
         $data = $this->db->get();
         if ($data->num_rows() > 0) {
             return $data;
@@ -160,6 +170,36 @@ class ProductoModel extends CI_Model {
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
         $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
         $this->db->where('producto.usuario_id', $id);
+        $this->db->where('estado_publicacion',1);
+        $data = $this->db->get();
+        if ($data->num_rows() > 0) {
+            return $data->num_rows();
+        } else {
+            return FALSE;
+        }
+    }
+    function getMisProductosNP($id,$limit,$start) {
+        $this->db->limit($limit, $start);
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->from('producto');
+        $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
+        $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
+        $this->db->where('producto.usuario_id', $id);
+        $this->db->where('estado_publicacion',0);
+        $data = $this->db->get();
+        if ($data->num_rows() > 0) {
+            return $data;
+        } else {
+            return FALSE;
+        }
+    }
+    function numMisProductosNP($id) {
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->from('producto');
+        $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
+        $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
+        $this->db->where('producto.usuario_id', $id);
+        $this->db->where('estado_publicacion',0);
         $data = $this->db->get();
         if ($data->num_rows() > 0) {
             return $data->num_rows();
@@ -189,6 +229,7 @@ class ProductoModel extends CI_Model {
         if ($ciudad != "") {
             $this->db->where('usuarios.id_ciudad',$ciudad);
         }
+        $this->db->where('estado_publicacion',1);
         $consulta = $this->db->get();
         if ($consulta->num_rows() > 0) {
             $data = $consulta;
@@ -220,6 +261,7 @@ class ProductoModel extends CI_Model {
         if ($ciudad != "") {
             $this->db->where('usuarios.id_ciudad',$ciudad);
         }
+        $this->db->where('estado_publicacion',1);
         $consulta = $this->db->get();
         return $consulta->num_rows();
     }
@@ -260,5 +302,18 @@ class ProductoModel extends CI_Model {
         $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
         $data = $this->db->get();
         return $data->num_rows();
+    }
+    
+    function darDeAlta($id){
+        $data['estado_publicacion']=1;
+        $this->db->where('producto_id', $id);
+        $this->db->update('producto', $data);
+        return TRUE;
+    }
+    function darDeBaja($id){
+        $data['estado_publicacion']=0;
+        $this->db->where('producto_id', $id);
+        $this->db->update('producto', $data);
+        return TRUE;
     }
 }
