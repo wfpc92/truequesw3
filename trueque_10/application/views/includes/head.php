@@ -52,7 +52,7 @@
 	<div id="logo" >
             <img src="<?php echo base_url(); ?>images/logo.jpg" width=50% height=80% border=0 alt="Logo"></img>
 	</div>	
-	<div id="sesion" style="padding-top: 50px; padding-right: 50px;">
+	<div id="sesion" style="margin-top: 50px; margin-right: 50px;">
 						<?php 
 						$this->load->view('includes/'.$sesion);
 						?>
