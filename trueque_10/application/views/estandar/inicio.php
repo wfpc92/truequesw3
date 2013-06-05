@@ -2,7 +2,7 @@
 
 <div id="main" >
     <br/><br/>
-    <ul>
+    <ul style="width: 100%;">
         <?php
         if ($productos != FALSE and $productos->num_rows > 0):
             foreach ($productos->result() as $producto):
@@ -19,7 +19,7 @@
                             echo img($image_properties);
                             ?>
                         </li>
-                        <li style="width: 30%; float: left; padding-right: 20%;">
+                        <li style=" width: 40%;float: left; margin-left: 10%">
                             <br/>
                             <h3><?php echo anchor('productos/verProducto/' . $producto->producto_id, $producto->p_nombre); ?>
                             </h3>
@@ -29,9 +29,12 @@
                             <b>Propietario: </b>
                         <u><?php echo anchor('productos/verUsuario/' . $producto->u_id, $producto->u_nombre . ' ' . $producto->u_apellido); ?></u>
                 </li>
-                <li style="width: 20%; float: right; padding-right:5%; ">
-                    <button><?php echo anchor('miCuenta/truequear/' . $producto->producto_id, 'truequear') ?></button>
+                <?php echo form_open('miCuenta/truequear')?>
+                <?php echo form_hidden('productoSolicita', $producto->producto_id, 'size ="40" id =""'); ?>
+                <li style="width: 5%; float: right;">
+                    <input type="submit" value="Truequear" />
                 </li>
+                <?php echo form_close();?>
             </ul>
         </li>
         <li>

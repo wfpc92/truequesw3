@@ -1,15 +1,15 @@
 <?php if(isset($errores)) print_r($errores); ?>
 <?php 
-	$atributos = array(
-		'id' => 'formRegistroUsuario'
-	); 
-	echo form_open('usuarios/email', $atributos);
+	echo form_open('usuarios/enviarContrasena');
 ?>
 <h1> Recuperacion de contraseña</h1>
-<table id="registrar">
-	<tr>
+<table id="recuperar contrasena">
+    <tr>    <td><?php if(isset($errores)){
+        echo $errores;
+    }
+?> </td>
 		<td><br/>* E-mail: </td>
-		<td> <?php 
+		<td> <?php
 			$data_form = array(
                           'name'        => 'email',
                           'id'          => 'email',
@@ -20,12 +20,10 @@
 	</tr>
 </table>
 	 <tr>
-        <td><br/><input id = "registrarse" type="submit" value="Enviar" onclick="location.href='<?php echo base_url(); ?>'; return false;" /></td>
+        <td><br/><input id = "registrarse" type="submit" value="Enviar"/></td>
         <button id = "cancelar" onclick="location.href='<?php echo base_url(); ?>'; return false;"> Cancelar</button>
         <!--<input type= "button" name= "submitCancel"  value="Cancel" onclick="redirect('usuarios');”>-->
         <?php echo form_close();?>
-
-
     </tr>
 <?php echo form_close();?>
 

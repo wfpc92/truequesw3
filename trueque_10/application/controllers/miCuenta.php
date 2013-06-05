@@ -21,47 +21,72 @@ class MiCuenta extends CI_Controller {
             $data['contenido'] = 'usuario/misProductos';
             $data['usuarioActual'] = $usuarioActual;
             $data['sidebar'] = 'sidebarMiCuenta';
-            
+
             //PAGINACION...
             $opciones = array();
             $opciones['per_page'] = 5;
-            $opciones['base_url'] = base_url().'miCuenta/index/';
-            $opciones['total_rows'] = $this->productoModel->numMisProductos($usuarioActual['usuario_id']);;
+            $opciones['base_url'] = base_url() . 'miCuenta/index/';
+            $opciones['total_rows'] = $this->productoModel->numMisProductos($usuarioActual['usuario_id']);
+            ;
             $opciones['uri_segment'] = 3;
             $opciones['num_links'] = 3;
             $opciones['first_link'] = 'Primero';
             $opciones['last_link'] = 'Ultimo';
             $this->pagination->initialize($opciones);
-            $data['paginacion']= $this->pagination->create_links();
-            $data['productos'] = $this->productoModel->getMisProductos($usuarioActual['usuario_id'],$opciones['per_page'], $this->uri->segment(3));
+            $data['paginacion'] = $this->pagination->create_links();
+            $data['productos'] = $this->productoModel->getMisProductos($usuarioActual['usuario_id'], $opciones['per_page'], $this->uri->segment(3));
             //FIN_PAGINACION...
-            
+
             $this->load->view('plantilla', $data);
         } else {
             redirect(base_url());
         }
     }
 
-    public function truequear($idProdTrueque) {
+    public function truequear() {
         $this->load->model('productoModel');
-        $data['title'] = 'Trueque Truequear';
+        $this->load->library('pagination');
         $usuarioActual = $this->session->all_userdata();
-        if (isset($usuarioActual['nombre'])) {
+        if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
+            $data['title'] = 'Seleccionar Producto';
             $data['sesion'] = 'sesionUsuario';
             $data['menu'] = 'menuUsuario';
-            $data['contenido'] = 'misProductosSeleccionar';
+            $data['contenido'] = 'usuario/misProductosSeleccionar';
             $data['usuarioActual'] = $usuarioActual;
-            $data['sidebar'] = 'sidebarCategorias';
-            $data['productos'] = $this->productoModel->getMisProductos($usuarioActual['usuario_id']);
-            $data['idProdTrueque'] = $idProdTrueque;
-        } else {
-            $data['sesion'] = 'sesionLogin';
-            $data['menu'] = 'menuEstandar';
-            $data['contenido'] = 'contenido';
-            $data['sidebar'] = 'sidebarCategorias';
-        }
+            $data['sidebar'] = 'sidebarMiCuenta';
+            if (isset($_POST['productoSolicita'])) {
+                $data['productoSolicita'] = $_POST['productoSolicita'];
+                $this->session->set_userdata('productoSolicita', $data['productoSolicita']);
+            } else {
+                $data['productoSolicita'] = $this->session->userdata('productoSolicita');
+            }
+            //PAGINACION...
+            $opciones = array();
+            $opciones['per_page'] = 5;
+            $opciones['base_url'] = base_url() . 'miCuenta/truequear/';
+            $opciones['total_rows'] = $this->productoModel->numMisProductos($usuarioActual['usuario_id']);
+            ;
+            $opciones['uri_segment'] = 3;
+            $opciones['num_links'] = 3;
+            $opciones['first_link'] = 'Primero';
+            $opciones['last_link'] = 'Ultimo';
+            $this->pagination->initialize($opciones);
+            $data['paginacion'] = $this->pagination->create_links();
+            $data['productos'] = $this->productoModel->getMisProductos($usuarioActual['usuario_id'], $opciones['per_page'], $this->uri->segment(3));
+            //FIN_PAGINACION...
 
-        $this->load->view('plantilla', $data);
+            $this->load->view('plantilla', $data);
+        } else {
+            redirect(base_url());
+        }
+    }
+
+    public function enviarTrueque() {
+        $this->load->model('permutaModel');
+        $data['producto_recibe'] = $_POST['productoSolicita'];
+        $data['producto_solicita'] = $_POST['productoEnvia'];
+        $this->permutaModel->crearPermuta($data);
+        redirect(base_url());
     }
 
     public function publicarProducto() {
@@ -124,14 +149,14 @@ class MiCuenta extends CI_Controller {
                         'fechaingreso' => $fechaActual,
                         'usuario_id' => $usuarioActual['usuario_id']
                     );
-                    if (isset($_POST['producto_id'])){
-                        $producto['producto_id']=$_POST['producto_id'];
-                        $producto['imagen']= $_POST['imagen'];
+                    if (isset($_POST['producto_id'])) {
+                        $producto['producto_id'] = $_POST['producto_id'];
+                        $producto['imagen'] = $_POST['imagen'];
                         $data['producto'] = $producto;
                         $data['contenido'] = 'usuario/editarImagenProducto';
-                    }else{
-                            $data['producto'] = $producto;
-                         $data['contenido'] = 'usuario/publicarImagen';
+                    } else {
+                        $data['producto'] = $producto;
+                        $data['contenido'] = 'usuario/publicarImagen';
                     }
                 }
             }
@@ -151,19 +176,19 @@ class MiCuenta extends CI_Controller {
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload()) {
             $error = array('error' => $this->upload->display_errors());
-            if($_POST['producto_id']){
+            if ($_POST['producto_id']) {
                 $this->load->view('usuario/editarImagenProducto', $error);
-            }else{
+            } else {
                 $this->load->view('usuario/publicarImagen', $error);
             }
         } else {
             $this->load->model('productoModel');
             $data = array('upload_data' => $this->upload->data());
             $aux = $this->upload->data();
-            $producto['imagen'] = base_url().'/images/'.$aux['file_name'];
-            if(isset( $_POST['producto_id'])){
-                $this->productoModel->editarProducto($producto,$_POST['producto_id']);
-            }else{
+            $producto['imagen'] = base_url() . '/images/' . $aux['file_name'];
+            if (isset($_POST['producto_id'])) {
+                $this->productoModel->editarProducto($producto, $_POST['producto_id']);
+            } else {
                 $this->productoModel->agregarProducto($producto);
             }
             redirect('miCuenta');
@@ -178,7 +203,8 @@ class MiCuenta extends CI_Controller {
             return TRUE;
         }
     }
-    function editarProducto($id){
+
+    function editarProducto($id) {
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
             $data['title'] = 'Editar Producto';
@@ -187,7 +213,7 @@ class MiCuenta extends CI_Controller {
             $data['sesion'] = 'sesionUsuario';
             $data['menu'] = 'menuUsuario';
             $data['usuarioActual'] = $usuarioActual;
-            $data['sesion'] = 'sesionLogin';
+            $data['sesion'] = 'sesionUsuario';
             $data['menu'] = 'menuEstandar';
             $this->load->model('productoModel');
             $data['producto'] = $this->productoModel->getProducto($id);
@@ -197,7 +223,8 @@ class MiCuenta extends CI_Controller {
             redirect(base_url());
         }
     }
-        function borrarProducto($id){
+
+    function borrarProducto($id) {
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
             $data['title'] = 'Editar Producto';
@@ -206,7 +233,7 @@ class MiCuenta extends CI_Controller {
             $data['sesion'] = 'sesionUsuario';
             $data['menu'] = 'menuUsuario';
             $data['usuarioActual'] = $usuarioActual;
-            $data['sesion'] = 'sesionLogin';
+            $data['sesion'] = 'sesionUsuario';
             $data['menu'] = 'menuEstandar';
             $this->load->model('productoModel');
             $data['producto'] = $this->productoModel->getProducto($id);
@@ -215,13 +242,93 @@ class MiCuenta extends CI_Controller {
         } else {
             redirect(base_url());
         }
-        }
-        public function borrarProductoBd() {
+    }
+
+    public function borrarProductoBd() {
         $this->load->model('productoModel');
         $id = $this->input->post('producto_id');
         $this->productoModel->borrarProducto($id);
         redirect('miCuenta');
     }
 
+    public function editarInformacion() {
+        $this->load->model('usuariosModel');
+        $usuarioActual = $this->session->all_userdata();
+        if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
+            $usuario = $this->usuariosModel->getUsuario($usuarioActual['usuario_id']);
+            $data['title'] = 'Editar Informacion';
+            $data['sidebar'] = 'sidebarMiCuenta';
+            $data['contenido'] = 'usuario/editarInformacion';
+            $data['sesion'] = 'sesionUsuario';
+            $data['menu'] = 'menuUsuario';
+            $data['usuarioActual'] = $usuarioActual;
+            $data['sesion'] = 'sesionUsuario';
+            $data['menu'] = 'menuEstandar';
+            $data['usuario'] = $usuario;
+            $this->load->view('plantilla', $data);
+        } else {
+            redirect(base_url());
+        }
+    }
+
+    public function guardarInformacion() {
+        $usuarioActual = $this->session->all_userdata();
+        if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
+            $this->load->model('usuariosModel');
+            $this->load->library('form_validation');
+            $config['upload_path'] = './images/';
+            $config['allowed_types'] = 'gif|jpg|png';
+            $config['max_size'] = '100';
+            $config['max_width'] = '800';
+            $config['max_height'] = '600';
+            $this->load->library('upload', $config);
+            $config = array(
+                array(
+                    'field' => 'usuario[nombre]',
+                    'label' => 'Nombre',
+                    'rules' => 'trim|required'
+                ),
+                array(
+                    'field' => 'usuario[apellido]',
+                    'label' => 'Apellido',
+                    'rules' => 'trim|required'
+                )
+            );
+            $this->form_validation->set_rules($config);
+            $this->form_validation->set_message('required', 'El campo %s es requerido');
+
+            if (!$this->upload->do_upload() && $this->form_validation->run() == FALSE) {
+                $data['errorImg'] = $this->upload->display_errors();
+                $data['error'] = validation_errors();
+                $usuario = $this->usuariosModel->getUsuario($usuarioActual['usuario_id']);
+                $data['title'] = 'Editar Informacion';
+                $data['sidebar'] = 'sidebarMiCuenta';
+                $data['contenido'] = 'usuario/editarInformacion';
+                $data['sesion'] = 'sesionUsuario';
+                $data['menu'] = 'menuUsuario';
+                $data['usuarioActual'] = $usuarioActual;
+                $data['sesion'] = 'sesionUsuario';
+                $data['menu'] = 'menuEstandar';
+                $data['usuario'] = $usuario;
+                $this->load->view('plantilla', $data);
+            } else {
+                $aux = $this->upload->data();
+                $usuario=$_POST['usuario'];
+                if($aux['file_name']!=""){
+                    $usuario['avatar'] = base_url() . '/images/' . $aux['file_name'];
+                }else{
+                    $usuario['avatar'] = base_url() . '/images/avatar.jpg';
+                }
+                $usuario['usuario_id']=$usuarioActual['usuario_id'];
+                $this->usuariosModel->setUsuario($usuario);
+                $this->session->set_userdata('nombre', $usuario['nombre']);
+                $this->session->set_userdata('avatar', $usuario['avatar']);
+                redirect('miCuenta');
+            }
+        } else {
+            redirect(base_url());
+        }
+    }
+
 }
-?>
+?>	

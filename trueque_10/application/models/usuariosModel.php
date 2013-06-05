@@ -23,6 +23,16 @@ class usuariosModel extends CI_Model {
             return FALSE;
         }
     }
+    function getEmails($email) {
+        $this->db->limit(1);
+        $this->db->where('email',$email);
+        $data = $this->db->get('usuarios');
+        if ($data->num_rows() > 0) {
+            return $data;
+        } else {
+            return FALSE;
+        }
+    }
     function numUsuarios() {
         /* dentro de la variable data se van a guardar las tuplas correspondientes a la consulta get sobre la tabla usuarios en la base de datos */
         $data = $this->db->get('usuarios');
@@ -55,7 +65,7 @@ class usuariosModel extends CI_Model {
 
     function getUsuario($id) {
         $data = array();
-        $this->db->select('usuario_id,nombre,apellido,email,id_ciudad');
+        $this->db->select('usuario_id,nombre,apellido,email,id_ciudad,avatar');
         $this->db->where('usuario_id', $id);
         $this->db->limit(1);
         $consulta = $this->db->get('usuarios');
