@@ -51,4 +51,22 @@ class PermutaModel extends CI_Model {
     function crearPermuta($data){
         $this->db->insert('permuta',$data);
     }
+    function getPermutasEnviadas($current) {
+        $this->db->select('usu_solicita.usuario_id AS usu_solicita_id, usu_recibe.usuario_id AS usu_recibe_id, p1.nombre AS rec_nombre ,p2.nombre AS sol_nombre, p1.imagen AS rec_imagen,p2.imagen AS sol_imagen, usu_recibe.nombre AS rec_usu_nombre, usu_recibe.apellido AS rec_usu_apellido, per.producto_recibe AS rec_producto_id, per.producto_solicita AS sol_producto_id, usu_recibe.usuario_id AS rec_usu_id, per.producto_recibe AS rec_producto_id, per.producto_solicita AS sol_producto_id');
+        $this->db->from('permuta AS per');
+        $this->db->join('producto AS p1', 'p1.producto_id = per.producto_recibe');
+        $this->db->join('producto AS p2', 'p2.producto_id = per.producto_solicita');
+        $this->db->join('usuarios AS usu_recibe', 'p1.usuario_id = usu_recibe.usuario_id');
+        $this->db->join('usuarios AS usu_solicita', 'p2.usuario_id = usu_solicita.usuario_id');
+        $this->db->where('usu_solicita.usuario_id',  $current);
+        $this->db->where('per.fechapermuta',  '0000-00-00');
+       
+        $data = $this->db->get();
+        if ($data->num_rows() > 0) {
+            return $data;
+        } else {
+            return FALSE;
+        }
+    }
+    
 }
