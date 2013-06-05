@@ -228,52 +228,51 @@ class Productos extends CI_Controller {
   
     }
     public function obtenerIdCategoria($nombre){
-        echo $nombre;
         $categoria="";
         switch ($nombre){
-                case "cine":
+                case "antiguedades":
                     $categoria=1;
                     break;
-                case "electrodomesticos":
+                case "camaras":
                     $categoria=2;
                     break;
-                case "videojuegos":
+                case "casas":
                     $categoria=3;
                     break;
-                case "vehiculos":
+                case "celulares":
                     $categoria=4;
                     break;
-                case "musica":
+                case "cine":
                     $categoria=5;
                     break;
-                case "antiguedades":
+                case "computadores":
                     $categoria=6;
                     break;
                 case "deportes":
                     $categoria=7;
                     break;
-                case "libros":
+                case "electrodomesticos":
                     $categoria=8;
                     break;
-                case "camaras":
+                case "joyas":
                     $categoria=9;
                     break;
-                case "celulares":
+                case "juguetes":
                     $categoria=10;
                     break;
-                case "computadores":
+                case "libros":
                     $categoria=11;
                     break;
-                case "joyas":
+                case "licores":
                     $categoria=12;
                     break;
-                case "casas":
+                case "musica":
                     $categoria=13;
                     break;
-                case "juguetes":
+                case "vehiculos":
                     $categoria=14;
                     break;
-                case "licores":
+                case "videojuegos":
                     $categoria=15;
                     break;
                 case "otras":
