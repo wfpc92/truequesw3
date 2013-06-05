@@ -168,17 +168,17 @@ class ProductoModel extends CI_Model {
         }
     }
 
-    function busquedaAvanzada($categoria, $desde, $hasta, $ciudad) {
+    function busquedaAvanzada($categoria, $desde, $hasta, $ciudad,$limit,$start) {
 
         $data = array();
+        $this->db->limit($limit, $start);
         $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
-        $this->db->join('cuidad', 'usuarios.id_ciudad=cuidad.id');
         $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
-
+        
         if ($categoria != "") {
-            $this->db->where('categoria', $categoria);
+            $this->db->where('producto.categoria_id',$categoria);
         }
         if ($desde != "") {
             $this->db->where('fechaingreso >=', $desde);
@@ -187,11 +187,10 @@ class ProductoModel extends CI_Model {
             $this->db->where('fechaingreso <=', $hasta);
         }
         if ($ciudad != "") {
-            $this->db->where('cuidad.nombre', $ciudad);
+            $this->db->where('usuarios.id_ciudad',$ciudad);
         }
         $consulta = $this->db->get();
         if ($consulta->num_rows() > 0) {
-
             $data = $consulta;
 
             foreach ($data->result() as $producto):
@@ -203,15 +202,14 @@ class ProductoModel extends CI_Model {
     }
     function numBusquedaAvanzada($categoria, $desde, $hasta, $ciudad) {
 
-        $data = array();
+         $data = array();
         $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
-        $this->db->join('cuidad', 'usuarios.id_ciudad=cuidad.id');
         $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
-
+        
         if ($categoria != "") {
-            $this->db->where('categoria', $categoria);
+            $this->db->where('producto.categoria_id',$categoria);
         }
         if ($desde != "") {
             $this->db->where('fechaingreso >=', $desde);
@@ -220,19 +218,10 @@ class ProductoModel extends CI_Model {
             $this->db->where('fechaingreso <=', $hasta);
         }
         if ($ciudad != "") {
-            $this->db->where('cuidad.nombre', $ciudad);
+            $this->db->where('usuarios.id_ciudad',$ciudad);
         }
         $consulta = $this->db->get();
-        if ($consulta->num_rows() > 0) {
-
-            $data = $consulta;
-
-            foreach ($data->result() as $producto):
-                echo '';
-            endforeach;
-        }
-        $consulta->free_result();
-        return $data->num_rows();
+        return $consulta->num_rows();
     }
     
     public function agregarProducto($data){

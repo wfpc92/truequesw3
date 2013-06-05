@@ -9,6 +9,7 @@ class Productos extends CI_Controller {
         parent::__construct();
         $this->load->model('productoModel');
         $this->load->library('pagination');
+        $this->load->library('image_lib');
     }
 
     public function index() {
@@ -114,7 +115,7 @@ class Productos extends CI_Controller {
         $this->load->library('pagination');
 
         $opciones = array();
-        $opciones['per_page'] = 2;
+        $opciones['per_page'] = 5;
         $opciones['base_url'] = base_url() . 'productos/buscarProducto';
         $opciones['total_rows'] = $cantidad;
         $opciones['uri_segment'] = 3;
@@ -171,14 +172,40 @@ class Productos extends CI_Controller {
             $data['sesion'] = 'sesionLogin';
             $data['menu'] = 'menuEstandar';
         }
+        
+        if(isset($_POST['categorias'])){
+            $categoria = $_POST['categorias'];
+            $desde = $_POST['fechaIngreso'];
+            $hasta = $_POST['hasta'];
+            $ciudad = $_POST['ciudades'];
+            $this->session->set_userdata('categorias',$categoria);
+            $this->session->set_userdata('fechaIngreso',$desde);
+            $this->session->set_userdata('hasta',$hasta);
+            $this->session->set_userdata('ciudades',$ciudad);
+        }
+        else{
+            $categoria = $this->session->userdata('categorias');
+            $desde =$this->session->userdata('fechaIngreso');
+            $hasta = $this->session->userdata('hasta');
+            $ciudad = $this->session->userdata('ciudades');
+        }
+        //PAGINACION
+        $cantidad = $this->productoModel->numBusquedaAvanzada($categoria, $desde, $hasta, $ciudad);
+        $this->load->library('pagination');
+        $opciones = array();
+        $opciones['per_page'] = 5;
+        $opciones['base_url'] = base_url() . 'productos/busquedaAvanzadaProducto/';
+        $opciones['total_rows'] = $cantidad;
+        $opciones['uri_segment'] = 3;
+        $opciones['num_links'] = 3;
+        $opciones['first_link'] = 'Primero';
+        $opciones['last_link'] = 'Ultimo';
 
-
-        $categoria = $_POST['categorias'];
-        $desde = $_POST['fechaIngreso'];
-        $hasta = $_POST['hasta'];
-        $ciudad = $_POST['ciudades'];
-        $productos = $this->productoModel->busquedaAvanzada($categoria, $desde, $hasta, $ciudad);
+        $this->pagination->initialize($opciones);
+        $productos = $this->productoModel->busquedaAvanzada($categoria, $desde, $hasta, $ciudad, $opciones['per_page'], $this->uri->segment(3));
         $data['productos'] = $productos;
+        $data['paginacion']= $this->pagination->create_links();
+        //FIN_PAGINACION
         
         $this->load->view('plantilla', $data);
     }
