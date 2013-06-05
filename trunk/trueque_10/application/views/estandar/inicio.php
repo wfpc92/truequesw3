@@ -12,6 +12,7 @@
                         <li style="width: 50%; float: left;">
                             <?php
                             $image_properties = array(
+                                'id'=> 'imagenProducto',
                                 'src' => $producto->imagen,
                                 'alt' => $producto->p_nombre,
                                 'class' => 'resize',
