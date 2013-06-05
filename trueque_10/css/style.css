@@ -179,6 +179,9 @@ a:hover {
 #menu li {
 	float: left;
 	border-right: 1px solid #1A1A18; 
+        height: 38px;
+        margin-top: 23px;
+        border-radius: 30px 30px 30px 30px; 
 }
 
 #menu li:hover{
@@ -188,7 +191,8 @@ a:hover {
 #menu a {
 	display: block;
 	height: 30px;
-	padding: 25px 40px 0px 40px;
+	/* padding: 25px 40px 0px 40px;*/
+        padding: 12px 40px 0px 40px;
 	text-decoration: none;
 	text-align: center;
 	text-transform: uppercase;
@@ -197,6 +201,7 @@ a:hover {
 	font-weight: bold;
 	color: #FFFFFF;
 	border: none;
+        
 }
 
 #menu a:hover{
@@ -306,6 +311,11 @@ a:hover {
 	font-size: 10px;
 	color: #333333;
 	
+}
+
+hr.separador{
+    border: none;
+    border-bottom: 1px solid #E3E5E3;
 }
 
 /*Paginacion*/
