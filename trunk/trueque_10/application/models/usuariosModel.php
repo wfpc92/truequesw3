@@ -62,6 +62,30 @@ class usuariosModel extends CI_Model {
             return FALSE;
         }
     }
+    
+    public function login_reactivacion($email, $contrasena){
+        $where = array(
+            'email' => $email,
+            'contrasena' => $contrasena
+        );
+        $this->db->select()->from('usuarios')->where($where);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->first_row('array');
+        } else {
+            return FALSE;
+        }
+    }
+    
+    public function obtenerContrasena($receptor){
+        $this->db->select('contrasena')->from('usuarios')->where('email',$receptor);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->first_row('array');
+        } else {
+            return FALSE;
+        }
+    }
 
     function getUsuario($id) {
         $data = array();
