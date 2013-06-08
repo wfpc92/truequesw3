@@ -51,7 +51,8 @@ a:hover {
 
 #wrapper{
 	width: 980px;
-	height: 60px;
+	/*height: 60px;*/
+        height: 39px;
 	margin: 0 auto;
 	padding: 0;
 	background: #000000;
@@ -93,6 +94,7 @@ a:hover {
 	padding: 0px 0px 0px 60px;
 	color: #000000;
 	background: #000000;
+        
 }
 
 #logo h1, #logo p {
@@ -187,9 +189,9 @@ a:hover {
 #menu li {
 	float: left;
 	border-right: 1px solid #1A1A18; 
-        height: 38px;
-        margin-top: 23px;
-        border-radius: 30px 30px 30px 30px; 
+        height: 40px;
+        margin-top: -1px;
+        border-radius: 15px 15px 0px 0px; 
 }
 
 #menu li:hover{
@@ -199,8 +201,9 @@ a:hover {
 #menu a {
 	display: block;
 	height: 30px;
-	/* padding: 25px 40px 0px 40px;*/
-        padding: 12px 40px 0px 40px;
+	/* padding: 25px 40px 0px 40px;
+        padding: 12px 40px 0px 40px;*/
+         padding: 8px 40px 0px 40px;
 	text-decoration: none;
 	text-align: center;
 	text-transform: uppercase;
