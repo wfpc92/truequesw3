@@ -1,7 +1,7 @@
 <ul>
 			<li>
 				<h2>Informacion</h2>
-				<p>Aqui va un pequeño mensaje de bienvenida para los usuarios</p>
+				<p>En esta seccion se puede ver informacion acerca de los productos que han sido publicados y pueden ser intercambiados.</p>
 			</li>
 			<li>
 				<h2>Categorias</h2>
