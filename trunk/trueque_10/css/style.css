@@ -200,10 +200,18 @@ a:hover {
         border-radius: 15px 15px 0px 0px; 
 }
 
+#menu ul li.activo {
+	background-color: white;
+
+}
 #menu li:hover{
     background: white; 
     color: black;
 }
+#menu ul li.activo a:link, #menu ul li.activo a:visited {
+	color: #FFF;
+} 
+
 #menu a {
 	display: block;
 	height: 30px;
