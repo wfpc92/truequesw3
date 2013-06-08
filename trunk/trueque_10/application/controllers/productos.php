@@ -13,6 +13,8 @@ class Productos extends CI_Controller {
     }
 
     public function index() {
+        $data['titulo'] = "Inicio";
+	$data['activo'] = 1;
         $data['contenido'] = 'estandar/inicio';
         $data['title'] = 'Trueque Inicio';
         $data['sidebar'] = 'sidebarCategorias';
