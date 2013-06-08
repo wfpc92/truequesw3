@@ -1,5 +1,4 @@
 <ul>
-				<li><a href="#" class="more"> Inicio</a><br/><br/>
 			<li>
 				<h2>Informacion</h2>
 				<p>Aqui podras configurar la aplicacion</p>
