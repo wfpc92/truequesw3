@@ -71,7 +71,8 @@ a:hover {
 	height: 200px;
 	margin: 0px auto;
 	padding: 0px 0px 0px 0px;
-	background: BLACK;
+	background: url(../images/ensayo.jpg) no-repeat;
+        background-size: 100%;
 }
 #header a {
 	margin: 0;
@@ -93,7 +94,7 @@ a:hover {
 	margin: 0;
 	padding: 0px 0px 0px 60px;
 	color: #000000;
-	background: #000000;
+	/*background: #000000;*/
         
 }
 
@@ -120,11 +121,11 @@ a:hover {
 /* Search */
 
 #search {
-	width: 50%;
+	width: 40%;
 }
 #sesion {
 	float: right;
-         background-color: black;
+        background-color: black;
         border: 1px solid #888888;
         border-radius: 10px 10px 10px 10px;
         box-shadow: 0 0 10px #888888;
@@ -141,9 +142,14 @@ a:hover {
 	color: #FFFFFF;
 }
 #search form {
-	height: 41px;
-	margin: 0;
-	padding: 17px 0 0 20px;
+	margin-left: 4px;
+        height : 0%;
+        background-color: black;
+        border: 1px solid #888888;
+        border-radius: 10px 10px 10px 10px;
+        box-shadow: 0 0 10px #888888;
+        padding: 10px;
+
 }
 
 #search fieldset {
