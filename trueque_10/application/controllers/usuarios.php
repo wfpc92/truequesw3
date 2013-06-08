@@ -119,7 +119,7 @@ class Usuarios extends CI_Controller {
     public function enviarContrasena() {
         $data['sesion'] = 'sesionLogin';
         $data['menu'] = 'menuEstandar';
-        $data['contenido'] = 'estandar/email';
+        $data['contenido'] = 'estandar/mensajeCorreoEnviado';
         $data['title'] = 'Trueque Registrar';
         $data['sidebar'] = 'sidebarCategorias';
         if ($_POST) {
@@ -132,25 +132,52 @@ class Usuarios extends CI_Controller {
             $this->load->library('form_validation');
             $this->form_validation->set_rules($config);
             $this->form_validation->set_message('required', 'El campo %s es requerido');
+            
+            ////////////////////////
+            
+            $receptor = $_POST['email'];
+            $contrasena = $this->usuariosModel->obtenerContrasena($receptor);
+            
+            if ($contrasena != FALSE){
+                $this->email->from('');
+                $this->email->to($receptor);
+                $this->email->subject('Recuperacion de Contrasena de trueque.com');
+                $link_recuperacion = 'http://localhost/trueque_10/usuarios/cambiar_contrasena/'.str_replace('@', '_', $receptor).'-'.$contrasena['contrasena'];
+                $mensaje = 'Dale clic a este enlace para recuperar tu contraseña: '.$link_recuperacion;
+                $this->email->message($mensaje);
+                $this->email->send();           
+                $data['mensaje'] = 'Se env&iacute;o a su correo '.$receptor .' un link con el que podr&aacute; ingresar directamente a su cuenta.'.$this->email->print_debugger();
+            }
+            else{
+                $data['mensaje'] = 'No existe la cuenta '.$receptor.' en el Sistema';                
+            }
+            
+            
+            //////////////////////
             if ($this->form_validation->run() == FALSE) {
                 $data['errores'] = validation_errors();
             }
-            else{
-                echo "sin errores";
-                ini_set('port',25);
-                $this->load->library('email');
-                $this->email->from('williamruano@unicauca.edu.co', 'Administrador Trueque');
-                $this->email->to($_POST['email']);
-                $this->email->cc('otro@otro-ejemplo.com');
-                $this->email->bcc('ellos@su-ejemplo.com');
-                $this->email->subject('Email de Prueba');
-                $this->email->message('Probando la Clase Email.');
-                $this->email->send();
-                echo $this->email->print_debugger();
-            }
-           //$this->load->view('plantilla', $data); 
+            
+            $this->load->view('plantilla', $data); 
         }
     }
+    
+    function cambiar_contrasena($variable){
+        list($email, $contrasena) = explode('-', $variable);
+        $email = str_replace('_', '@', $email);
+        $usuarioActual = $this->usuariosModel->login_reactivacion($email, $contrasena);
+        if (!$usuarioActual) {
+            redirect(base_url());
+        } else {
+            $this->session->set_userdata('usuario_id', $usuarioActual['usuario_id']);
+            $this->session->set_userdata('usuario_nivel', $usuarioActual['nivel']);
+            $this->session->set_userdata('nombre', $usuarioActual['nombre']);
+            $this->session->set_userdata('avatar', $usuarioActual['avatar']);
+            redirect(base_url());
+        }
+    }
+    
+    
     function existe($str) {
             $this->load->model('usuariosModel');
             $emails=  $this->usuariosModel->getEmails($str);
