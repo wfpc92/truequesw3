@@ -11,6 +11,8 @@ class MiCuenta extends CI_Controller {
     }
 
     public function index() {
+         $data['titulo'] = "miCuenta";
+	$data['activo'] = 2;
         $this->load->model('productoModel');
         $this->load->library('pagination');
         $usuarioActual = $this->session->all_userdata();
