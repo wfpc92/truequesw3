@@ -73,7 +73,7 @@
 <body>
 <div id="header" style="padding-top: 10px;">
 	<div id="logo" >
-            <img src="<?php echo base_url(); ?>images/logo.jpg" width=50% height=80% border=0 alt="Logo"></img>
+            <img src="<?php echo base_url(); ?>images/logo_trans.png" width=50% height=80% border=0 alt="Logo"></img>
 	</div>	
 	<div id="sesion" style="margin-top: 50px; margin-right: 50px;">
 						<?php 
@@ -85,7 +85,7 @@
             <?php echo form_open('productos/buscarProducto') ?>
             <?php echo form_input('buscar',''); ?>  
             <?php echo form_submit('btnBuscar', 'Buscar'); ?> 
-            <?php echo anchor('productos/busquedaAvanzada', 'Busqueda avanzada') ?> 
+            <?php echo anchor('productos/busquedaAvanzada', 'Busqueda avanzada')?> 
             <?php echo form_close(); ?>                             
      </div>
 </div>
