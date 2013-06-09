@@ -148,6 +148,7 @@ class MiCuenta extends CI_Controller {
             $data['usuarioActual'] = $usuarioActual;
             $data['sidebar'] = 'sidebarMiCuenta';
             $data['categoria'] = $this->productoModel->cargarCategoria();
+            $data['title'] ='Publicar Producto';
             if ($_POST) {
                 $config = array(
                     array(
@@ -216,6 +217,7 @@ class MiCuenta extends CI_Controller {
             $data['sidebar'] = 'sidebarMiCuenta';
             $data['usuarioActual']=$usuarioActual;
             $data['producto']=$producto;
+            $data['title'] = 'Publicar Producto';
             if (isset($_POST['producto_id'])) {
                 $data['contenido'] = 'usuario/editarImagenProducto';
                 $data['producto']['producto_id']=$_POST['producto_id'];
