@@ -12,7 +12,7 @@ class Permutas extends CI_Controller {
 
     public function index() {
         $data['contenido'] = 'usuario/propuestasRecibidas';
-        $data['title'] = 'Ver Permutas';
+        $data['title'] = 'Propuestas Recibidas';
         $data['sidebar'] = 'sidebarMiCuenta';
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre'])) {
@@ -57,7 +57,7 @@ class Permutas extends CI_Controller {
     }
     function permutasEnviadas(){
         $data['contenido'] = 'usuario/propuestasEnviadas';
-        $data['title'] = 'Ver Permutas Enviadas';
+        $data['title'] = 'Propuestas Enviadas';
         $data['sidebar'] = 'sidebarMiCuenta';
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre'])) {
