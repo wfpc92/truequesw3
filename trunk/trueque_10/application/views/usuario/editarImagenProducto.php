@@ -23,6 +23,7 @@
         </div>
         <div>
         <?php echo form_open_multipart('miCuenta/guardarImagen'); ?>
+        <?php echo form_hidden('producto[imagen]', $producto['imagen'], 'size ="40" id =""'); ?>
         <?php echo form_hidden('producto[nombre]', $producto['nombre'], 'size ="40" id =""'); ?>
 <?php echo form_hidden('producto[descripcion]', $producto['descripcion'], 'size ="40" id =""'); ?>
 <?php echo form_hidden('producto[fechaingreso]', $producto['fechaingreso'], 'size ="40" id =""'); ?>

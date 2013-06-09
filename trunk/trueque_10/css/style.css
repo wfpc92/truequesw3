@@ -162,7 +162,7 @@ a:hover {
 	width: 220px;
 	padding: 8px 5px 6px 5px;
 	border: none;
-	background: #FFFFFF url(images/img02.jpg) no-repeat left top;
+	background: url(../images/img02.jpg) no-repeat left top;
 	text-transform: lowercase;
 	font: normal 11px Arial, Helvetica, sans-serif;
 	color: #000000;

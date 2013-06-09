@@ -119,8 +119,5 @@
         <?php endif; ?>
     </ul>
 </div>
-
-
-
-<p><a href="#" class="more"><</a><a href="#" class="more">></a></p>
+<p class =" paginacion"><?php echo $paginacion; ?></ p>
 <div style="clear: both;">&nbsp;</div>

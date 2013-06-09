@@ -3,7 +3,6 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-//
 class Administrar extends CI_Controller {
 
     function _construct() {
@@ -93,5 +92,126 @@ class Administrar extends CI_Controller {
         $this->usuariosModel->borrarUsuario($id);
         redirect('administrar');
     }
+    public function  estadisticasTrueque(){
+        $usuarioActual = $this->session->all_userdata();
+        if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 0) {
+            $this->load->model('permutaModel');
+            $data['title'] = 'Estadistica Trueques';
+            $data['sesion'] = 'sesionUsuario';
+            $data['contenido'] = 'administrador/estadisticasTrueque';
+            $data['usuarioActual'] = $usuarioActual;
+            $data['menu'] = 'menuAdministrador';
+            $data['sidebar'] = 'sidebarAdministrar';
+            $this->form_validation->set_rules('anio', 'anio',
+            'trim|required|xss_clean|numeric');
+            $this->form_validation->set_message('required', 'El campo %s es requerido');
+            $this->form_validation->set_message('numeric', 'El campo %s debe contener unicamente numeros');
+            
+         if ($this->form_validation->run() == TRUE) {
+            $anio=$_POST['anio'];
+            $reporte=$this->permutaModel->crearReportes($anio);
+            $series_data[]=array('name'=> $anio,'data'=>$reporte);
+            $data['reporte']= json_encode($series_data);
+         }
+         else{
+             $data['contenido'] = 'administrador/seleccionarAnio';
+        }
+        $this->load->view('plantilla', $data);
+        }else {
+            redirect(base_url());
+        }
+ }
+    public function seleccionarAnio(){
+        $usuarioActual = $this->session->all_userdata();
+        if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 0) {
+            $this->load->model('permutaModel');
+            $data['title'] = 'Estadistica Trueques';
+            $data['sesion'] = 'sesionUsuario';
+            $data['contenido'] = 'administrador/seleccionarAnio';
+            $data['usuarioActual'] = $usuarioActual;
+            $data['menu'] = 'menuAdministrador';
+            $data['sidebar'] = 'sidebarAdministrar';
+            $this->load->view('plantilla', $data);
+        } else {
+            redirect(base_url());
+        }
+    }
 
+public function  estadisticasPublicaciones(){
+        $usuarioActual = $this->session->all_userdata();
+        if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 0) {
+            $this->load->model('permutaModel');
+            $data['title'] = 'Estadistica Trueques';
+            $data['sesion'] = 'sesionUsuario';
+            $data['contenido'] = 'administrador/estadisticasPublicaciones';
+            $data['usuarioActual'] = $usuarioActual;
+            $data['menu'] = 'menuAdministrador';
+            $data['sidebar'] = 'sidebarAdministrar';
+            $this->form_validation->set_rules('anio', 'anio',
+            'trim|required|xss_clean|numeric');
+            $this->form_validation->set_message('required', 'El campo %s es requerido');
+            $this->form_validation->set_message('numeric', 'El campo %s debe contener unicamente numeros');
+            
+         if ($this->form_validation->run() == TRUE) {
+            $anio=$_POST['anio'];
+            $reporte=$this->permutaModel->crearReportesPublicaciones($anio);
+            $series_data[]=array('name'=> $anio,'data'=>$reporte);
+            $data['reporte']= json_encode($series_data);
+         }
+         else{
+             $data['contenido'] = 'administrador/seleccionarAnioP';
+        }
+        $this->load->view('plantilla', $data);
+        }else {
+            redirect(base_url());
+        }
+ }
+    public function seleccionarAnioP(){
+        $usuarioActual = $this->session->all_userdata();
+        if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 0) {
+            $this->load->model('permutaModel');
+            $data['title'] = 'Estadistica Trueques';
+            $data['sesion'] = 'sesionUsuario';
+            $data['contenido'] = 'administrador/seleccionarAnioP';
+            $data['usuarioActual'] = $usuarioActual;
+            $data['menu'] = 'menuAdministrador';
+            $data['sidebar'] = 'sidebarAdministrar';
+            $this->load->view('plantilla', $data);
+        } else {
+            redirect(base_url());
+        }
+    }
+    public function todosTrueques(){
+        $this->load->model('permutaModel');
+        $data['contenido'] = 'administrador/todosTrueques';
+        $data['title'] = 'Ver Permutas';
+        $data['sidebar'] = 'sidebarAdministrar';
+        $usuarioActual = $this->session->all_userdata();
+        if (isset($usuarioActual['nombre'])) {
+            $data['sesion'] = 'sesionUsuario';
+            $data['menu'] = 'menuUsuario';
+            $data['usuarioActual'] = $usuarioActual;
+            if ($usuarioActual['usuario_nivel'] == 0) {
+                $data['menu'] = 'menuAdministrador';
+            }
+        } else {
+            $data['sesion'] = 'sesionLogin';
+            $data['menu'] = 'menuEstandar';
+        }
+        $this->load->library('pagination');
+        $opciones = array();
+        $opciones['per_page'] = 5;
+        $opciones['base_url'] = base_url().'administrar/todosTrueques';
+        $opciones['total_rows'] =  $this->permutaModel->getNumTodasPermutas();
+        $opciones['uri_segment'] = 3;
+        $opciones['num_links'] = 3;
+        $opciones['first_link'] = 'Primero';
+        $opciones['last_link'] = 'Ultimo';
+        $this->pagination->initialize($opciones);
+        $permutas= $this->permutaModel->getTodasPermutas($opciones['per_page'], $this->uri->segment(3));
+        $data['permutas'] = $permutas;
+        $data['paginacion']= $this->pagination->create_links();
+        //FIN_PAGINACION...
+        $this->load->view('plantilla', $data);
+}
 }

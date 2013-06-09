@@ -3,7 +3,6 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-//
 class Permutas extends CI_Controller {
 
     function Permutas() {
@@ -28,7 +27,20 @@ class Permutas extends CI_Controller {
             $data['menu'] = 'menuEstandar';
         }
         $current= $usuarioActual['usuario_id'];
-        $data['permutas'] = $this->permutaModel->getPermutas($current);
+        $this->load->library('pagination');
+        $opciones = array();
+        $opciones['per_page'] = 5;
+        $opciones['base_url'] = base_url().'permutas/index';
+        $opciones['total_rows'] = $this->permutaModel->getNumPermutas($current);
+        $opciones['uri_segment'] = 3;
+        $opciones['num_links'] = 3;
+        $opciones['first_link'] = 'Primero';
+        $opciones['last_link'] = 'Ultimo';
+        $this->pagination->initialize($opciones);
+        $permutas= $this->permutaModel->getPermutas($current,$opciones['per_page'], $this->uri->segment(3));
+        $data['permutas'] = $permutas;
+        $data['paginacion']= $this->pagination->create_links();
+        //FIN_PAGINACION...
         $this->load->view('plantilla', $data);
     }
     
@@ -60,7 +72,20 @@ class Permutas extends CI_Controller {
             $data['menu'] = 'menuEstandar';
         }
         $current= $usuarioActual['usuario_id'];
-        $data['permutas'] = $this->permutaModel->getPermutasEnviadas($current);
+        $this->load->library('pagination');
+        $opciones = array();
+        $opciones['per_page'] = 5;
+        $opciones['base_url'] = base_url().'permutas/permutasEnviadas';
+        $opciones['total_rows'] = $this->permutaModel->getNumPermutasEnviadas($current);
+        $opciones['uri_segment'] = 3;
+        $opciones['num_links'] = 3;
+        $opciones['first_link'] = 'Primero';
+        $opciones['last_link'] = 'Ultimo';
+        $this->pagination->initialize($opciones);
+        $permutas= $this->permutaModel->getPermutasEnviadas($current,$opciones['per_page'], $this->uri->segment(3));
+        $data['permutas'] = $permutas;
+        $data['paginacion']= $this->pagination->create_links();
+        //FIN_PAGINACION...
         $this->load->view('plantilla', $data);
     }
 }

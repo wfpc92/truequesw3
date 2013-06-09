@@ -48,12 +48,12 @@ $autoload['packages'] = array();
 | or in your application/libraries folder.
 |
 | Prototype:
-|
+|pense que de pronto si lo habia subido :/
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database', 'session','email');
-//
+$autoload['libraries'] = array('database', 'session','form_validation','email');
+
 
 /*
 | -------------------------------------------------------------------

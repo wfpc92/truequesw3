@@ -7,6 +7,9 @@
 				<h2>Administrar</h2>
 				<ul>
 					<li><?php echo anchor('administrar','Usuarios')?></li>
-				</ul>
+                                        <li><?php echo anchor('administrar/seleccionarAnio','Estadistica Trueques')?></li>
+                                        <li><?php echo anchor('administrar/seleccionarAnioP','Estadistica Publicaciones')?></li>
+                                        <li><?php echo anchor('administrar/todosTrueques','Trueques Realizados')?></li>
+                                </ul>
 			</li>
 		</ul>

@@ -3,7 +3,6 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-//
 class MiCuenta extends CI_Controller {
 
     function _construct() {
@@ -153,7 +152,7 @@ class MiCuenta extends CI_Controller {
                     array(
                         'field' => 'nombre',
                         'label' => 'nombre',
-                        'rules' => 'trim|required'
+                        'rules' => 'trim|required|xss_clean|alpha_numeric|callback_seguraSQL'
                     ),
                     array(
                         'field' => 'categoria',
@@ -163,7 +162,7 @@ class MiCuenta extends CI_Controller {
                     array(
                         'field' => 'descripcion',
                         'label' => 'descripcion',
-                        'rules' => 'trim|required'
+                        'rules' => 'trim|required|xss_clean|alpha_dash|callback_seguraSQL'
                     )
                 );
                 $this->load->library('form_validation');
@@ -200,6 +199,8 @@ class MiCuenta extends CI_Controller {
     }
 
     function guardarImagen() {
+        $usuarioActual = $this->session->all_userdata();
+        if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1){
         $config['upload_path'] = './images/';
         $config['allowed_types'] = 'gif|jpg|png';
         $config['max_size'] = '100';
@@ -208,11 +209,18 @@ class MiCuenta extends CI_Controller {
         $producto = $_POST['producto'];
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload()) {
-            $error = array('error' => $this->upload->display_errors());
-            if ($_POST['producto_id']) {
-                $this->load->view('usuario/editarImagenProducto', $error);
+            $data['error'] = array('error' => $this->upload->display_errors());
+            $data['sesion'] = 'sesionUsuario';
+            $data['menu'] = 'menuUsuario';
+            $data['sidebar'] = 'sidebarMiCuenta';
+            $data['usuarioActual']=$usuarioActual;
+            $data['producto']=$producto;
+            if (isset($_POST['producto_id'])) {
+                $data['contenido'] = 'usuario/editarImagenProducto';
+                $data['producto']['producto_id']=$_POST['producto_id'];
+                $this->load->view('plantilla', $data);
             } else {
-                $this->load->view('usuario/publicarImagen', $error);
+                $data['contenido'] = 'usuario/publicarImagen';
             }
         } else {
             $this->load->model('productoModel');
@@ -226,6 +234,7 @@ class MiCuenta extends CI_Controller {
             }
             redirect('miCuenta');
         }
+        }else{redirect(base_url());}
     }
 
     function seleccionar($str) {
@@ -236,7 +245,6 @@ class MiCuenta extends CI_Controller {
             return TRUE;
         }
     }
-
     function editarProducto($id) {
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
@@ -319,12 +327,12 @@ class MiCuenta extends CI_Controller {
                 array(
                     'field' => 'usuario[nombre]',
                     'label' => 'Nombre',
-                    'rules' => 'trim|required'
+                    'rules' => 'trim|required|xss_clean|alpha_dash|callback_seguraSQL'
                 ),
                 array(
                     'field' => 'usuario[apellido]',
                     'label' => 'Apellido',
-                    'rules' => 'trim|required'
+                    'rules' => 'trim|required|xss_clean|alpha_dash|callback_seguraSQL'
                 )
             );
             $this->form_validation->set_rules($config);
@@ -371,6 +379,19 @@ class MiCuenta extends CI_Controller {
         $this->load->model('productoModel');
         $this->productoModel->darDeBaja($id);
         redirect('miCuenta');
+    }
+    function seguraSQL($str){
+        if((stripos($str,"or")!==false)|| (stripos($str,"'")!==false)
+                || (stripos($str,";")!==false)||(stripos($str,"from")!==false)
+                ||(stripos($str,"drop")!==false)||(stripos($str,"delete")!==false)
+                ||(stripos($str,"alter")!==false)||(stripos($str,"where")!==false)||(stripos($str,"and")!==false)
+                ||(stripos($str,"<")!==false)||(stripos($str,">")!==false)
+                ||(stripos($str,"=")!==false)){
+            return FALSE;
+        }else{
+            $this->form_validation->set_message('seguraSQL', 'Su Ingreso esta considerado como un ataque a nuestra Base de datos');
+            return TRUE;
+        }
     }
 }
 ?>	

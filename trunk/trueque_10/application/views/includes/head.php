@@ -8,13 +8,14 @@
 <title>Trueque</title>
 <?php echo link_tag('css/style.css') ?>
 <title>$title</title>
-</head>
 <?php echo link_tag('css/stylesheet.css') ?>
-    <script src="<?php echo base_url(); ?>js/jquery-1.9.1.js"></script>
+    
+    <script type="text/javascript" src="<?php echo base_url();?>js/jquery.js"></script>
     <script src="<?php echo base_url(); ?>js/jquery-ui.js"></script>
     <script src="<?php echo base_url(); ?>js/busquedaAvanzada.js"></script>
-    <script src="<?php echo base_url(); ?>js/registrarUsuario.js"></script>
-
+    <script src="<?php echo base_url(); ?>js/registrarUsuario.js"></script>    
+    <script type="text/javascript" src="<?php echo base_url();?>js/highcharts/js/highcharts.js"></script>
+    
   <script language="javascript">
     $(document).ready(function(){ 
         $( "#fechaIngreso" ).datepicker({
@@ -30,8 +31,6 @@
            });    
     })    
   </script>
-    
-  
   <script>
       jQuery(function($){
         $.datepicker.regional['es'] = {
@@ -70,6 +69,7 @@
     })    
   </script>
     <link rel="stylesheet" href="/resources/demos/style.css" />
+</head>
 <body>
 <div id="header" style="padding-top: 10px;">
 	<div id="logo" >
