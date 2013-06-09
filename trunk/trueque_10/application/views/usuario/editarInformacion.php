@@ -1,16 +1,20 @@
-<html>
-    <head>
-        <title>Formulario de Subida</title>
-    </head>
-    <body>
-        <h1>Editar Informacion de la Cuenta</h1>
+
+<div id ="miga">
+    <?php echo anchor('productos/index','Inicio'); ?>
+     > 
+    <?php echo anchor('miCuenta','Mi Cuenta'); ?>
+     >
+     <?php echo "<strong>" . $title . "</strong>"; ?>
+</div>
+</br></br>       
+<h1>Editar Informacion de la Cuenta</h1></br>
         <?php
         if (isset($error)) {
             echo $error;
         }
         ?>
-        <h4>Tu Avatar: </h4>
-        <div>
+        <h4 id="editar">Tu Avatar: </h4>
+        <div id ="editar">
             <?php
             $image_properties = array(
                 'src' => $usuario->avatar,
@@ -23,7 +27,7 @@
             ?>
         <?php echo form_open_multipart('miCuenta/guardarInformacion'); ?>
         </div>
-        <div>
+        <div id ="editar">
             <input type="file" name="userfile" size="20" />
         </div>
         <table id="editar">
@@ -54,9 +58,8 @@
                 </td>
             </tr>
         </table>
-        <div>
+        <div id ="btnEditar">
             <input type="submit" value="Guardar Informacion" />
         </div>
 <?php echo form_close() ?>
-    </body>
-</html>
+  
