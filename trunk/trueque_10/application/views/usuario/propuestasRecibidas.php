@@ -3,7 +3,7 @@
      > 
     <?php echo anchor('miCuenta','Mi Cuenta'); ?>
      >
-     <strong><?php echo $title ?></strong>
+     <?php echo "<strong>" . $title . "</strong>";?>
 </div>
 </br></br>
 <h1><?php echo $title ?></h1>
