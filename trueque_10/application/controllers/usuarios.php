@@ -60,8 +60,8 @@ class Usuarios extends CI_Controller {
             $this->form_validation->set_rules($config);
             $this->form_validation->set_message('required', 'El campo %s es requerido');
             $this->form_validation->set_message('is_unique', 'Este email ya esta registrado');
-            $this->form_validation->set_message('matches', 'El campo %s No coinside');
-            $this->form_validation->set_message('valid_email', 'El campo %s No corresponde a un Email');
+            $this->form_validation->set_message('matches', 'El campo %s no coincide');
+            $this->form_validation->set_message('valid_email', 'El campo %s no corresponde a un Email');
 
             if ($this->form_validation->run() == FALSE) {
                 $data['errores'] = validation_errors();
