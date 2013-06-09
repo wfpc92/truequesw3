@@ -1,4 +1,13 @@
-<h2>Lista de Permutas</h2><br/>
+<div id ="miga">
+    <?php echo anchor('productos/index','Inicio'); ?>
+     > 
+    <?php echo anchor('miCuenta','Mi Cuenta'); ?>
+     >
+     <strong><?php echo $title ?></strong>
+</div>
+</br></br>
+<h1><?php echo $title ?></h1>
+</br>
 <p><a href="#" class="more"><</a><a href="#" class="more">></a></p>
 
 
