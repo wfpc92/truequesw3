@@ -1,4 +1,12 @@
-<h2>Lista de Permutas Enviadas</h2><br/>
+<div id ="miga">
+    <?php echo anchor('productos/index','Inicio'); ?>
+     > 
+    <?php echo anchor('miCuenta','Mi Cuenta'); ?>
+     >
+     <?php echo "<strong>" . $title . "</strong>";?>
+</div>
+</br></br>
+<h1><?php echo $title ?></h1><br/>
 <div id="main" >
     <br/><br/>
     <ul>
