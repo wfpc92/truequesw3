@@ -10,13 +10,13 @@ class MiCuenta extends CI_Controller {
     }
 
     public function index() {
-         $data['titulo'] = "miCuenta";
+        $data['titulo'] = "miCuenta";
 	$data['activo'] = 2;
         $this->load->model('productoModel');
         $this->load->library('pagination');
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
-            $data['title'] = 'Trueque Mi Cuenta';
+            $data['title'] = 'Mis Productos';
             $data['sesion'] = 'sesionUsuario';
             $data['menu'] = 'menuUsuario';
             $data['contenido'] = 'usuario/misProductos';
@@ -48,7 +48,7 @@ class MiCuenta extends CI_Controller {
         $this->load->library('pagination');
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
-            $data['title'] = 'Trueque Mi Cuenta';
+            $data['title'] = 'Productos Sin Publicar';
             $data['sesion'] = 'sesionUsuario';
             $data['menu'] = 'menuUsuario';
             $data['contenido'] = 'usuario/productosNoPublicados';
@@ -131,6 +131,7 @@ class MiCuenta extends CI_Controller {
             $data['usuarioActual'] = $usuarioActual;
             $data['sidebar'] = 'sidebarMiCuenta';
             $data['categoria'] = $this->productoModel->cargarCategoria();
+            $data['title'] = 'Publicar Producto';
             $this->load->view('plantilla', $data);
         } else {
             redirect(base_url());
