@@ -1,4 +1,14 @@
-<h2>Productos Destacados</h2><br/>
+<div id ="miga"> 
+    <?php 
+        if($title != 'Productos Destacados'){
+            echo anchor('productos/index','Inicio');
+            echo " > ";
+            echo "<strong>".$title."</strong><br/></br>";
+        }
+    ?>
+</div>
+</br>
+<h1><?php echo $title; ?></h1><br/>
 
 <div id="main" >
     <br/><br/>
