@@ -202,8 +202,8 @@ a:hover {
 
 #menu ul li.activo {
 	background-color: white;
-
 }
+
 #menu li:hover{
     background: white; 
     color: black;
@@ -211,6 +211,9 @@ a:hover {
 #menu ul li.activo a:link, #menu ul li.activo a:visited {
 	color: #FFF;
 } 
+#menu ul li.activo a:visited{
+    color : black;
+}
 
 #menu a {
 	display: block;
