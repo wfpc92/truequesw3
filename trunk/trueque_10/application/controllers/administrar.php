@@ -10,6 +10,8 @@ class Administrar extends CI_Controller {
     }
 
     public function index() {
+        $data['titulo'] = "administrar";
+	$data['activo'] = 2;
         $this->load->model('usuariosModel');
         $this->load->model('productoModel');
         $this->load->library('pagination');
