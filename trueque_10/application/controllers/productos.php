@@ -91,8 +91,12 @@ class Productos extends CI_Controller {
 
         static $criterio;
         if(isset($_POST['buscar'])){
-            $criterio = $this->input->post('buscar');
+            $this->form_validation->set_rules('buscar', 'Buscar',
+            'trim|xss_clean|callback_seguraSQL');
+            if ($this->form_validation->run() == TRUE) {
+             $criterio = $this->input->post('buscar');
              $this->session->set_userdata('buscar',$criterio);
+            }
         }
         else{
             $criterio=$this->session->userdata('buscar');
@@ -309,5 +313,20 @@ class Productos extends CI_Controller {
                     break;
             }
             return $categoria;
+    }
+    function seguraSQL($str){
+ 
+        if((stripos($str,"or")!==false)|| (stripos($str,"'")!==false)
+                || (stripos($str,";")!==false)||(stripos($str,"from")!==false)
+                ||(stripos($str,"drop")!==false)||(stripos($str,"delete")!==false)
+                ||(stripos($str,"alter")!==false)||(stripos($str,",")!==false)
+                ||(stripos($str,"where")!==false)||(stripos($str,"and")!==false)
+                ||(stripos($str,"<")!==false)||(stripos($str,">")!==false)
+                ||(stripos($str,"=")!==false)){
+            return FALSE;
+        }else{
+            $this->form_validation->set_message('seguraSQL', 'Su Ingreso esta considerado como un ataque a nuestra Base de datos');
+            return TRUE;
+        }
     }
 }

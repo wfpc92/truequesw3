@@ -23,7 +23,8 @@ class usuariosModel extends CI_Model {
             return FALSE;
         }
     }
-    function getEmails($email) {
+    function getEmails($str) {
+        $email=mysql_real_escape_string($str);
         $this->db->limit(1);
         $this->db->where('email',$email);
         $data = $this->db->get('usuarios');
@@ -49,7 +50,9 @@ class usuariosModel extends CI_Model {
         return $id;
     }
 
-    public function login($email, $contrasena) {
+    public function login($str1, $str2) {
+        $email=mysql_real_escape_string($str1);
+        $contrasena=mysql_real_escape_string($str2);
         $where = array(
             'email' => $email,
             'contrasena' => sha1($contrasena)

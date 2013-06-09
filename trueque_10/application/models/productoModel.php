@@ -57,12 +57,9 @@ class ProductoModel extends CI_Model {
         return $data;
     }
 
-    public function buscarProductos($criterio, $limit, $start) {
-        /* creamos una variable array vacia */
-        $data = array();
-        /* creamos una variable array vacia */
+    public function buscarProductos($str, $limit, $start=null) {
+        $criterio=mysql_real_escape_string($str);
         $this->load->helper('string');
-        /* se hace la consulta sobre la base de datos */
         $valores = explode(" ", $criterio);
         $query = "SELECT `producto_id`, `producto`.`nombre` AS p_nombre, `descripcion`, ";
         $query = $query." `categoria`.`nombre` AS categoria, `imagen`, `fechaingreso`, ";
@@ -78,9 +75,11 @@ class ProductoModel extends CI_Model {
             $query = $query.' OR `categoria`.`nombre` LIKE \'%'.$valor.'%\'';
         endforeach;
         $query=$query.")";
-        //echo $query;
+        $query=$query.' LIMIT '.$limit;
+        if($start!=null&&isset($start)&&$start!=""){
+            $query=$query.' OFFSET '.$start;
+        }
         $consulta =$this->db->query($query);
-        //= $this->db->get();
         foreach ($consulta->result() as $prod):
             echo '';
         endforeach;
@@ -93,9 +92,7 @@ class ProductoModel extends CI_Model {
 
     //PAGINACION 
     public function numBuscarProducto($criterio) {
-        /* creamos una variable array vacia */
         $this->load->helper('string');
-        /* se hace la consulta sobre la base de datos */
         $valores = explode(" ", $criterio);
         $query = "SELECT `producto_id`, `producto`.`nombre` AS p_nombre, `descripcion`, ";
         $query = $query." `categoria`.`nombre` AS categoria, `imagen`, `fechaingreso`, ";
@@ -110,9 +107,7 @@ class ProductoModel extends CI_Model {
             $query = $query.' OR `descripcion` LIKE \'%'.$valor.'%\''; 
             $query = $query.' OR `categoria`.`nombre` LIKE \'%'.$valor.'%\'';
         endforeach;
-        //echo $query;
         $consulta=$this->db->query($query);
-        //$consulta = $this->db->get();
         return $consulta->num_rows();
     }
 

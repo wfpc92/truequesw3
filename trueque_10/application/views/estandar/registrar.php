@@ -1,4 +1,3 @@
-<?php if(isset($errores)) print_r($errores); ?>
 <?php 
 	$atributos = array(
 		'id' => 'formRegistroUsuario'
@@ -16,6 +15,7 @@
                           'size'        => '40',
                           'value' => set_value('nombre')
                         );
+                        echo form_error('nombre','<b><p style="color:red;">','</p></b>');
 			echo form_input($data_form);?>
 		</td>
 	</tr>
@@ -28,6 +28,7 @@
                           'size'        => '40',
                           'value' => set_value('apellido')
                         );
+                        echo form_error('apellido','<b><p style="color:red;">','</p></b>');
 			echo form_input($data_form);?>
 		</td>
 	</tr>
@@ -39,7 +40,8 @@
                           'id'          => 'email',
                           'size'        => '40',
                           'value' => set_value('email')
-                        ); 
+                        );
+                        echo form_error('email','<b><p style="color:red;">','</p></b>');
 			echo form_input($data_form);?>
 		</td>
 	</tr>
@@ -50,7 +52,8 @@
                           'name'        => 'confirmaremail',
                           'id'          => 'confirmaremail',
                           'size'        => '40'
-                        ); 
+                        );
+                        echo form_error('confirmaremail','<b><p style="color:red;">','</p></b>');
 			echo form_input($data_form);?>
 		</td>
 	</tr>
@@ -62,6 +65,7 @@
                           'id'          => 'contrasena',
                           'size'        => '40'
                         );
+                        echo form_error('contrasena','<b><p style="color:red;">','</p></b>');
 			echo form_password($data_form);?></td>
 	</tr>
 	<tr>
@@ -72,6 +76,7 @@
                           'id'          => 'confirmarcontrasena',
                           'size'        => '40'
                         ); 
+                        echo form_error('confirmarcontrasena','<b><p style="color:red;">','</p></b>');
 			echo form_password($data_form);?></td>
 	</tr>	
 </table>

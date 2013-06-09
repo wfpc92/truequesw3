@@ -28,12 +28,12 @@ class Usuarios extends CI_Controller {
                 array(
                     'field' => 'nombre',
                     'label' => 'Nombre',
-                    'rules' => 'trim|required'
+                    'rules' => 'trim|required|callback_seguraSQL'
                 ),
                 array(
                     'field' => 'apellido',
                     'label' => 'Apellido',
-                    'rules' => 'trim|required'
+                    'rules' => 'trim|required|callback_seguraSQL'
                 ),
                 array(
                     'field' => 'email',
@@ -61,6 +61,7 @@ class Usuarios extends CI_Controller {
             $this->form_validation->set_message('required', 'El campo %s es requerido');
             $this->form_validation->set_message('is_unique', 'Este email ya esta registrado');
             $this->form_validation->set_message('matches', 'El campo %s No coinside');
+            $this->form_validation->set_message('valid_email', 'El campo %s No corresponde a un Email');
 
             if ($this->form_validation->run() == FALSE) {
                 $data['errores'] = validation_errors();
@@ -87,10 +88,16 @@ class Usuarios extends CI_Controller {
 
     public function login() {
         if ($_POST) {
-            $email = $this->input->post('email', true);
-            $contrasena = $this->input->post('contrasena', true);
-            $usuarioActual = $this->usuariosModel->login($email, $contrasena);
-            if (!$usuarioActual) {
+            $this->form_validation->set_rules('email', 'Buscar',
+            'trim|required|xss_clean|valid_email');
+             $this->form_validation->set_rules('contrasena', 'Buscar',
+            'trim|required|xss_clean');
+            if ($this->form_validation->run() == TRUE) {
+                $email = $this->input->post('email', true);
+                $contrasena = $this->input->post('contrasena', true);
+                $usuarioActual = $this->usuariosModel->login($email, $contrasena);  
+            }
+            if (isset($usuarioActual)&&!$usuarioActual) {
                 redirect(base_url());
             } else {
                 $this->session->set_userdata('usuario_id', $usuarioActual['usuario_id']);
@@ -186,5 +193,19 @@ class Usuarios extends CI_Controller {
             }
             $this->form_validation->set_message('No se encuentra el Email');
              return FALSE;
+    }
+    function seguraSQL($str){
+        if((stripos($str,"or")!==false)|| (stripos($str,"'")!==false)
+                || (stripos($str,";")!==false)||(stripos($str,"from")!==false)
+                ||(stripos($str,"drop")!==false)||(stripos($str,"delete")!==false)
+                ||(stripos($str,"alter")!==false)||(stripos($str,",")!==false)
+                ||(stripos($str,"where")!==false)||(stripos($str,"and")!==false)
+                ||(stripos($str,"<")!==false)||(stripos($str,">")!==false)
+                ||(stripos($str,"=")!==false)){
+            return FALSE;
+        }else{
+            $this->form_validation->set_message('seguraSQL', 'Su Ingreso esta considerado como un ataque a nuestra Base de datos');
+            return TRUE;
+        }
     }
 }
