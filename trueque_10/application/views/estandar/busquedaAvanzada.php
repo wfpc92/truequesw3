@@ -1,16 +1,9 @@
-      
-  
-
-      <table width="430"  align="center" >
-         <tr>
-             <td width="200" align="center">
-                  <br/><br/>
-                  <h2 >Busqueda Avanzada </h2>
-                  <br/><br/>
-              </td>
-         </tr>
-     </table>
-       
+<div id ="miga">
+       <?php echo anchor('productos/index','Inicio') ?> > <strong>Buqueda Avanzada</strong>
+</div>
+       <br/><br/>
+       <h1 align ="center">Busqueda Avanzada </h1>
+       <br/><br/>
        <div id="formulario">
             <?php 
                 echo form_open('productos/busquedaAvanzadaProducto');
