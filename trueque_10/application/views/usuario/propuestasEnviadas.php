@@ -6,7 +6,7 @@
      <?php echo "<strong>" . $title . "</strong>";?>
 </div>
 </br></br>
-<h1><?php echo $title ?></h1><br/>
+<h1><?php echo $title; ?></h1><br/>
 <div id="main" >
     <br/><br/>
     <ul>
