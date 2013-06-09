@@ -4,8 +4,17 @@
 	); 
 	echo form_open('usuarios/registrar', $atributos);
 ?>
+<div id ="miga">
+    <?php echo anchor('productos/index','Inicio'); ?>
+     > <strong>Registrate</strong>
+</div>
+</br></br>
+
 <h1> Registro</h1>
+</br>
+
 <table id="registrar">
+    <tr><td>(*)Datos Obligatorios</td></tr>
 	<tr>
 		<td><br/>* Nombre: </td>
 		<td> <?php 
@@ -78,10 +87,13 @@
                         ); 
                         echo form_error('confirmarcontrasena','<b><p style="color:red;">','</p></b>');
 			echo form_password($data_form);?></td>
-	</tr>	
+	</tr>
 </table>
-	 <tr>
-        <td><br/><input id = "registrarse" type="submit" value="Registrarme" /></td>
-        <button id = "cancelar" onclick="location.href='<?php echo base_url(); ?>'; return false;"> Cancelar</button>
-    </tr>
+<table id ="btnRegistro">
+        <tr>
+            <td><input  type="submit" value="Registrarme" /></td>
+            <td><button id ="btnCancelarRegistro" onclick="location.href='<?php echo base_url(); ?>'; return false;"> Cancelar</button></td>
+         </tr>
+</table>
+	 
 <?php echo form_close();?>
