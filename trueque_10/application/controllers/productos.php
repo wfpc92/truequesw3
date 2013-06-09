@@ -13,10 +13,10 @@ class Productos extends CI_Controller {
     }
 
     public function index() {
-        $data['titulo'] = "Inicio";
+        $data['titulo'] = "Productos Destacados";
 	$data['activo'] = 1;
         $data['contenido'] = 'estandar/inicio';
-        $data['title'] = 'Trueque Inicio';
+        $data['title'] = 'Productos Destacados';
         $data['sidebar'] = 'sidebarCategorias';
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre'])) {
@@ -101,7 +101,7 @@ class Productos extends CI_Controller {
         else{
             $criterio=$this->session->userdata('buscar');
         }
-        $data['title'] = 'Trueque Buscar Producto';
+        $data['title'] = $criterio;
         $data['sidebar'] = 'sidebarCategorias';
         $data['contenido'] = 'estandar/inicio';
         $usuarioActual = $this->session->all_userdata();
@@ -140,7 +140,7 @@ class Productos extends CI_Controller {
     }
 
     public function busquedaAvanzada() {
-        $data['title'] = 'Trueque Buscar Producto';
+        $data['title'] = 'Resultados Busqueda Avanzada';
         $data['sidebar'] = 'sidebarCategorias';
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre'])) {
@@ -163,7 +163,7 @@ class Productos extends CI_Controller {
 
     public function busquedaAvanzadaProducto() {
 
-        $data['title'] = 'Trueque Buscar Producto';
+        $data['title'] = 'Resultados Busqueda Avanzada';
         $data['sidebar'] = 'sidebarCategorias';
         $data['contenido'] = 'estandar/inicio';
         $usuarioActual = $this->session->all_userdata();
@@ -217,7 +217,6 @@ class Productos extends CI_Controller {
     }
     public function getProductosSide($categoria=null){
          $data['contenido'] = 'estandar/inicio';
-         $data['title'] = 'Trueque Inicio';
          $data['sidebar'] = 'sidebarCategorias';
          $usuarioActual = $this->session->all_userdata();
          if (isset($usuarioActual['nombre'])) {
@@ -233,13 +232,18 @@ class Productos extends CI_Controller {
         }
         //PAGINACION...
         if(isset($categoria) && $categoria!=null && $categoria!=$this->session->userdata('numProdPag')){
+            
+            $data['title'] = $categoria;
+            $this->session->set_userdata('nombreCategoria',$data['title']);
             $categoria=  $this->obtenerIdCategoria($categoria);
             $this->session->set_userdata('categoria',$categoria);
             $this->session->set_userdata('numProdPag',5);
         }
         else{
-            $categoria=$this->session->userdata('categoria');
+            $data['title'] = $this->session->userdata('nombreCategoria');
+            $categoria=$this->session->userdata('categoria'); 
         }
+        
         $opciones = array();
         $opciones['per_page'] = 5;
         $opciones['base_url'] = base_url(). 'productos/getProductosSide';
@@ -248,14 +252,13 @@ class Productos extends CI_Controller {
         $opciones['num_links'] = 3;
         $opciones['first_link'] = 'Primero';
         $opciones['last_link'] = 'Ultimo';
-
-
         $this->pagination->initialize($opciones);
         $productos = $this->productoModel->getCamaras($opciones['per_page'], $this->uri->segment(3),$categoria);
         $data['productos'] = $productos;
         $data['paginacion']= $this->pagination->create_links();
         //FIN_PAGINACION...
-
+        
+        
         $this->load->view('plantilla', $data);
 
   
@@ -263,52 +266,52 @@ class Productos extends CI_Controller {
     public function obtenerIdCategoria($nombre){
         $categoria="";
         switch ($nombre){
-                case "antiguedades":
+                case "Antiguedades":
                     $categoria=1;
                     break;
-                case "camaras":
+                case "Camaras":
                     $categoria=2;
                     break;
-                case "casas":
+                case "Casas":
                     $categoria=3;
                     break;
-                case "celulares":
+                case "Celulares":
                     $categoria=4;
                     break;
-                case "cine":
+                case "Cine":
                     $categoria=5;
                     break;
-                case "computadores":
+                case "Computadores":
                     $categoria=6;
                     break;
-                case "deportes":
+                case "Deportes":
                     $categoria=7;
                     break;
-                case "electrodomesticos":
+                case "Electrodomesticos":
                     $categoria=8;
                     break;
-                case "joyas":
+                case "Joyas":
                     $categoria=9;
                     break;
-                case "juguetes":
+                case "Juguetes":
                     $categoria=10;
                     break;
-                case "libros":
+                case "Libros":
                     $categoria=11;
                     break;
-                case "licores":
+                case "Licores":
                     $categoria=12;
                     break;
-                case "musica":
+                case "Musica":
                     $categoria=13;
                     break;
-                case "vehiculos":
+                case "Vehiculos":
                     $categoria=14;
                     break;
-                case "videojuegos":
+                case "Videojuegos":
                     $categoria=15;
                     break;
-                case "otras":
+                case "Otros":
                     $categoria=16;
                     break;
             }
