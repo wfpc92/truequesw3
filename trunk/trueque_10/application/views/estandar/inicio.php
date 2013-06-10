@@ -7,21 +7,18 @@
         }
     ?>
 </div>
-</br>
-<h1><?php echo $title; ?></h1><br/>
-
-<div id="main" >
+<br/>
+<h1>Todos los Productos</h1><br/>
+<h2 class =" paginacion" align="left"><?php echo $paginacion; ?></h2>
+<table id="main" border="0" cellspacing="0">
     <br/><br/>
-    <ul>
+    <tr>
         <?php
         if ($productos != FALSE and $productos->num_rows > 0):
             foreach ($productos->result() as $producto):
                 ?>
-                <li>
-                    <ul>
-                        <li class="li_imagen">
-                            <center>
-                           <?php
+                        <td>
+                            <?php
                             $image_properties = array(
                                 'id'=> 'imagenProducto',
                                 'src' => $producto->imagen,
@@ -29,9 +26,9 @@
                                 'class' => 'resize',
                             );
                             echo img($image_properties);
-                            ?></center>
-                        </li>
-                        <li class="li_contenido">
+                            ?>
+                        </td>
+                        <td class="descripcion">
                             <br/>
                             <h3><?php echo anchor('productos/verProducto/' . $producto->producto_id, $producto->p_nombre); ?>
                             </h3>
@@ -40,27 +37,28 @@
                             <b>Fecha Publicaci&oacute;n: </b><?php echo $producto->fechaingreso; ?><br/>
                             <b>Propietario: </b>
                         <u><?php echo anchor('productos/verUsuario/' . $producto->u_id, $producto->u_nombre . ' ' . $producto->u_apellido); ?></u>
-                </li>
+                </td>
                 <?php echo form_open('miCuenta/truequear')?>
                 <?php echo form_hidden('productoSolicita', $producto->producto_id, 'size ="40" id =""'); ?>
-                <li style="width: 5%; float: left; padding-left: 30%">
+                <td class="boton">
                     <input type="submit" value="Truequear" />
-                </li>
+                </td>
                 <?php echo form_close();?>
-            </ul>
-        </li>
-        <li>
-            <hr class="separador"/>
-        </li>
+                </tr>
+                <tr class="espacio">
+            <td  colspan="3">
+            <hr class="separador" />
+            </td>
+        </tr>
     <?php endforeach; ?>
 
 <?php else: ?>
-    <p>Ningun Producto En La Base de datos</p>
+    <h3>No se han Encontrado Productos</h3>
 <?php endif; ?>
-</ul>
-</div>
+
+</table>
 <!---PAGINACION-->
-<p class =" paginacion"><?php echo $paginacion; ?></ p>
+<h2 class =" paginacion"><?php echo $paginacion; ?></h2>
     <!---FIN_PAGINACION-->
 
 <div style="clear: both;">&nbsp;</div>

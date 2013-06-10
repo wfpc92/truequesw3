@@ -17,9 +17,12 @@
                 <b>Descripci&oacute;n: </b><?php echo $producto->descripcion; ?><br/><br/>
                 <b>Categor&iacute;a: </b><?php echo $producto->categoria; ?><br/><br/>
                 <b>Fecha Publicaci&oacute;n: </b><?php echo $producto->fechaingreso; ?><br/><br/>
-                <b>Propietario: </b><u><?php echo anchor('productos/verUsuario/' . $producto->u_id, $producto->u_nombre . ' ' . $producto->u_apellido); ?></u>
+                <b>Propietario: </b><?php echo anchor('productos/verUsuario/' . $producto->u_id, $producto->u_nombre . ' ' . $producto->u_apellido); ?>
             </p>
-            <button><a href="productos/index" class="more">Truequear</a></button>
+            <?php echo form_open('miCuenta/truequear')?>
+                <?php echo form_hidden('productoSolicita', $producto->producto_id, 'size ="40" id =""'); ?>
+                    <input type="submit" value="Truequear" />
+            <?php echo form_close();?>
         </div>
     <?php else: ?>
         <p>No Existe producto</p>

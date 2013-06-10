@@ -1,4 +1,3 @@
-<?php if(isset($errorSesion)){echo $errorSesion;}?>
 <form action="<?php echo base_url(); ?>usuarios/login/" method="post">
 							<table >
 							<tr><td align="right">E-mail: </td><td><input class="text" name="email" id='email' size="32" maxlength="64"/></td></tr>

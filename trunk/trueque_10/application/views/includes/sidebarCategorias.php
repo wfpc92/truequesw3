@@ -1,4 +1,4 @@
-<ul>
+<ul id="sidebar">
 			<li>
 				<h2>Informacion</h2>
 				<p>En esta seccion se puede ver informacion acerca de los productos que han sido publicados y pueden ser intercambiados.</p>

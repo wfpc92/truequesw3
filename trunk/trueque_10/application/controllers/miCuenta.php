@@ -11,6 +11,7 @@ class MiCuenta extends CI_Controller {
 
     public function index() {
         $data['titulo'] = "miCuenta";
+        $data['sideSelect']=0;
 	$data['activo'] = 2;
         $this->load->model('productoModel');
         $this->load->library('pagination');
@@ -44,6 +45,8 @@ class MiCuenta extends CI_Controller {
         }
     }
     public function productosNoPublicados() {
+        $data['activo'] = 2;
+        $data['sideSelect']=1;
         $this->load->model('productoModel');
         $this->load->library('pagination');
         $usuarioActual = $this->session->all_userdata();
@@ -76,6 +79,9 @@ class MiCuenta extends CI_Controller {
         }
     }
     public function truequear() {
+        $data['activo'] = 2;
+        $data['sideSelect']=0;
+        $data=$this->cargarEstandar();
         $this->load->model('productoModel');
         $this->load->library('pagination');
         $usuarioActual = $this->session->all_userdata();
@@ -109,8 +115,19 @@ class MiCuenta extends CI_Controller {
 
             $this->load->view('plantilla', $data);
         } else {
-            redirect(base_url());
+            $data['mensajeAprobacion'] = 'Para Truequear un Producto </br> debes 
+                <a href=\'http://localhost/trueque_10/usuarios/registrar\'>Registrarte</a>
+                o Iniciar Sesion';
+            $data['contenido']='estandar/error';
+            $this->load->view('plantilla', $data);
         }
+    }
+    public function cargarEstandar(){
+        $data['title']='inicio';
+        $data['sesion']='sesionLogin';
+        $data['menu']='menuEstandar';
+        $data['sidebar']='sidebarCategorias';
+        return $data;
     }
 
     public function enviarTrueque() {
@@ -118,10 +135,22 @@ class MiCuenta extends CI_Controller {
         $data['producto_recibe'] = $_POST['productoSolicita'];
         $data['producto_solicita'] = $_POST['productoEnvia'];
         $this->permutaModel->crearPermuta($data);
-        redirect(base_url());
+        $data=array();
+        $usuarioActual = $this->session->all_userdata();
+        $data['usuarioActual']=$usuarioActual;
+        $data['title']='trueque enviado';
+        $data['menu']='menuUsuario';
+        $data['sesion']='sesionUsuario';
+        $data['sidebar']='sidebarMiCuenta';
+        $data['contenido']='estandar/exito';
+        $data['mensajeAprobacion']='Propuesta Enviada Correctamente <br/>
+            Mira <a href=\'http://localhost/trueque_10/permutas/permutasEnviadas\'>Tus Propuestas Enviadas</a> o <a href=\'http://localhost/trueque_10/productos\'>Busca mas Productos</a>';
+        $this->load->view('plantilla',$data);
     }
 
     public function publicarProducto() {
+        $data['sideSelect']=2;
+        $data['activo'] = 2;
         $this->load->model('productoModel');
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
@@ -139,22 +168,28 @@ class MiCuenta extends CI_Controller {
     }
 
     function guardarProducto() {
+        $data['sideSelect']=2;
+        $data['activo'] = 2;
         $this->load->model('productoModel');
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
             $data['sesion'] = 'sesionUsuario';
             $data['menu'] = 'menuUsuario';
-            $data['contenido'] = 'usuario/publicarProducto';
             $data['usuarioActual'] = $usuarioActual;
             $data['sidebar'] = 'sidebarMiCuenta';
             $data['categoria'] = $this->productoModel->cargarCategoria();
             $data['title'] ='Publicar Producto';
+            if (isset($_POST['producto_id'])) {
+                        $data['contenido'] = 'usuario/editarProducto';
+                    } else {
+                        $data['contenido'] = 'usuario/publicarProducto';
+                    }
             if ($_POST) {
                 $config = array(
                     array(
                         'field' => 'nombre',
                         'label' => 'nombre',
-                        'rules' => 'trim|required|xss_clean|alpha_numeric|callback_seguraSQL'
+                        'rules' => 'trim|required|xss_clean|callback_seguraSQL'
                     ),
                     array(
                         'field' => 'categoria',
@@ -164,7 +199,7 @@ class MiCuenta extends CI_Controller {
                     array(
                         'field' => 'descripcion',
                         'label' => 'descripcion',
-                        'rules' => 'trim|required|xss_clean|alpha_dash|callback_seguraSQL'
+                        'rules' => 'trim|required|xss_clean|callback_seguraSQL'
                     )
                 );
                 $this->load->library('form_validation');
@@ -201,6 +236,8 @@ class MiCuenta extends CI_Controller {
     }
 
     function guardarImagen() {
+        $data['sideSelect']=2;
+        $data['activo'] = 2;
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1){
         $config['upload_path'] = './images/';
@@ -211,7 +248,7 @@ class MiCuenta extends CI_Controller {
         $producto = $_POST['producto'];
         $this->load->library('upload', $config);
         if (!$this->upload->do_upload()) {
-            $data['error'] = array('error' => $this->upload->display_errors());
+            $data['error'] = $this->upload->display_errors();
             $data['sesion'] = 'sesionUsuario';
             $data['menu'] = 'menuUsuario';
             $data['sidebar'] = 'sidebarMiCuenta';
@@ -224,6 +261,7 @@ class MiCuenta extends CI_Controller {
                 $this->load->view('plantilla', $data);
             } else {
                 $data['contenido'] = 'usuario/publicarImagen';
+                $this->load->view('plantilla', $data);
             }
         } else {
             $this->load->model('productoModel');
@@ -231,8 +269,10 @@ class MiCuenta extends CI_Controller {
             $aux = $this->upload->data();
             $producto['imagen'] = base_url() . '/images/' . $aux['file_name'];
             if (isset($_POST['producto_id'])) {
+                echo "se fue por el editar";
                 $this->productoModel->editarProducto($producto, $_POST['producto_id']);
-            } else {
+            } else {echo "se fue por el agregar";
+                
                 $this->productoModel->agregarProducto($producto);
             }
             redirect('miCuenta');
@@ -248,7 +288,9 @@ class MiCuenta extends CI_Controller {
             return TRUE;
         }
     }
-    function editarProducto($id) {
+    function editarProducto() {
+        $data['sideSelect']=2;
+        $data['activo'] = 2;
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
             $data['title'] = 'Editar Producto';
@@ -260,7 +302,7 @@ class MiCuenta extends CI_Controller {
             $data['sesion'] = 'sesionUsuario';
             $data['menu'] = 'menuEstandar';
             $this->load->model('productoModel');
-            $data['producto'] = $this->productoModel->getProducto($id);
+            $data['producto'] = $this->productoModel->getProducto($_POST['producto_id']);
             $data['categoria'] = $this->productoModel->cargarCategoria();
             $this->load->view('plantilla', $data);
         } else {
@@ -268,7 +310,9 @@ class MiCuenta extends CI_Controller {
         }
     }
 
-    function borrarProducto($id) {
+    function borrarProducto() {
+        $data['sideSelect']=0;
+        $data['activo'] = 2;
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
             $data['title'] = 'Editar Producto';
@@ -280,7 +324,7 @@ class MiCuenta extends CI_Controller {
             $data['sesion'] = 'sesionUsuario';
             $data['menu'] = 'menuEstandar';
             $this->load->model('productoModel');
-            $data['producto'] = $this->productoModel->getProducto($id);
+            $data['producto'] = $this->productoModel->getProducto($_POST['producto_id']);
             $data['categoria'] = $this->productoModel->cargarCategoria();
             $this->load->view('plantilla', $data);
         } else {
@@ -296,6 +340,8 @@ class MiCuenta extends CI_Controller {
     }
 
     public function editarInformacion() {
+        $data['sideSelect']=5;
+        $data['activo'] = 2;
         $this->load->model('usuariosModel');
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
@@ -316,6 +362,8 @@ class MiCuenta extends CI_Controller {
     }
 
     public function guardarInformacion() {
+        $data['sideSelect']=5;
+        $data['activo'] = 2;
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
             $this->load->model('usuariosModel');
@@ -373,23 +421,22 @@ class MiCuenta extends CI_Controller {
             redirect(base_url());
         }
     }
-    public function darDeAlta($id){
+    public function darDeAlta(){
         $this->load->model('productoModel');
-        $this->productoModel->darDeAlta($id);
-        redirect('miCuenta');
+        $this->productoModel->darDeAlta($_POST['producto_id']);
+        redirect('miCuenta/productosNoPublicados');
     }
-    public function darDeBaja($id){
+    public function darDeBaja(){
         $this->load->model('productoModel');
-        $this->productoModel->darDeBaja($id);
+        $this->productoModel->darDeBaja($_POST['producto_id']);
         redirect('miCuenta');
     }
     function seguraSQL($str){
-        if((stripos($str,"or")!==false)|| (stripos($str,"'")!==false)
-                || (stripos($str,";")!==false)||(stripos($str,"from")!==false)
-                ||(stripos($str,"drop")!==false)||(stripos($str,"delete")!==false)
-                ||(stripos($str,"alter")!==false)||(stripos($str,"where")!==false)||(stripos($str,"and")!==false)
+        if((stripos($str,"'")!==false)||(stripos($str," from ")!==false)
+                ||(stripos($str," drop ")!==false)||(stripos($str," delete ")!==false)
+                ||(stripos($str," alter ")!==false)||(stripos($str," where ")!==false)||(stripos($str," and ")!==false)
                 ||(stripos($str,"<")!==false)||(stripos($str,">")!==false)
-                ||(stripos($str,"=")!==false)){
+                ||(stripos($str," = ")!==false)){
             return FALSE;
         }else{
             $this->form_validation->set_message('seguraSQL', 'Su Ingreso esta considerado como un ataque a nuestra Base de datos');

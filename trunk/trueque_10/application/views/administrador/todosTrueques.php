@@ -1,4 +1,5 @@
 <h2>Todos los trueques</h2><br/>
+<h2 class ="paginacion" align ="center"><?php echo $paginacion; ?></h2>
 <div id="main" >
     <br/><br/>
     <ul>
@@ -63,5 +64,5 @@
         <?php endif; ?>
     </ul>
 </div>
-<p class =" paginacion"><?php echo $paginacion; ?></ p>
+<h2 class ="paginacion" align ="center"><?php echo $paginacion; ?></h2>
 <div style="clear: both;">&nbsp;</div>

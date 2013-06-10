@@ -1,49 +1,68 @@
-<div id="main" >
+<div id ="miga"> 
+    <?php 
+        if($title != 'Productos Destacados'){
+            echo anchor('productos/index','Inicio');
+            echo " > ";
+            echo "<strong> Truequeando</strong><br/></br>";
+        }
+    ?>
+</div>
+<br/>
+<h1>¿Con cual de Tus Productos lo queres Truequear?</h1><br/>
+<h2 class =" paginacion" align="left"><?php echo $paginacion; ?></h2>
+<table id="main" border="0" cellspacing="0">
     <br/><br/>
-    <ul>
+    <tr>
         <?php
         if ($productos != FALSE and $productos->num_rows > 0):
             foreach ($productos->result() as $producto):
                 ?>
-                <li>
-                    <ul style="display: inline-block;">
-                        <li style="width: 50%; float: left;">
+                        <td>
                             <?php
                             $image_properties = array(
+                                'id'=> 'imagenProducto',
                                 'src' => $producto->imagen,
                                 'alt' => $producto->p_nombre,
                                 'class' => 'resize',
                             );
                             echo img($image_properties);
                             ?>
-                        </li>
-                        <li style="width: 30%; float: left; padding-right: 20%;">
+                        </td>
+                        <td class="descripcion">
                             <br/>
                             <h3><?php echo anchor('productos/verProducto/' . $producto->producto_id, $producto->p_nombre); ?>
                             </h3>
                             <br/>
                             <b>Categoria: </b><?php echo $producto->categoria; ?><br/>
                             <b>Fecha Publicaci&oacute;n: </b><?php echo $producto->fechaingreso; ?><br/>
-                        </li>
-                <li style="width: 20%; float: right; padding-right: 5%;">
+                            <b>Propietario: </b>
+                        <u><?php echo anchor('productos/verUsuario/' . $producto->u_id, $producto->u_nombre . ' ' . $producto->u_apellido); ?></u>
+                </td>
                 <?php echo form_open('miCuenta/enviarTrueque')?>
                 <?php echo form_hidden('productoSolicita', $productoSolicita, 'size ="40" id =""'); ?>
                 <?php echo form_hidden('productoEnvia', $producto->producto_id, 'size ="40" id =""'); ?>
-                <li style="width: 20%; float: right; padding-right:5%; ">
+                <td class="boton">
                     <input type="submit" value="Seleccionar" />
-                </li>
+                </td>
                 <?php echo form_close();?>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <hr class="separador"/>
-        </li>
+                </tr>
+                <tr class="espacio">
+            <td  colspan="3">
+            <hr class="separador" />
+            </td>
+        </tr>
     <?php endforeach; ?>
 
-<?php else: ?>
-    <p>Ningun Producto En La Base de datos</p>
-<?php endif; ?>
-</ul>
-</div>
-<p class =" paginacion"><?php echo $paginacion; ?></ p>
+<?php else: 
+    $data['mensajeAprobacion']='No tienes Productos Publicados
+        <br/> Ve a <a href=\'http://localhost/trueque_10/miCuenta/publicarProducto\'> Publicar Producto </a> para agregar
+        uno <br/>a <a href=\'http://localhost/trueque_10/miCuenta\'>Tu lista de Publicaciones</a>';
+$this->load->view('estandar/error',$data);
+endif; ?>
+
+</table>
+<!---PAGINACION-->
+<h2 class =" paginacion"><?php echo $paginacion; ?></h2>
+    <!---FIN_PAGINACION-->
+
+<div style="clear: both;">&nbsp;</div>

@@ -11,6 +11,8 @@ class Permutas extends CI_Controller {
     }
 
     public function index() {
+        $data['sideSelect']=3;
+        $data['activo'] = 2;
         $data['contenido'] = 'usuario/propuestasRecibidas';
         $data['title'] = 'Propuestas Recibidas';
         $data['sidebar'] = 'sidebarMiCuenta';
@@ -47,7 +49,6 @@ class Permutas extends CI_Controller {
     function permutar($peticion){
         $this->permutaModel->hacerPermuta($peticion);
         redirect('permutas');
-        
     }
     
     function rechazar($peticion){
@@ -56,6 +57,8 @@ class Permutas extends CI_Controller {
         
     }
     function permutasEnviadas(){
+        $data['sideSelect']=4;
+        $data['activo'] = 2;
         $data['contenido'] = 'usuario/propuestasEnviadas';
         $data['title'] = 'Propuestas Enviadas';
         $data['sidebar'] = 'sidebarMiCuenta';

@@ -17,8 +17,10 @@
             <td><?php echo form_dropdown('categoria', $categoria,$producto->categoria_id); ?></td>  
 	</tr>
 	<tr>
-		<td><br/><input id ="botonPublicar" type="submit" value="Siguiente" /></td>
-		<?php echo form_close();?>
+                <td><br/><input id ="botonPublicar" type="submit" value="Siguiente" /></td>
+		<td><br/><button id = "cancelar" onclick="location.href='<?php echo base_url(); ?>/miCuenta'; return false;"  > Cancelar</button></td>
+		
+                <?php echo form_close();?>
         </tr>
 
     </table>

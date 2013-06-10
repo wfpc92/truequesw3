@@ -49,6 +49,7 @@ class Productos extends CI_Controller {
     }
 
     public function verProducto($id) {
+        $data['activo'] = 1;
         $data['title'] = 'Trueque verProducto';
         $data['sidebar'] = 'sidebarCategorias';
         $data['contenido'] = 'estandar/verProducto';
@@ -69,6 +70,7 @@ class Productos extends CI_Controller {
     }
 
     public function verUsuario($id) {
+        $data['activo'] = 1;
         $data['title'] = 'Trueque verUsuario';
         $data['sidebar'] = 'sidebarCategorias';
         $data['contenido'] = 'estandar/verUsuario';
@@ -88,7 +90,7 @@ class Productos extends CI_Controller {
     }
 
     public function buscarProducto() {
-
+        $data['activo'] = 1;
         static $criterio;
         if(isset($_POST['buscar'])){
             $this->form_validation->set_rules('buscar', 'Buscar',
@@ -140,6 +142,7 @@ class Productos extends CI_Controller {
     }
 
     public function busquedaAvanzada() {
+        $data['activo'] = 1;
         $data['title'] = 'Resultados Busqueda Avanzada';
         $data['sidebar'] = 'sidebarCategorias';
         $usuarioActual = $this->session->all_userdata();
@@ -162,7 +165,7 @@ class Productos extends CI_Controller {
     }
 
     public function busquedaAvanzadaProducto() {
-
+        $data['activo'] = 1;
         $data['title'] = 'Resultados Busqueda Avanzada';
         $data['sidebar'] = 'sidebarCategorias';
         $data['contenido'] = 'estandar/inicio';
@@ -216,6 +219,7 @@ class Productos extends CI_Controller {
         $this->load->view('plantilla', $data);
     }
     public function getProductosSide($categoria=null){
+        $data['activo'] = 1;
          $data['contenido'] = 'estandar/inicio';
          $data['sidebar'] = 'sidebarCategorias';
          $usuarioActual = $this->session->all_userdata();
