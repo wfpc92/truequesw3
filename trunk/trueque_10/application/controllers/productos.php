@@ -13,7 +13,7 @@ class Productos extends CI_Controller {
     }
 
     public function index() {
-        $data['titulo'] = "Productos Destacados";
+        $data['titulo'] = "Todos los Productos";
 	$data['activo'] = 1;
         $data['contenido'] = 'estandar/inicio';
         $data['title'] = 'Productos Destacados';

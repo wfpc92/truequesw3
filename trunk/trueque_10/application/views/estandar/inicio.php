@@ -8,7 +8,7 @@
     ?>
 </div>
 <br/>
-<h1>Todos los Productos</h1><br/>
+<h1><?php echo $title ?></h1>
 <h2 class =" paginacion" align="left"><?php echo $paginacion; ?></h2>
 <table id="main" border="0" cellspacing="0">
     <br/><br/>
