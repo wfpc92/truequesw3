@@ -12,6 +12,7 @@ class Administrar extends CI_Controller {
     public function index() {
         $data['titulo'] = "administrar";
 	$data['activo'] = 2;
+        $data['sideSelect']=0;
         $this->load->model('usuariosModel');
         $this->load->model('productoModel');
         $this->load->library('pagination');
@@ -43,6 +44,7 @@ class Administrar extends CI_Controller {
     }
 
     public function updateUsuario() {
+        $data['sideSelect']=0;
         $data['activo'] = 2;
         $this->load->model('usuariosModel');
         $this->load->model('productoModel');
@@ -63,6 +65,7 @@ class Administrar extends CI_Controller {
     }
 
     public function guardarUsuario() {
+        $data['sideSelect']=0;
         $this->load->model('usuariosModel');
         $this->load->model('productoModel');
         $usuarioInfo = $this->input->post('usuario');
@@ -72,6 +75,7 @@ class Administrar extends CI_Controller {
     }
 
     public function deleteUsuario() {
+        $data['sideSelect']=0;
         $data['activo'] = 2;
         $this->load->model('usuariosModel');
         $this->load->model('productoModel');
@@ -91,12 +95,14 @@ class Administrar extends CI_Controller {
     }
 
     public function borrarUsuario() {
+        $data['sideSelect']=0;
         $this->load->model('usuariosModel');
         $id = $this->input->post('id');
         $this->usuariosModel->borrarUsuario($id);
         redirect('administrar');
     }
     public function  estadisticasTrueque(){
+        $data['sideSelect']=1;
         $data['activo'] = 2;
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 0) {
@@ -127,6 +133,7 @@ class Administrar extends CI_Controller {
         }
  }
     public function seleccionarAnio(){
+        $data['sideSelect']=1;
         $data['activo'] = 2;
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 0) {
@@ -144,6 +151,7 @@ class Administrar extends CI_Controller {
     }
 
 public function  estadisticasPublicaciones(){
+    $data['sideSelect']=2;
         $data['activo'] = 2;
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 0) {
@@ -174,6 +182,7 @@ public function  estadisticasPublicaciones(){
         }
  }
     public function seleccionarAnioP(){
+        $data['sideSelect']=2;
         $data['activo'] = 2;
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 0) {
@@ -190,6 +199,7 @@ public function  estadisticasPublicaciones(){
         }
     }
     public function todosTrueques(){
+        $data['sideSelect']=3;
         $data['activo'] = 2;
         $this->load->model('permutaModel');
         $data['contenido'] = 'administrador/todosTrueques';
