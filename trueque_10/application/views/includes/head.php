@@ -14,8 +14,7 @@
     <script src="<?php echo base_url(); ?>js/jquery-ui.js"></script>
     <script src="<?php echo base_url(); ?>js/busquedaAvanzada.js"></script>
     <script src="<?php echo base_url(); ?>js/registrarUsuario.js"></script>    
-    <script type="text/javascript" src="<?php echo base_url();?>js/highcharts/js/highcharts.js"></script>
-    
+    <script type="text/javascript" src="<?php echo base_url();?>js/highcharts/js/highcharts.js"></script> 
   <script language="javascript">
     $(document).ready(function(){ 
         $( "#fechaIngreso" ).datepicker({
@@ -73,7 +72,7 @@
 <body>
 <div id="header" style="padding-top: 10px;">
 	<div id="logo" >
-            <img src="<?php echo base_url(); ?>images/logo_trans.png" width=50% height=80% border=0 alt="Logo"></img>
+            <a href="<?php echo base_url();?>"><img src="<?php echo base_url(); ?>images/logo_trans.png" width=50% height=80% border=0 alt="Logo"></img></a>
 	</div>	
 	<div id="sesion" style="margin-top: 50px; margin-right: 50px;">
 						<?php 
@@ -81,7 +80,6 @@
 						?>
 	</div>
 	<div id="search" style="padding-top: 130px;">
-            <!-- </*?php /*$valor="computador";?*/> -->
             <?php echo form_open('productos/buscarProducto') ?>
             <?php echo form_input('buscar',''); ?>  
             <?php echo form_submit('btnBuscar', 'Buscar'); ?> 
@@ -93,7 +91,6 @@
             <div id="menu">
                 <?php $this->load->view('includes/'.$menu);?>
             </div>
-            <!-- end #menu -->
         </div>
 <div id="page">
 	

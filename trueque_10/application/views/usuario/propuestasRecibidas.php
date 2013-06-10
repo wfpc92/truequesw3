@@ -6,12 +6,9 @@
      <?php echo "<strong>" . $title . "</strong>";?>
 </div>
 </br></br>
-<h1><?php echo $title ?></h1>
-</br>
-<p><a href="#" class="more"><</a><a href="#" class="more">></a></p>
-
-
-<div id="main" >
+<h1><?php echo $title ?></h1><br/>
+<h2 class =" paginacion"><?php echo $paginacion; ?></h2>
+<div id="main">
     <br/><br/>
     <ul>
         <?php
@@ -19,7 +16,7 @@
             foreach ($permutas->result() as $permuta):
                 ?>
                 <li >
-                    <table>
+                    <table border="0" cellspacing="0">
                         <tr>
                             <td>
                                 <?php
@@ -84,9 +81,9 @@
 
                             </td>
 
-                        </tr>
+                        </tr >
 
-                        <tr>
+                        <tr class="espacio">
                             <td align="center">
                                 <?php echo anchor('productos/verProducto/' . $permuta->rec_producto_id, $permuta->rec_nombre); ?>                       
 
@@ -102,7 +99,7 @@
                             </td>
 
                         </tr>
-                        <tr>
+                        <tr class="espacio">
                             <td>
 
                             </td>
@@ -124,9 +121,9 @@
             <?php endforeach; ?>
 
         <?php else: ?>
-            <p>Ningun Producto En La Base de datos</p>
+                <h2>No Tienes Mas Propuestas de Trueque Recibidas</h2>
         <?php endif; ?>
     </ul>
 </div>
-<p class =" paginacion"><?php echo $paginacion; ?></ p>
 <div style="clear: both;">&nbsp;</div>
+<h2 class =" paginacion"><?php echo $paginacion; ?></h2>

@@ -58,6 +58,7 @@ class ProductoModel extends CI_Model {
     }
 
     public function buscarProductos($str, $limit, $start=null) {
+        $data=array();
         $criterio=mysql_real_escape_string($str);
         $this->load->helper('string');
         $valores = explode(" ", $criterio);

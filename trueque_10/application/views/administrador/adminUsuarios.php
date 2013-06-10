@@ -1,4 +1,4 @@
-<table cellpadding="5" cellspacing="0" border="1">
+<table cellpadding="5" cellspacing="0" border="1" style="width: 100%;">
     <caption><h2>Usuarios</h2></caption>
     <thead>
         <tr>
@@ -22,11 +22,19 @@
                     <td><?php echo $usuario->apellido; ?></td>
                     <td><?php echo $usuario->email; ?></td>
                     <td> <?php echo $usuario->nivel; ?></td>
-                    <td> <?php
-        echo anchor('administrar/updateUsuario/' . $usuario->usuario_id, 'editar', 'class="link-opc"');
-        echo " ";
-        echo anchor('administrar/deleteUsuario/' . $usuario->usuario_id, 'eliminar');
-                ?>
+                    <td> 
+                        <table><tr><td><?php
+                      echo form_open('administrar/updateUsuario')?>
+                <?php echo form_hidden('usuario_id', $usuario->usuario_id, 'size ="20" id =""'); ?>
+                    <input type="submit" value=" Editar " />
+            <?php echo form_close();?>
+                                </td><td>
+            <?php echo form_open('administrar/deleteUsuario')?>
+                <?php echo form_hidden('usuario_id', $usuario->usuario_id, 'size ="20" id =""'); ?>
+                    <input type="submit" value="Eliminar" />
+            <?php echo form_close();
+                ?></td></tr>
+                        </table>
                     </td>
                 </tr>
             <?php endforeach; ?>

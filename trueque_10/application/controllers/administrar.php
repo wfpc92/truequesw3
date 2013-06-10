@@ -42,7 +42,8 @@ class Administrar extends CI_Controller {
         }
     }
 
-    public function updateUsuario($id) {
+    public function updateUsuario() {
+        $data['activo'] = 2;
         $this->load->model('usuariosModel');
         $this->load->model('productoModel');
         $usuarioActual = $this->session->all_userdata();
@@ -53,7 +54,7 @@ class Administrar extends CI_Controller {
             $data['usuarioActual'] = $usuarioActual;
             $data['menu'] = 'menuAdministrador';
             $data['sidebar'] = 'sidebarAdministrar';
-            $data['usuario'] = $this->usuariosModel->getUsuario($id);
+            $data['usuario'] = $this->usuariosModel->getUsuario($_POST['usuario_id']);
             $data['ciudades'] = $this->productoModel->cargarCiudad();
             $this->load->view('plantilla', $data);
         } else {
@@ -70,7 +71,8 @@ class Administrar extends CI_Controller {
         redirect('administrar');
     }
 
-    public function deleteUsuario($id) {
+    public function deleteUsuario() {
+        $data['activo'] = 2;
         $this->load->model('usuariosModel');
         $this->load->model('productoModel');
         $usuarioActual = $this->session->all_userdata();
@@ -81,7 +83,7 @@ class Administrar extends CI_Controller {
             $data['usuarioActual'] = $usuarioActual;
             $data['menu'] = 'menuAdministrador';
             $data['sidebar'] = 'sidebarAdministrar';
-            $data['usuario'] = $this->usuariosModel->getUsuario($id);
+            $data['usuario'] = $this->usuariosModel->getUsuario($_POST['usuario_id']);
             $this->load->view('plantilla', $data);
         } else {
             redirect(base_url());
@@ -95,6 +97,7 @@ class Administrar extends CI_Controller {
         redirect('administrar');
     }
     public function  estadisticasTrueque(){
+        $data['activo'] = 2;
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 0) {
             $this->load->model('permutaModel');
@@ -124,6 +127,7 @@ class Administrar extends CI_Controller {
         }
  }
     public function seleccionarAnio(){
+        $data['activo'] = 2;
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 0) {
             $this->load->model('permutaModel');
@@ -140,6 +144,7 @@ class Administrar extends CI_Controller {
     }
 
 public function  estadisticasPublicaciones(){
+        $data['activo'] = 2;
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 0) {
             $this->load->model('permutaModel');
@@ -169,6 +174,7 @@ public function  estadisticasPublicaciones(){
         }
  }
     public function seleccionarAnioP(){
+        $data['activo'] = 2;
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 0) {
             $this->load->model('permutaModel');
@@ -184,6 +190,7 @@ public function  estadisticasPublicaciones(){
         }
     }
     public function todosTrueques(){
+        $data['activo'] = 2;
         $this->load->model('permutaModel');
         $data['contenido'] = 'administrador/todosTrueques';
         $data['title'] = 'Ver Permutas';

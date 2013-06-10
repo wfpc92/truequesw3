@@ -2,7 +2,7 @@
     <?php
     $image_properties = array(
         'id' => 'imagenProducto',
-        'src' => base_url().'images/error.jpg',
+        'src' => base_url().'images/ok.jpg',
         'alt' => 'Error',
         'class' => 'resize',
         'height'=> '5%',
@@ -12,7 +12,7 @@
     echo img($image_properties);
     ?>
     <br/>
-     <?php echo "<h2 align=\"right\" style=\"color: red;\";>".$mensajeAprobacion."</h2>"?>
+     <?php echo "<h2 align=\"right\" style=\"color: green;\";>".$mensajeAprobacion."</h2>"?>
 <?php else: redirect(base_url());
  endif;
 ?>

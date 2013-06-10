@@ -27,5 +27,5 @@
 <?php echo form_open('miCuenta/borrarProductoBd');?>
 <?php echo form_hidden('producto_id', $producto->producto_id, 'size ="40" id =""'); ?>
 <input type="submit" value="Eliminar" />
-<button id = "cancelar" onclick="location.href='<?php echo base_url(); ?>administrar'; return false;"  > Cancelar</button>
+<button id = "cancelar" onclick="location.href='<?php echo base_url(); ?>/miCuenta'; return false;"  > Cancelar</button>
 <?php echo form_close();?>

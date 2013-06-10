@@ -16,9 +16,9 @@ class Contactenos extends CI_Controller {
     public function index() {
         $data['titulo'] = "Contactenos";
 	$data['activo'] = 4;
-       $data['contenido'] = 'estandar/inicio';
+        $data['contenido'] = 'estandar/contactanos';
         $data['title'] = 'Trueque Inicio';
-        $data['sidebar'] = 'sidebarCategorias';
+        $data['sidebar'] = 'sidebarContactenos';
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre'])) {
             $data['sesion'] = 'sesionUsuario';
