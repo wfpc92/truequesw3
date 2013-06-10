@@ -12,15 +12,16 @@
 
 <div id="main" >
     <br/><br/>
-    <ul style="width: 100%;">
+    <ul>
         <?php
         if ($productos != FALSE and $productos->num_rows > 0):
             foreach ($productos->result() as $producto):
                 ?>
                 <li>
-                    <ul style="display: inline-block;">
-                        <li style="width: 50%; float: left;">
-                            <?php
+                    <ul>
+                        <li class="li_imagen">
+                            <center>
+                           <?php
                             $image_properties = array(
                                 'id'=> 'imagenProducto',
                                 'src' => $producto->imagen,
@@ -28,9 +29,9 @@
                                 'class' => 'resize',
                             );
                             echo img($image_properties);
-                            ?>
+                            ?></center>
                         </li>
-                        <li style=" width: 40%;float: left; margin-left: 10%">
+                        <li class="li_contenido">
                             <br/>
                             <h3><?php echo anchor('productos/verProducto/' . $producto->producto_id, $producto->p_nombre); ?>
                             </h3>
@@ -42,7 +43,7 @@
                 </li>
                 <?php echo form_open('miCuenta/truequear')?>
                 <?php echo form_hidden('productoSolicita', $producto->producto_id, 'size ="40" id =""'); ?>
-                <li style="width: 5%; float: right;">
+                <li style="width: 5%; float: left; padding-left: 30%">
                     <input type="submit" value="Truequear" />
                 </li>
                 <?php echo form_close();?>

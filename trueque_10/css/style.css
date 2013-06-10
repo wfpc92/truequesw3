@@ -551,6 +551,8 @@ hr.separador{
 
 
 #main ul{    
+    width: 100%;
+    display: inline-block;
     list-style-type: none;
 }
 #main li {
@@ -559,17 +561,15 @@ hr.separador{
     height: auto;
 }
 #main li img {
-    float: left;
+    float: none;
+    
     margin: 10px 10px 10px 10px;
 }
 #main li img.resize{
-    height:180x;
+    height:140px;
     width:auto;
 }
-#main li img.resize{
-    height:auto;
-    width:200px;
-}
+
 #main li p {
     margin-left:0px;
     overflow: auto;
@@ -586,6 +586,16 @@ hr.separador{
     cursor: initial;
 }
 
+#main li.li_imagen {
+    width: 40%;
+    float: left;
+}
+
+#main li.li_contenido{
+    width: 50%;
+    float: left;
+    margin-left: 0%;    
+}
 #item li img {
     float: left;
     margin: 10px 10px 10px 10px;
@@ -593,10 +603,6 @@ hr.separador{
 #item img.resize{
     height:180px;
     width:auto;
-}
-#item img.resize{
-    height:auto;
-    width:200px;
 }
 #item p {
     margin-left:0px;
@@ -615,6 +621,8 @@ hr.separador{
 #imagenProducto {
     margin-left : 10%;
     margin-bottom: 2%;
+    alignment-adjust: central;
+    alignment-baseline: central;
 }
 
 #botonImagen {
