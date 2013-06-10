@@ -20,7 +20,6 @@ h1, h2, h3 {
 	padding: 0;
 	font-weight: normal;
 	color: #000000;
-        font-family: "Times New Roman", Times, serif;
 }
 
 h2 {
@@ -37,7 +36,6 @@ h3 {
 }
 
 p, ul, ol {
-     font-family: "Comic Sans MS", cursive, sans-serif;
      color: #1A1A18;
      font-size: 1.1em;
 	margin-top: 0;
@@ -46,12 +44,11 @@ p, ul, ol {
 
 a {
 	text-decoration: underline;
-        font-family: "Times New Roman", Times, serif;
 	color: #1A1A18;
 }
 
 a:hover {
-    text-decoration: line-through;
+    text-decoration: underline;
 }
 a:visited {
     color:#708;
@@ -69,7 +66,6 @@ a:visited {
 	margin: 0 auto;
 	padding: 0;
 	background: #000000;
-        font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
 /* Header */
@@ -191,7 +187,6 @@ a:visited {
 	width: 680px;
 	height: 60px;
 	padding: 0px;
-        font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
 #menu ul {
@@ -378,7 +373,6 @@ hr.separador{
 	margin: 0px;
 	padding: 40px 0px 0px 0px;
 	color: #1A1A18;
-        font-family: "Comic Sans MS", cursive, sans-serif;
 }
 #sidebar a:visited{
     color: #1A1A18;
