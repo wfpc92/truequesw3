@@ -57,10 +57,13 @@
                 </td>
             </tr>
         <?php endforeach; ?>
-
+<tr>
     <?php else: ?>
+    <td>
         <h2>Aun no Tienes Productos Publicados.</h2><br/>
         <h3>Has <?php echo anchor('miCuenta/publicarProducto', 'Click Aqui'); ?> para agregar un Producto a tus Publicaciones</h3>
-    <?php endif; ?>
+    </td>
+            <?php endif; ?>
+</tr>
 </table>
 <h3 class =" paginacion"><?php echo $paginacion; ?></h3>
