@@ -488,14 +488,16 @@ class MiCuenta extends CI_Controller {
     }
     
     function donacionExitosa(){
-            $data['activo'] = 1;
-            $data['sesion'] = 'sesionLogin';
-            $data['menu'] = 'menuEstandar';
-            $data['contenido'] = 'usuario/donacion_exitosa';
-            $data['title'] = 'Donacion voluntaria';
-            $data['sidebar'] = 'sidebarCategorias';
-            $this->load->view('plantilla', $data);
-                
+            $data=array();
+        $usuarioActual = $this->session->all_userdata();
+        $data['usuarioActual']=$usuarioActual;
+        $data['title']='Solicitud enviada';
+        $data['menu']='menuUsuario';
+        $data['sesion']='sesionUsuario';
+        $data['sidebar']='sidebarMiCuenta';
+        $data['contenido']='estandar/exito';
+        $data['mensajeAprobacion']='Gracias por su donaci&oacute;n';
+        $this->load->view('plantilla',$data);
     }
 }
 ?>	
