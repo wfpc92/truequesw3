@@ -48,7 +48,17 @@ class Permutas extends CI_Controller {
     
     function permutar($peticion){
         $this->permutaModel->hacerPermuta($peticion);
-        redirect('permutas');
+        $data=array();
+        $usuarioActual = $this->session->all_userdata();
+        $data['usuarioActual']=$usuarioActual;
+        $data['title']='Solicitud enviada';
+        $data['menu']='menuUsuario';
+        $data['sesion']='sesionUsuario';
+        $data['sidebar']='sidebarMiCuenta';
+        $data['contenido']='estandar/exito';
+        $data['mensajeAprobacion']='Trueque realizado correctamente   <br/>
+            Haz tu donaci&oacute;n voluntaria <a href=\'http://localhost/trueque_10/miCuenta/donacion\'>aqu&iacute;</a>.';
+        $this->load->view('plantilla',$data);
     }
     
     function rechazar($peticion){
