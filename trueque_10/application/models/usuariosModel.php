@@ -114,5 +114,9 @@ class usuariosModel extends CI_Model {
         $this->db->delete('usuarios');
         return TRUE;
     }
+    
+    function cambiarContrasena($usuario_id, $nuevacontrasena){
+        $query = $this->db->query('UPDATE usuarios SET contrasena = \''.sha1($nuevacontrasena).'\' WHERE usuario_id = '.$usuario_id);    
+    }
 
 }

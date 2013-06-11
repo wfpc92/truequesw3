@@ -204,7 +204,7 @@ class Usuarios extends CI_Controller {
             $data['activo'] = 1;
             $data['sesion'] = 'sesionLogin';
             $data['menu'] = 'menuEstandar';
-            $data['contenido'] = 'miCuenta/cambiarContraseña';
+            $data['contenido'] = 'usuario/cambiarContrasena';
             $data['title'] = 'Donacion voluntaria';
             $data['sidebar'] = 'sidebarCategorias';
             $this->load->view('plantilla', $data);
