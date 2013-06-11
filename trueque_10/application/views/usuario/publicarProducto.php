@@ -5,9 +5,11 @@
     <?php echo anchor('miCuenta','Mi Cuenta'); ?>
      >
      <?php echo "<strong>" . $title . "</strong>";?>
-</div>    
+</div>  
 <br/>
 <h1> Publicar Producto</h1>
+<div style="padding-left: 5%;">
+
     <table id="formulario-publicar">
         <tr>
             <?php echo form_error('nombre');?>
@@ -32,3 +34,4 @@
         </tr>
 
     </table>
+</div>

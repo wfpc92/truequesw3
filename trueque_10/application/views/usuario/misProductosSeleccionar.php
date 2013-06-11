@@ -7,9 +7,8 @@
         }
     ?>
 </div>
-<br/>
-<h1>¿Con cual de Tus Productos lo queres Truequear?</h1><br/>
-<h2 class =" paginacion" align="left"><?php echo $paginacion; ?></h2>
+<h1>¿Con cual de Tus Productos lo queres Truequear?</h1>
+<h3 class =" paginacion" align="left"><?php echo $paginacion; ?></h3>
 <table id="main" border="0" cellspacing="0">
     <br/><br/>
     <tr>
@@ -30,7 +29,7 @@
                         </td>
                         <td class="descripcion">
                             <br/>
-                            <h3><?php echo anchor('productos/verProducto/' . $producto->producto_id, $producto->p_nombre); ?>
+                            <h3><?php echo $producto->p_nombre; ?>
                             </h3>
                             <br/>
                             <b>Categoria: </b><?php echo $producto->categoria; ?><br/>
@@ -62,7 +61,7 @@ endif; ?>
 
 </table>
 <!---PAGINACION-->
-<h2 class =" paginacion"><?php echo $paginacion; ?></h2>
+<h3 class =" paginacion"><?php echo $paginacion; ?></h3>
     <!---FIN_PAGINACION-->
 
 <div style="clear: both;">&nbsp;</div>

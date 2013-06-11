@@ -23,16 +23,16 @@ h1, h2, h3 {
 }
 
 h2 {
-	font-size: 2em;
+	font-size: 24px;
 }
 
 h1 {
-	font-size: 2.4em;
+	font-size: 29px;
         padding-left: 5%;
 }
 
 h3 {
-	font-size: 1.6em;
+	font-size: 20px;        
 }
 
 p, ul, ol {
@@ -49,9 +49,10 @@ a {
 
 a:hover {
     text-decoration: underline;
+    color: #1A1A18;
 }
-a:visited {
-    color:#708;
+a:visited {    
+    color: #1A1A18;
 }
 #sidebar li.seleccionar{
     background: #383838;
@@ -73,7 +74,7 @@ a:visited {
 #header {
 	clear: both;
 	width: 980px;
-	height: 200px;
+	height: 180px;
 	margin: 0px auto;
 	padding: 0px 0px 0px 0px;
 	background: url(../images/header.jpg) no-repeat;
@@ -82,7 +83,7 @@ a:visited {
 #header a {
 	margin: 0;
 	padding: 0px 0 0 10px;
-	font: normal 14px Georgia, "Times New Roman", Times, serif;
+	font: normal 14px Arial, "Times New Roman", Times, serif;
 	font-style: italic;
 	color: #FFFFFF;
 }
@@ -117,10 +118,16 @@ a:visited {
 #logo p {
 	margin: 0;
 	padding: 0px 0 0 10px;
-	font: normal 14px Georgia, "Times New Roman", Times, serif;
+	font: normal 14px Arial, "Times New Roman", Times, serif;
 	font-style: italic;
 	color: #FFFFFF;
 } 
+#logo img{
+        background-color: black;
+        border: 1px solid #888888;
+        border-radius: 10px 10px 10px 10px;
+        box-shadow: 0 0 10px #888888;
+}
  
 /* Search */
 
@@ -141,7 +148,7 @@ a:visited {
 #sesion pre {
 	margin: 0;
 	padding: 0px 0 0 10px;
-	font: normal 14px Georgia, "Times New Roman", Times, serif;
+	font: normal 14px Arial, "Times New Roman", Times, serif;
 	font-style: italic;
 	color: #FFFFFF;
 }
@@ -185,7 +192,7 @@ a:visited {
 #menu {
 	float: left;
 	width: 680px;
-	height: 60px;
+	height: 45px;
 	padding: 0px;
 }
 
@@ -259,7 +266,7 @@ a:visited {
 #content {
 	float: right;
 	width: 560px;
-	padding: 30px 0px 0px 0px;
+	padding: 5px 0px 0px 0px;
 }
 
 #estiloSesion{
@@ -371,7 +378,7 @@ hr.separador{
 #sidebar {
 	float: left;
 	margin: 0px;
-	padding: 40px 0px 0px 0px;
+	padding: 10px 0px 0px 0px;
 	color: #1A1A18;
 }
 #sidebar a:visited{
@@ -402,7 +409,7 @@ hr.separador{
 
 #sidebar p {
 	margin: 0 0px;
-	padding: 0px 30px 20px 0px;
+	padding: 0px 0px 20px 0px;
 	text-align: justify;
 }
 /* Footer */
@@ -433,12 +440,12 @@ hr.separador{
 	width: 960px;
 	height: 60px;
 	margin: 0px auto;
-	padding: 0px 0px 0px 20px;
+	padding: 0px 0px 0px 5px;
 }
 
 #footer-menu ul {
 	margin: 0;
-	padding: 30px 0px 0px 0px;
+	padding: 5px 0px 0px 0px;
 	list-style: none;
 	line-height: normal;
 }
@@ -507,8 +514,8 @@ hr.separador{
     width:auto;
 }
 #main td img.resize{
-    height:auto;
-    width:200px;
+    max-height: 150px;
+    max-width:200px;
 }
 #main td p {
     margin-left:0px;
@@ -542,18 +549,15 @@ hr.separador{
     margin: 10px 10px 10px 10px;
 }
 #item img.resize{
-    height:180px;
-    width:auto;
-}
-#item img.resize{
     height:auto;
-    width:200px;
+    max-width:280px;
 }
 #item p {
     margin-left:0px;
     float: right;
     overflow: auto;
-    width: 350px;
+    width: 400px;
+    text-align: justify;
 }
 
 #item button {
@@ -564,7 +568,6 @@ hr.separador{
 /*Publicar Imagen*/
 
 #imagenProducto {
-    margin-left : 10%;
     margin-bottom: 2%;
 }
 
@@ -575,7 +578,6 @@ hr.separador{
 
 #formulario-publicar {
     border-collapse: separate;
-    border-spacing: 10px 20px;
 }
 
 #botonPublicar {
@@ -598,13 +600,8 @@ hr.separador{
     width:140px;
 }
 
-
-#main li img.resize_rechazar_aceptar{
+#main td img.resize_rechazar_aceptar{
     height:40px;
-    width:auto;
-}
-#main li img.resize_rechazar_aceptar{
-    height:auto;
     width:160px;
 }
 

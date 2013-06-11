@@ -5,18 +5,14 @@
      >
      <?php echo "<strong>" . $title . "</strong>";?>
 </div>
-</br></br>
+<br/>
 <h1><?php echo $title ?></h1><br/>
-<h2 class =" paginacion"><?php echo $paginacion; ?></h2>
-<div id="main">
-    <br/><br/>
-    <ul>
+<h3 class =" paginacion"><?php echo $paginacion; ?></h3>
+<table id="main" border="0" cellspacing="0">
         <?php
         if ($permutas != FALSE and $permutas->num_rows > 0):
             foreach ($permutas->result() as $permuta):
                 ?>
-                <li >
-                    <table border="0" cellspacing="0">
                         <tr>
                             <td>
                                 <?php
@@ -29,8 +25,8 @@
                                 ?>
 
                             </td>
-                            <td>
-                                <h5>Te lo cambian por: </h5>
+                            <td align="center">
+                                <h3>Te lo cambian por: </h3>
 
                             </td>
                             <td>
@@ -113,17 +109,17 @@
 
                             </td>
                         </tr>    
-                    </table>
-                    <br/>
-
-                </li>
+                        <tr><td class="espacio">
                 <hr class="separador"/>
+                        </td>
+                </tr>
             <?php endforeach; ?>
 
         <?php else: ?>
+                <tr><td>
                 <h2>No Tienes Mas Propuestas de Trueque Recibidas</h2>
+                    </td></tr>
         <?php endif; ?>
-    </ul>
-</div>
+                </table>
 <div style="clear: both;">&nbsp;</div>
-<h2 class =" paginacion"><?php echo $paginacion; ?></h2>
+<h3 class =" paginacion"><?php echo $paginacion; ?></h3>

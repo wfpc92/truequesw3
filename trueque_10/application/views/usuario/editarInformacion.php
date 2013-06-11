@@ -5,16 +5,20 @@
     <?php echo anchor('miCuenta','Mi Cuenta'); ?>
      >
      <?php echo "<strong>" . $title . "</strong>"; ?>
-</div>
-</br></br>       
-<h1>Editar Informacion de la Cuenta</h1></br>
+</div>     
+<br/>
+
+    <td><h1>Editar Informacion de la Cuenta</h1></td>
+<br/>
+<div style="padding-left: 5%;">
+<table>
         <?php
         if (isset($error)) {
             echo $error;
         }
         ?>
-        <h4 id="editar">Tu Avatar: </h4>
-        <div id ="editar">
+        <tr><td><h4 id="editar">Tu Avatar: </h4></td></tr>
+        <tr><td>
             <?php
             $image_properties = array(
                 'src' => $usuario->avatar,
@@ -26,13 +30,14 @@
             echo img($image_properties);
             ?>
         <?php echo form_open_multipart('miCuenta/guardarInformacion'); ?>
-        </div>
-        <div id ="editar">
+        </td></tr>
+        <tr><td>
             <input type="file" name="userfile" size="20" />
-        </div>
-        <table id="editar">
+        </td></tr>
+        <tr><td>
+        <table>
             <tr>
-                <td><br/>* Nombre: </td>
+                <td>* Nombre: </td>
                 <td> <?php
             $data_form = array(
                 'name' => 'usuario[nombre]',
@@ -58,8 +63,11 @@
                 </td>
             </tr>
         </table>
-        <div id ="btnEditar">
+            </td></tr>
+        <tr><td>
             <input type="submit" value="Guardar Informacion" />
-        </div>
+            </td></tr>
+</table>
+</div>
 <?php echo form_close() ?>
   

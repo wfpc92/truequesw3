@@ -23,6 +23,7 @@ class Productos extends CI_Controller {
             $data['sesion'] = 'sesionUsuario';
             $data['menu'] = 'menuUsuario';
             $data['usuarioActual'] = $usuarioActual;
+            $id=$usuarioActual['usuario_id'];
             if ($usuarioActual['usuario_nivel'] == 0) {
                 $data['menu'] = 'menuAdministrador';
             }
@@ -30,18 +31,25 @@ class Productos extends CI_Controller {
             $data['sesion'] = 'sesionLogin';
             $data['menu'] = 'menuEstandar';
         }
-
         //PAGINACION...
         $opciones = array();
         $opciones['per_page'] = 5;
         $opciones['base_url'] = base_url().'productos/index/';
-        $opciones['total_rows'] = $this->productoModel->getNumProductos();
+        if(isset($id)){
+            $opciones['total_rows'] = $this->productoModel->getNumProductos($id);
+        }else{
+            $opciones['total_rows'] = $this->productoModel->getNumProductos(Null);
+        }
         $opciones['uri_segment'] = 3;
         $opciones['num_links'] = 3;
         $opciones['first_link'] = 'Primero';
         $opciones['last_link'] = 'Ultimo';
         $this->pagination->initialize($opciones);
-        $productos = $this->productoModel->getTodosProductos($opciones['per_page'], $this->uri->segment(3));
+        if(isset($id)){
+            $productos = $this->productoModel->getTodosProductos($opciones['per_page'], $this->uri->segment(3),$id);
+        }else{
+           $productos = $this->productoModel->getTodosProductos($opciones['per_page'], $this->uri->segment(3),Null); 
+        }
         $data['productos'] = $productos;
         $data['paginacion']= $this->pagination->create_links();
         //FIN_PAGINACION...
@@ -111,6 +119,7 @@ class Productos extends CI_Controller {
             $data['sesion'] = 'sesionUsuario';
             $data['menu'] = 'menuUsuario';
             $data['usuarioActual'] = $usuarioActual;
+            $id=$usuarioActual['usuario_id'];
             if ($usuarioActual['usuario_nivel'] == 0) {
                 $data['menu'] = 'menuAdministrador';
             }
@@ -119,7 +128,11 @@ class Productos extends CI_Controller {
             $data['menu'] = 'menuEstandar';
         }
         //PAGINACION
-        $cantidad = $this->productoModel->numBuscarProducto($criterio);
+        if(isset($id)){
+            $cantidad = $this->productoModel->numBuscarProducto($criterio,$id);
+        }else{
+            $cantidad = $this->productoModel->numBuscarProducto($criterio,NULL);
+        }
         $this->load->library('pagination');
 
         $opciones = array();
@@ -132,7 +145,12 @@ class Productos extends CI_Controller {
         $opciones['last_link'] = 'Ultimo';
 
         $this->pagination->initialize($opciones);
-        $productos = $this->productoModel->buscarProductos($criterio, $opciones['per_page'], $this->uri->segment(3));
+        if(isset($id)){
+            $productos = $this->productoModel->buscarProductos($criterio, $opciones['per_page'], $this->uri->segment(3),$id);
+        }
+        else{
+            $productos = $this->productoModel->buscarProductos($criterio, $opciones['per_page'], $this->uri->segment(3),NULL);
+        }
         $data['productos'] = $productos;
         $data['paginacion']= $this->pagination->create_links();
         //FIN_PAGINACION
@@ -173,7 +191,8 @@ class Productos extends CI_Controller {
         if (isset($usuarioActual['nombre'])) {
             $data['sesion'] = 'sesionUsuario';
             $data['menu'] = 'menuUsuario';
-            $data['usuarioActual'] = $usuarioActual;
+            $data['usuarioActual'] = $usuarioActual;            
+            $id=$usuarioActual['usuario_id'];
             if ($usuarioActual['usuario_nivel'] == 0) {
                 $data['menu'] = 'menuAdministrador';
             }
@@ -199,7 +218,11 @@ class Productos extends CI_Controller {
             $ciudad = $this->session->userdata('ciudades');
         }
         //PAGINACION
-        $cantidad = $this->productoModel->numBusquedaAvanzada($categoria, $desde, $hasta, $ciudad);
+        if(isset($id)){
+            $cantidad = $this->productoModel->numBusquedaAvanzada($categoria, $desde, $hasta, $ciudad,$id);
+        }else{
+          $cantidad = $this->productoModel->numBusquedaAvanzada($categoria, $desde, $hasta, $ciudad,NULL);
+        }
         $this->load->library('pagination');
         $opciones = array();
         $opciones['per_page'] = 5;
@@ -211,7 +234,11 @@ class Productos extends CI_Controller {
         $opciones['last_link'] = 'Ultimo';
 
         $this->pagination->initialize($opciones);
-        $productos = $this->productoModel->busquedaAvanzada($categoria, $desde, $hasta, $ciudad, $opciones['per_page'], $this->uri->segment(3));
+        if(isset($id)){
+             $productos = $this->productoModel->busquedaAvanzada($categoria, $desde, $hasta, $ciudad, $opciones['per_page'], $this->uri->segment(3),$id);
+        }else{
+             $productos = $this->productoModel->busquedaAvanzada($categoria, $desde, $hasta, $ciudad, $opciones['per_page'], $this->uri->segment(3),NULL);
+        }
         $data['productos'] = $productos;
         $data['paginacion']= $this->pagination->create_links();
         //FIN_PAGINACION

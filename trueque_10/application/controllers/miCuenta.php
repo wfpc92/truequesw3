@@ -352,8 +352,6 @@ class MiCuenta extends CI_Controller {
             $data['sesion'] = 'sesionUsuario';
             $data['menu'] = 'menuUsuario';
             $data['usuarioActual'] = $usuarioActual;
-            $data['sesion'] = 'sesionUsuario';
-            $data['menu'] = 'menuEstandar';
             $data['usuario'] = $usuario;
             $this->load->view('plantilla', $data);
         } else {
@@ -378,12 +376,12 @@ class MiCuenta extends CI_Controller {
                 array(
                     'field' => 'usuario[nombre]',
                     'label' => 'Nombre',
-                    'rules' => 'trim|required|xss_clean|alpha_dash|callback_seguraSQL'
+                    'rules' => 'trim|required|xss_clean|callback_seguraSQL'
                 ),
                 array(
                     'field' => 'usuario[apellido]',
                     'label' => 'Apellido',
-                    'rules' => 'trim|required|xss_clean|alpha_dash|callback_seguraSQL'
+                    'rules' => 'trim|required|xss_clean|callback_seguraSQL'
                 )
             );
             $this->form_validation->set_rules($config);
@@ -443,16 +441,50 @@ class MiCuenta extends CI_Controller {
             return TRUE;
         }
     }
-    
-    function donacion(){
-        
-            $data['activo'] = 1;
+    public function verMiProducto($id) {
+        $this->load->model('productoModel');
+        $data['sideSelect']=0;
+        $data['activo'] = 2;
+        $data['title'] = 'Trueque verProducto';
+        $data['sidebar'] = 'sidebarCategorias';
+        $data['contenido'] = 'usuario/verMiProducto';
+        $usuarioActual = $this->session->all_userdata();
+        if (isset($usuarioActual['nombre'])) {
+            $data['sesion'] = 'sesionUsuario';
+            $data['menu'] = 'menuUsuario';
+             $data['sidebar'] = 'sidebarMiCuenta';
+            $data['usuarioActual'] = $usuarioActual;
+            if ($usuarioActual['usuario_nivel'] == 0) {
+                $data['menu'] = 'menuAdministrador';
+            }
+        } else {
             $data['sesion'] = 'sesionLogin';
             $data['menu'] = 'menuEstandar';
+        }
+        $data['producto'] = $this->productoModel->getProducto($id);
+        $this->load->view('plantilla', $data);
+    }
+    function donacion(){
+        $data['sideSelect']=6;
+        $data['activo'] = 2;
+        $data['title'] = 'Donacion Voluntaria';
+        $data['sidebar'] = 'sidebarCategorias';
+        $data['contenido'] = 'estandar/inicio';
+        $usuarioActual = $this->session->all_userdata();
+        if (isset($usuarioActual['nombre'])) {
             $data['contenido'] = 'usuario/donacion';
-            $data['title'] = 'Donacion voluntaria';
-            $data['sidebar'] = 'sidebarCategorias';
-            $this->load->view('plantilla', $data);
+            $data['sesion'] = 'sesionUsuario';
+            $data['menu'] = 'menuUsuario';
+             $data['sidebar'] = 'sidebarMiCuenta';
+            $data['usuarioActual'] = $usuarioActual;
+            if ($usuarioActual['usuario_nivel'] == 0) {
+                $data['menu'] = 'menuAdministrador';
+            }
+        } else {
+            $data['sesion'] = 'sesionLogin';
+            $data['menu'] = 'menuEstandar';
+        }
+        $this->load->view('plantilla', $data);
     }
     
     function donacionExitosa(){

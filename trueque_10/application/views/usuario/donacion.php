@@ -1,6 +1,12 @@
-<?php ?>
-
-
+<div id ="miga">
+    <?php echo anchor('productos/index', 'Inicio'); ?>
+    > 
+    <?php echo anchor('miCuenta', 'Mi Cuenta'); ?>
+    >
+    <?php echo "<strong> Realizar Donacion</strong>"; ?>
+</div> 
+<br/>
+<div style="padding-left: 5%;">
 <form id="datos_tc" name="datos_tc" action="/trueque_10/miCuenta/donacionExitosa" method="POST" onsubmit="return procesando();"> 
 
 
@@ -202,3 +208,4 @@
 
     
 </form>
+</div>
