@@ -1,3 +1,10 @@
+<div id ="miga">
+    <?php echo anchor('productos/index', 'Inicio'); ?>
+    > <?php echo anchor('administrar/index', 'Administrar'); ?>
+    ><strong>Editar Usuario</strong>
+</div>
+<h1>Editar Un Usuario</h1>
+<div style="padding-left: 5%;">
 <table cellpadding="5" cellspacing="0" border="0">
     <tr>
         <?php echo form_open('administrar/guardarUsuario') ?>
@@ -25,3 +32,4 @@
         <?php echo form_close(); ?>
     </tr>
 </table>
+</div>

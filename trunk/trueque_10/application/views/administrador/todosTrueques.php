@@ -1,16 +1,19 @@
-<h2>Todos los trueques</h2><br/>
-<h2 class ="paginacion" align ="center"><?php echo $paginacion; ?></h2>
-<div id="main" >
-    <br/><br/>
-    <ul>
+<div id ="miga">
+    <?php echo anchor('productos/index', 'Inicio'); ?>
+    > <?php echo anchor('administrar/index', 'Administrar'); ?>
+    ><strong>Estadistica Trueques</strong>
+</div>
+<br/>
+<h1>Todos los trueques</h1><br/>
+<h2 class ="paginacion"><?php echo $paginacion; ?></h2>
+<div style="padding-left: 5%;">
+<table id="main" border="0" cellspacing="0">
         <?php
         if ($permutas != FALSE and $permutas->num_rows > 0):
             foreach ($permutas->result() as $permuta):
                 ?>
-                <li >
-                    <table>
                         <tr>
-                            <td>
+                            <td align="center">
                                 <?php
                                 $image_properties = array(
                                     'src' => $permuta->rec_imagen,
@@ -21,11 +24,11 @@
                                 ?>
 
                             </td>
-                            <td>
-                                <h4>se ha Truequeado por </h4>
+                            <td align="center">
+                                <h3>se ha Truequeado por </h3>
 
                             </td>
-                            <td>
+                            <td align="center">
                                 <?php
                                 $image_properties = array(
                                     'src' => $permuta->sol_imagen,
@@ -39,7 +42,7 @@
 
                         </tr>
 
-                        <tr>
+                        <tr class="espacio">
                             <td align="center">
                                 <?php echo anchor('productos/verProducto/' . $permuta->rec_producto_id, $permuta->rec_nombre); ?>                       
 
@@ -52,17 +55,13 @@
                             </td>
 
                         </tr>
-                    </table>
-                    <br/>
-
-                </li>
-                <hr class="separador"/>
+                        <tr class="espacio"><td>
+                <hr class="separador"/></tr><td>
             <?php endforeach; ?>
-
         <?php else: ?>
-            <p>Ningun Producto En La Base de datos</p>
+                            <tr><td><h2>Ningun Producto En La Base de datos</h2></td></tr>
         <?php endif; ?>
-    </ul>
-</div>
+</table>
 <h2 class ="paginacion" align ="center"><?php echo $paginacion; ?></h2>
 <div style="clear: both;">&nbsp;</div>
+</div>

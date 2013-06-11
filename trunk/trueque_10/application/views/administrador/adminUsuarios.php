@@ -1,3 +1,9 @@
+
+<div id ="miga">
+    <?php echo anchor('productos/index', 'Inicio'); ?>
+    > <strong>Administrar</strong>
+</div>
+<div style="padding-left: 5%;">
 <table cellpadding="5" cellspacing="0" border="1" style="width: 100%;">
     <caption><h2>Usuarios</h2></caption>
     <thead>
@@ -46,4 +52,5 @@
     </tbody>
 </table>
 <br/>
-<div colspan="6" align="center"><p><?php echo $paginacion; ?></p></div>
+<div colspan="6" align="center"><h2><?php echo $paginacion; ?></h2></div>
+</div>
