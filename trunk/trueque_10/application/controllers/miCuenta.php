@@ -499,5 +499,47 @@ class MiCuenta extends CI_Controller {
         $data['mensajeAprobacion']='Gracias por su donaci&oacute;n';
         $this->load->view('plantilla',$data);
     }
+    
+    function nuevaContrasena(){
+        $data['activo'] = 1;
+        $data=  $this->cargarEstandar();
+        $data['title'] = 'Trueque Cambio Exitoso';
+        $data['contenido']='miCuenta/nuevaContrasena';
+        if ($_POST) {
+            $config = array(
+                array(
+                    'field' => 'contrasena',
+                    'label' => 'Contraseña',
+                    'rules' => 'trim|required'
+                ),
+                array(
+                    'field' => 'confirmarcontrasena',
+                    'label' => 'Confirmar Contraseña',
+                    'rules' => 'trim|required|matches[contrasena]'
+                )
+            );
+            $this->load->library('form_validation');
+            $this->form_validation->set_rules($config);
+            $this->form_validation->set_message('required', 'El campo %s es requerido');
+            $this->form_validation->set_message('matches', 'El campo %s no coincide');
+            if ($this->form_validation->run() == FALSE) {
+                $data['errores'] = validation_errors();
+            } else {
+                $usuarioActual = $this->session->all_userdata();
+                $nuevaContrasena = $_POST['contrasena'];
+                $id = $usuarioActual['usuario_id'];
+                $this->load->model('usuariosModel');
+                $this->usuariosModel->cambiarContrasena($id,$nuevaContrasena);
+                $data['title'] = 'inicio';
+                $data['sesion'] = 'sesionUsuario';
+                $data['menu'] = 'menuUsuario';
+                $data['sidebar'] = 'sidebarMicuenta';
+                $data['usuarioActual']=$usuarioActual;
+                $data['contenido'] = 'estandar/exito';
+                $data['mensajeAprobacion']='Contrase&ntilde;a cambiada exit&oacute;samente.';
+                }
+            }
+        $this->load->view("plantilla", $data);
+    }
 }
 ?>	
