@@ -17,9 +17,9 @@ class ComoFunciona extends CI_Controller {
     public function index() {
         $data['titulo'] = "Como Funciona";
 	$data['activo'] = 3;
-       $data['contenido'] = 'estandar/inicio';
+       $data['contenido'] = 'estandar/comoFunciona';
         $data['title'] = 'Trueque Inicio';
-        $data['sidebar'] = 'sidebarCategorias';
+        $data['sidebar'] = 'sidebarComoFunciona';
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre'])) {
             $data['sesion'] = 'sesionUsuario';
