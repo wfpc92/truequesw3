@@ -13,7 +13,7 @@
 					<li <?php if (isset($sideSelect) && $sideSelect==3){echo "class=\"seleccionar\"";}?>><?php echo anchor('permutas/index','Propuestas Recibidas')?></li>
 					<li <?php if (isset($sideSelect) && $sideSelect==4){echo "class=\"seleccionar\"";}?>><?php echo anchor('permutas/permutasEnviadas','Propuestas Enviadas')?></li>
                                         <li <?php if (isset($sideSelect) && $sideSelect==5){echo "class=\"seleccionar\"";}?>><?php echo anchor('miCuenta/editarInformacion','Editar Informacion')?></li>
-                                        <li <?php if (isset($sideSelect) && $sideSelect==6){echo "class=\"seleccionar\"";}?>><?php echo anchor('miCuenta/','Realizar Donacion')?></li>
+                                        <li <?php if (isset($sideSelect) && $sideSelect==6){echo "class=\"seleccionar\"";}?>><?php echo anchor('miCuenta/donacion','Realizar Donacion')?></li>
 				</ul>
 			</li>
 		</ul>

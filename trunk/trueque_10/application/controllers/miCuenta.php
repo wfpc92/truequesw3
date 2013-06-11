@@ -443,5 +443,27 @@ class MiCuenta extends CI_Controller {
             return TRUE;
         }
     }
+    
+    function donacion(){
+        
+            $data['activo'] = 1;
+            $data['sesion'] = 'sesionLogin';
+            $data['menu'] = 'menuEstandar';
+            $data['contenido'] = 'usuario/donacion';
+            $data['title'] = 'Donacion voluntaria';
+            $data['sidebar'] = 'sidebarCategorias';
+            $this->load->view('plantilla', $data);
+    }
+    
+    function donacionExitosa(){
+            $data['activo'] = 1;
+            $data['sesion'] = 'sesionLogin';
+            $data['menu'] = 'menuEstandar';
+            $data['contenido'] = 'usuario/donacion_exitosa';
+            $data['title'] = 'Donacion voluntaria';
+            $data['sidebar'] = 'sidebarCategorias';
+            $this->load->view('plantilla', $data);
+                
+    }
 }
 ?>	
