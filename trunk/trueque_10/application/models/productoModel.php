@@ -24,19 +24,31 @@ class ProductoModel extends CI_Model {
     }
 
     //PAGINACION
-    function getTodosProductos($limit, $start) {
+    function getTodosProductos($limit, $start,$id) {
         $this->db->limit($limit, $start);
         $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
         $this->db->from('producto');
         $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
         $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
         $this->db->where('estado_publicacion',1);
+        if($id!=NULL){
+            $this->db->where('usuarios.usuario_id !=',$id);
+        }
         $data = $this->db->get();
         return $data;
     }
 
-    function getNumProductos() {
-        return $this->db->count_all('producto');
+    function getNumProductos($id) {
+        $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
+        $this->db->from('producto');
+        $this->db->join('usuarios', 'producto.usuario_id = usuarios.usuario_id');
+        $this->db->join('categoria','categoria.categoria_id = producto.categoria_id');
+        $this->db->where('estado_publicacion',1);
+        if($id!=NULL){
+            $this->db->where('usuarios.usuario_id !=',$id);
+        }
+        $data = $this->db->get();
+        return $data->num_rows();
     }
 
     //FIN_PAGINACION
@@ -57,7 +69,7 @@ class ProductoModel extends CI_Model {
         return $data;
     }
 
-    public function buscarProductos($str, $limit, $start=null) {
+    public function buscarProductos($str, $limit, $start=null,$id) {
         $data=array();
         $criterio=mysql_real_escape_string($str);
         $this->load->helper('string');
@@ -69,6 +81,9 @@ class ProductoModel extends CI_Model {
         $query = $query." FROM (`producto`) JOIN `usuarios` ON `producto`.`usuario_id` = `usuarios`.`usuario_id` ";
         $query = $query." JOIN `categoria` ON `categoria`.`categoria_id` = `producto`.`categoria_id` "; 
         $query = $query." WHERE `estado_publicacion` = 1 "; 
+        if($id!=null){
+            $query=$query." AND `producto`.`usuario_id`!= '".$id."'";
+        }
         $query = $query." AND (`producto`.`nombre` LIKE '%".$criterio."%'";
         foreach ($valores as $valor): 
             $query = $query.' OR `producto`.`nombre` LIKE \'%'.$valor.'%\''; 
@@ -92,7 +107,7 @@ class ProductoModel extends CI_Model {
     }
 
     //PAGINACION 
-    public function numBuscarProducto($criterio) {
+    public function numBuscarProducto($criterio,$id) {
         $this->load->helper('string');
         $valores = explode(" ", $criterio);
         $query = "SELECT `producto_id`, `producto`.`nombre` AS p_nombre, `descripcion`, ";
@@ -103,6 +118,9 @@ class ProductoModel extends CI_Model {
         $query = $query." JOIN `categoria` ON `categoria`.`categoria_id` = `producto`.`categoria_id` "; 
         $query = $query." WHERE `estado_publicacion` = 1 "; 
         $query = $query." AND `producto`.`nombre` LIKE '%".$criterio."%'";
+        if($id!=null){
+            $query=$query." AND `producto`.`usuario_id`!= '".$id."'";
+        }
         foreach ($valores as $valor): 
             $query = $query.' OR `producto`.`nombre` LIKE \'%'.$valor.'%\''; 
             $query = $query.' OR `descripcion` LIKE \'%'.$valor.'%\''; 
@@ -204,7 +222,7 @@ class ProductoModel extends CI_Model {
         }
     }
 
-    function busquedaAvanzada($categoria, $desde, $hasta, $ciudad,$limit,$start) {
+    function busquedaAvanzada($categoria, $desde, $hasta, $ciudad,$limit,$start,$id) {
 
         $data = array();
         $this->db->limit($limit, $start);
@@ -225,6 +243,9 @@ class ProductoModel extends CI_Model {
         if ($ciudad != "") {
             $this->db->where('usuarios.id_ciudad',$ciudad);
         }
+        if($id!=NULL){
+             $this->db->where('producto.usuario_id !=',$id);
+        }
         $this->db->where('estado_publicacion',1);
         $consulta = $this->db->get();
         if ($consulta->num_rows() > 0) {
@@ -237,7 +258,7 @@ class ProductoModel extends CI_Model {
         $consulta->free_result();
         return $data;
     }
-    function numBusquedaAvanzada($categoria, $desde, $hasta, $ciudad) {
+    function numBusquedaAvanzada($categoria, $desde, $hasta, $ciudad,$id) {
 
          $data = array();
         $this->db->select('producto_id, producto.nombre AS p_nombre, descripcion, categoria.nombre AS categoria, imagen, fechaingreso, usuarios.usuario_id AS u_id, usuarios.nombre AS u_nombre, usuarios.apellido AS u_apellido');
@@ -256,6 +277,9 @@ class ProductoModel extends CI_Model {
         }
         if ($ciudad != "") {
             $this->db->where('usuarios.id_ciudad',$ciudad);
+        }
+        if($id!=NULL){
+             $this->db->where('producto.usuario_id !=',$id);
         }
         $this->db->where('estado_publicacion',1);
         $consulta = $this->db->get();

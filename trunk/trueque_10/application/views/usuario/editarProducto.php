@@ -1,4 +1,11 @@
+<div id ="miga">
+    <?php echo anchor('productos/index', 'Inicio'); ?>
+    > <strong><?php echo anchor('miCuenta', 'Mi Cuenta');?></strong>
+    > <strong>Editar Producto</strong>
+</div>
+<br/>
 <h1> Editar Producto</h1>
+<div style="padding-left: 5%;">
     <table id="formulario_editar">
         <span><?php echo validation_errors(); ?></span>
         <tr>
@@ -24,3 +31,4 @@
         </tr>
 
     </table>
+</div>

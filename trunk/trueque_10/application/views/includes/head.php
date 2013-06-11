@@ -74,12 +74,12 @@
 	<div id="logo" >
             <a href="<?php echo base_url();?>"><img src="<?php echo base_url(); ?>images/logo_trans.png" width=50% height=80% border=0 alt="Logo"></img></a>
 	</div>	
-	<div id="sesion" style="margin-top: 50px; margin-right: 50px;">
+	<div id="sesion" style="margin-top: 20px; margin-right: 50px;">
 						<?php 
 						$this->load->view('includes/'.$sesion);
 						?>
 	</div>
-	<div id="search" style="padding-top: 130px;">
+	<div id="search" style="padding-top: 110px;">
             <?php echo form_open('productos/buscarProducto') ?>
             <?php echo form_input('buscar',''); ?>  
             <?php echo form_submit('btnBuscar', 'Buscar'); ?> 

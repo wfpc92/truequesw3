@@ -1,7 +1,7 @@
 <div id ="miga"> 
     <?php 
+        echo anchor('productos/index','Inicio');
         if($title != 'Productos Destacados'){
-            echo anchor('productos/index','Inicio');
             echo " > ";
             echo "<strong>".$title."</strong><br/></br>";
         }
@@ -9,7 +9,7 @@
 </div>
 <br/>
 <h1><?php echo $title ?></h1>
-<h2 class =" paginacion" align="left"><?php echo $paginacion; ?></h2>
+<h3 class =" paginacion" align="left"><?php echo $paginacion; ?></h3>
 <table id="main" border="0" cellspacing="0">
     <br/><br/>
     <tr>
@@ -53,12 +53,14 @@
     <?php endforeach; ?>
 
 <?php else: ?>
+        <tr><td>
     <h3>No se han Encontrado Productos</h3>
+    </td></tr>
 <?php endif; ?>
 
 </table>
 <!---PAGINACION-->
-<h2 class =" paginacion"><?php echo $paginacion; ?></h2>
+<h3 class =" paginacion"><?php echo $paginacion; ?></h3>
     <!---FIN_PAGINACION-->
 
 <div style="clear: both;">&nbsp;</div>

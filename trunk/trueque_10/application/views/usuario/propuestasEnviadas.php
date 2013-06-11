@@ -5,9 +5,9 @@
      >
      <?php echo "<strong>" . $title . "</strong>";?>
 </div>
-<br/><br/>
+<br/>
 <h1><?php echo $title; ?></h1><br/>
-<h2 class =" paginacion"><?php echo $paginacion; ?></h2>
+<h3 class =" paginacion"><?php echo $paginacion; ?></h3>
 <table id="main" border="0" cellspacing="0">
         <?php
         if ($permutas != FALSE and $permutas->num_rows > 0):
@@ -28,7 +28,7 @@
                           
                             </td>
                             <td align="center">
-                                <h2>Lo quieres cambiar por: </h2>
+                                <h3>Lo quieres cambiar por: </h3>
 
                             </td>
                             <td align="center"> 
@@ -56,8 +56,10 @@
         </tr>
             <?php endforeach; ?>
         <?php else: ?>
+        <tr><td>
             <h2>No has Enviado Propuestas de Trueque</h2>
+            </td></tr>
         <?php endif; ?>
  </table>
 <div style="clear: both;">&nbsp;</div>
-<h2 class =" paginacion"><?php echo $paginacion; ?></h2>
+<h3 class =" paginacion"><?php echo $paginacion; ?></h3>

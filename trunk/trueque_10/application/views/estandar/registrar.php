@@ -8,7 +8,7 @@
     <?php echo anchor('productos/index','Inicio'); ?>
      > <strong>Registrate</strong>
 </div>
-</br></br>
+<br/><br/>
 
 <h1> Registro</h1>
 </br>
