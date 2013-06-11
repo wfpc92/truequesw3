@@ -168,14 +168,14 @@ class Usuarios extends CI_Controller {
             $contrasena = $this->usuariosModel->obtenerContrasena($receptor);
 
             if ($contrasena != FALSE) {
-                $this->email->from('');
+                $this->email->from('postmaster','Trueque.com');
                 $this->email->to($receptor);
                 $this->email->subject('Recuperacion de Contrasena de trueque.com');
                 $link_recuperacion = 'http://localhost/trueque_10/usuarios/cambiar_contrasena/' . str_replace('@', '_', $receptor) . '-' . $contrasena['contrasena'];
                 $mensaje = 'Dale clic a este enlace para recuperar tu contraseña: ' . $link_recuperacion;
                 $this->email->message($mensaje);
                 $this->email->send();
-                $data['mensaje'] = 'Se env&iacute;o a su correo ' . $receptor . ' un link con el que podr&aacute; ingresar directamente a su cuenta.' . $this->email->print_debugger();
+                $data['mensaje'] = 'Se env&iacute;o a su correo ' . $receptor . ' un link con el que podr&aacute; ingresar directamente a su cuenta.';
             } else {
                 $data['mensaje'] = 'No existe la cuenta ' . $receptor . ' en el Sistema';
             }
@@ -201,9 +201,16 @@ class Usuarios extends CI_Controller {
             $this->session->set_userdata('usuario_nivel', $usuarioActual['nivel']);
             $this->session->set_userdata('nombre', $usuarioActual['nombre']);
             $this->session->set_userdata('avatar', $usuarioActual['avatar']);
-            redirect(base_url());
+            $data['activo'] = 1;
+            $data['sesion'] = 'sesionLogin';
+            $data['menu'] = 'menuEstandar';
+            $data['contenido'] = 'miCuenta/cambiarContraseña';
+            $data['title'] = 'Donacion voluntaria';
+            $data['sidebar'] = 'sidebarCategorias';
+            $this->load->view('plantilla', $data);
         }
     }
+    
 
     function existe($str) {
         $this->load->model('usuariosModel');

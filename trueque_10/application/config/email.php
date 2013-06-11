@@ -4,9 +4,9 @@
 $config['useragent'] = 'CodeIgniter';//	None	The "user agent".
 $config['protocol'] = 'smtp';//	mail, sendmail, or smtp	The mail sending protocol.
 $config['mailpath'] = 'C:/xampp/htdocs/trueque_10/base_datos';//	None	The server path to Sendmail.
-$config['smtp_host'] = 'localhost';//
-$config['smtp_user'] = 'newuser';//
-$config['smtp_pass'] = '12345678';//
+$config['smtp_host'] = '192.168.43.201';//aqui va la direccion IP del computador
+$config['smtp_user'] = 'Admin';//
+$config['smtp_pass'] = '';//
 $config['smtp_port'] = '25';//	None	SMTP Port.
 $config['smtp_timeout'] = 5;//	None	SMTP Timeout (in seconds).
 $config['wordwrap'] = TRUE;//	TRUE or FALSE (boolean)	Enable word-wrap.
