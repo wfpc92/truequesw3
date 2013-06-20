@@ -168,14 +168,16 @@ class Usuarios extends CI_Controller {
             $contrasena = $this->usuariosModel->obtenerContrasena($receptor);
 
             if ($contrasena != FALSE) {
-                $this->email->from('postmaster','Trueque.com');
+                
+                $this->email->set_newline("\r\n");
+                $this->email->from('truequesoporte@gmail.com','Trueque.com');
                 $this->email->to($receptor);
                 $this->email->subject('Recuperacion de Contrasena de trueque.com');
                 $link_recuperacion = 'http://localhost/trueque_10/usuarios/cambiar_contrasena/' . str_replace('@', '_', $receptor) . '-' . $contrasena['contrasena'];
                 $mensaje = 'Dale clic a este enlace para recuperar tu contraseña: ' . $link_recuperacion;
                 $this->email->message($mensaje);
                 $this->email->send();
-                $data['mensaje'] = 'Se env&iacute;o a su correo ' . $receptor . ' un link con el que podr&aacute; ingresar directamente a su cuenta.';
+                $data['mensaje'] = 'Se env&iacute;o a su correo ' . $receptor . ' un link con el que podr&aacute; ingresar directamente a su cuenta.';//\n\n'.$this->email->print_debugger();
             } else {
                 $data['mensaje'] = 'No existe la cuenta ' . $receptor . ' en el Sistema';
             }
