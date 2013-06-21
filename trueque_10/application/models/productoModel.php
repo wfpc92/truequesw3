@@ -3,7 +3,6 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-//
 class ProductoModel extends CI_Model {
 
     function __construct() {

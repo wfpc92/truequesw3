@@ -3,16 +3,10 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-//
 class Usuarios extends CI_Controller {
 
-    //este es el constructor de la clase.
     function Usuarios() {
-        /* se hace el llamado al constructor del padre. */
         parent::__construct();
-        /* se cargan los modelos que necesitemos 
-          para nuestro controlador: */
-        //$this->load->model('booksModel');
         $this->load->model('usuariosModel');
         $this->load->model('productoModel');
     }
@@ -47,7 +41,7 @@ class Usuarios extends CI_Controller {
                 array(
                     'field' => 'contrasena',
                     'label' => 'Contraseña',
-                    'rules' => 'trim|required'
+                    'rules' => 'trim|required|min_length[6]|callback_validarPass'
                 ),
                 array(
                     'field' => 'confirmarcontrasena',
@@ -61,7 +55,8 @@ class Usuarios extends CI_Controller {
             $this->form_validation->set_message('is_unique', 'Este email ya esta registrado');
             $this->form_validation->set_message('matches', 'El campo %s no coincide');
             $this->form_validation->set_message('valid_email', 'El campo %s no corresponde a un Email');
-            $this->form_validation->set_message('trim', 'El campo %s no corresponde a un Email');
+            $this->form_validation->set_message('trim', 'Caracteres Invalidos');
+            $this->form_validation->set_message('min_length', 'El campo %s debe tener al menos 6 caracteres');
             if ($this->form_validation->run() == FALSE) {
                 $data['errores'] = validation_errors();
             } else {
@@ -225,16 +220,16 @@ class Usuarios extends CI_Controller {
     }
 
     function seguraSQL($str) {
-        if ((stripos($str, "or") !== false) || (stripos($str, "'") !== false)
-                || (stripos($str, ";") !== false) || (stripos($str, "from") !== false)
-                || (stripos($str, "drop") !== false) || (stripos($str, "delete") !== false)
-                || (stripos($str, "alter") !== false) || (stripos($str, ",") !== false)
-                || (stripos($str, "where") !== false) || (stripos($str, "and") !== false)
+        if ((stripos($str, " or ") !== false) || (stripos($str, "'") !== false)
+                || (stripos($str, "; ") !== false) || (stripos($str, " from ") !== false)
+                || (stripos($str, " drop ") !== false) || (stripos($str, " delete ") !== false)
+                || (stripos($str, " alter ") !== false) || (stripos($str, ", ") !== false)
+                || (stripos($str, " where ") !== false) || (stripos($str, " and ") !== false)
                 || (stripos($str, "<") !== false) || (stripos($str, ">") !== false)
                 || (stripos($str, "=") !== false)) {
+            $this->form_validation->set_message('seguraSQL', 'Su Ingreso esta considerado como un ataque a nuestra Base de datos');
             return FALSE;
         } else {
-            $this->form_validation->set_message('seguraSQL', 'Su Ingreso esta considerado como un ataque a nuestra Base de datos');
             return TRUE;
         }
     }
@@ -253,5 +248,31 @@ class Usuarios extends CI_Controller {
         $data['sidebar'] = 'sidebarMicuenta';
         return $data;
     }
-
+    function validarPass($str){
+        $banMin=FALSE;
+        $banMay=FALSE;
+        $banEsp=FALSE;
+        $banNum=FALSE;
+        for($i=0; $i<strlen($str);$i++){
+            if(ord($str[$i])>=33 && ord($str[$i])<=47){
+                $banEsp=TRUE;
+            }
+            if(ord($str[$i])>=65 && ord($str[$i])<=90){
+                $banMay=TRUE;
+            }
+            if(ord($str[$i])>=97 && ord($str[$i])<=122){
+                $banMin=TRUE;
+            }
+            if(ord($str[$i])>=48 && ord($str[$i])<=57){
+                $banNum=TRUE;
+            }
+        }
+        if($banEsp==TRUE && $banMay==TRUE && $banMin==TRUE && $banNum==TRUE){
+            return TRUE;
+        }
+        else{
+            $this->form_validation->set_message('validarPass', 'Su contraseña debe contener caracteres: Mayuscula, Minuscula,Numero y Especial');
+            return FALSE;
+        }
+    }
 }

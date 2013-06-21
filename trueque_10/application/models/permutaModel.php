@@ -2,7 +2,7 @@
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-//
+
 class PermutaModel extends CI_Model {
 
     function __construct() {
@@ -143,9 +143,8 @@ class PermutaModel extends CI_Model {
             $cont=$cont+1;
         endforeach;
         $this->load->helper('string');
-        $meses=array();
-        for($i=0;$i<=12;$i++):
-            $meses[$i]=0;
+        for($i=0;$i<12;$i++):
+           $meses[$i]=0;
         endfor;
         for($i=0;$i<$consulta->num_rows();$i++):
             $valores=explode("-",$reporte[$i]);
@@ -155,6 +154,61 @@ class PermutaModel extends CI_Model {
         endfor;
         return $meses;
         
+    }
+     function llenarMeses(){
+        $meses['enero']=0;
+        $meses['febrero']=0;
+        $meses['marxo']=0;
+        $meses['abril']=0;
+        $meses['mayo']=0;
+        $meses['junio']=0;
+        $meses['julio']=0;
+        $meses['agosto']=0;
+        $meses['septiembre']=0;
+        $meses['octubre']=0;
+        $meses['noviembre']=0;
+        $meses['diciembre']=0;
+        return $meses;
+    }
+    function obtenerMes($mes){
+        switch ($mes){
+            case 1:
+                return "enero";
+                break;
+            case 2:
+                return "febrero";
+                break;
+            case 3:
+                return "marzo";
+                break;
+            case 4:
+                return "abril";
+                break;
+            case 5:
+                return "mayo";
+                break;
+            case 6:
+                return "junio";
+                break;
+            case 7:
+                return "julio";
+                break;
+            case 8:
+                return "agosto";
+                break;
+            case 9:
+                return "septiembre";
+                break;
+            case 10:
+                return "octubre";
+                break;
+            case 11:
+                return "noviembre";
+                break;
+            case 12:
+                return "diciembre";
+                break;
+        }
     }
     function crearReportesPublicaciones($anio){
         $cont=0;
@@ -166,7 +220,7 @@ class PermutaModel extends CI_Model {
         endforeach;
         $this->load->helper('string');
         $meses=array();
-        for($i=0;$i<=12;$i++):
+        for($i=0;$i<12;$i++):
             $meses[$i]=0;
         endfor;
         for($i=0;$i<$consulta->num_rows();$i++):

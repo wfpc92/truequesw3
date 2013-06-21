@@ -59,6 +59,9 @@
         <tr><td>
             <h2>No has Enviado Propuestas de Trueque</h2>
             </td></tr>
+        <tr><td>
+                <h2><?php echo anchor('productos','Busca un Producto')?> y propon un Trueque.</h2>
+            </td></tr>
         <?php endif; ?>
  </table>
 <div style="clear: both;">&nbsp;</div>

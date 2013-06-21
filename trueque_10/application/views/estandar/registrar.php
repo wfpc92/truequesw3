@@ -67,7 +67,8 @@
 		</td>
 	</tr>
 	<tr>
-		<td><br/><label for="contrasena">* Contraseña: </label></td>
+            <td><br/><label for="contrasena">* Contraseña: </label><br/>
+                <label>(Minimo 6 Caracteres)</label></td>
 		<td><?php 
 			$data_form = array(
                           'name'        => 'contrasena',
@@ -76,6 +77,7 @@
                         );
                         echo form_error('contrasena','<b><p style="color:red;">','</p></b>');
 			echo form_password($data_form);?></td>
+                <td><label>Obligatorio: Mayuscula, Minuscula,Numero y Especial</label></td>
 	</tr>
 	<tr>
 		<td><br/><label for="confirmacontrasena">* Confirmar Contraseña: </label></td>

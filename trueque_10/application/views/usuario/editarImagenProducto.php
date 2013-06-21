@@ -31,14 +31,14 @@
                     ?>
                 </td>
             </tr>
-            <?php echo form_open_multipart('miCuenta/guardarImagen'); ?>
+            <?php echo form_open_multipart('miCuenta/guardarEditarImagen'); ?>
             <?php echo form_hidden('producto[imagen]', $producto['imagen'], 'size ="40" id =""'); ?>
             <?php echo form_hidden('producto[nombre]', $producto['nombre'], 'size ="40" id =""'); ?>
             <?php echo form_hidden('producto[descripcion]', $producto['descripcion'], 'size ="40" id =""'); ?>
             <?php echo form_hidden('producto[fechaingreso]', $producto['fechaingreso'], 'size ="40" id =""'); ?>
             <?php echo form_hidden('producto[usuario_id]', $producto['usuario_id'], 'size ="40" id =""'); ?>
             <?php echo form_hidden('producto[categoria_id]', $producto['categoria_id'], 'size ="40" id =""'); ?>
-            <?php echo form_hidden('producto_id', $producto['producto_id'], 'size ="40" id =""'); ?>
+            <?php echo form_hidden('producto[producto_id]', $producto['producto_id'], 'size ="40" id =""'); ?>
             <tr><td><input type="file" name="userfile" size="20" /></td></tr>
             <tr><td><input type="submit" value="Guardar Imagen" /></td></tr>
             <?php echo form_close() ?>

@@ -45,7 +45,7 @@
                             
                                 <?php echo form_open('miCuenta/darDeBaja') ?>
                                 <?php echo form_hidden('producto_id', $producto->producto_id, 'size ="40"'); ?>
-                                <input type="submit" value="Dejar de Publicar" />
+                                <input type="submit" value="Despublicar" />
                                 <?php echo form_close(); ?>
                             </td>
                         </tr>

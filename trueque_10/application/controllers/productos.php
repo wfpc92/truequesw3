@@ -3,7 +3,6 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-//
 class Productos extends CI_Controller {
     function Productos() {
         parent::__construct();
@@ -353,16 +352,16 @@ class Productos extends CI_Controller {
     }
     function seguraSQL($str){
  
-        if((stripos($str,"or")!==false)|| (stripos($str,"'")!==false)
-                || (stripos($str,";")!==false)||(stripos($str,"from")!==false)
-                ||(stripos($str,"drop")!==false)||(stripos($str,"delete")!==false)
-                ||(stripos($str,"alter")!==false)||(stripos($str,",")!==false)
-                ||(stripos($str,"where")!==false)||(stripos($str,"and")!==false)
+        if((stripos($str," or ")!==false)|| (stripos($str,"' ")!==false)
+                || (stripos($str,"; ")!==false)||(stripos($str," from ")!==false)
+                ||(stripos($str," drop ")!==false)||(stripos($str," delete ")!==false)
+                ||(stripos($str," alter ")!==false)||(stripos($str,", ")!==false)
+                ||(stripos($str," where ")!==false)||(stripos($str,"and")!==false)
                 ||(stripos($str,"<")!==false)||(stripos($str,">")!==false)
                 ||(stripos($str,"=")!==false)){
+            $this->form_validation->set_message('seguraSQL', 'Su Ingreso esta considerado como un ataque a nuestra Base de datos');
             return FALSE;
         }else{
-            $this->form_validation->set_message('seguraSQL', 'Su Ingreso esta considerado como un ataque a nuestra Base de datos');
             return TRUE;
         }
     }

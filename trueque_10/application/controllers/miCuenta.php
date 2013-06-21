@@ -61,7 +61,7 @@ class MiCuenta extends CI_Controller {
             //PAGINACION...
             $opciones = array();
             $opciones['per_page'] = 5;
-            $opciones['base_url'] = base_url() . 'miCuenta/index/';
+            $opciones['base_url'] = base_url() . 'miCuenta/productosNoPublicados/';
             $opciones['total_rows'] = $this->productoModel->numMisProductosNP($usuarioActual['usuario_id']);
             ;
             $opciones['uri_segment'] = 3;
@@ -119,6 +119,13 @@ class MiCuenta extends CI_Controller {
                 <a href=\'http://localhost/trueque_10/usuarios/registrar\'>Registrarte</a>
                 o Iniciar Sesion';
             $data['contenido']='estandar/error';
+            if($usuarioActual['usuario_nivel'] == 0){
+                $data['sidebar'] = 'sidebarAdministrar';
+                $data['sesion'] = 'sesionUsuario';
+                $data['usuarioActual']=$usuarioActual;
+                $data['mensajeAprobacion'] = 'Tu Como Administrador </br> No Puedes 
+                Truequear Productos. <a href=\'http://localhost/trueque_10\'>Volver</a>';
+            }
             $this->load->view('plantilla', $data);
         }
     }
@@ -255,28 +262,37 @@ class MiCuenta extends CI_Controller {
             $data['usuarioActual']=$usuarioActual;
             $data['producto']=$producto;
             $data['title'] = 'Publicar Producto';
-            if (isset($_POST['producto_id'])) {
-                $data['contenido'] = 'usuario/editarImagenProducto';
-                $data['producto']['producto_id']=$_POST['producto_id'];
-                $this->load->view('plantilla', $data);
-            } else {
-                $data['contenido'] = 'usuario/publicarImagen';
-                $this->load->view('plantilla', $data);
-            }
+            $data['contenido'] = 'usuario/publicarImagen';
+            $this->load->view('plantilla', $data);
         } else {
             $this->load->model('productoModel');
             $data = array('upload_data' => $this->upload->data());
             $aux = $this->upload->data();
             $producto['imagen'] = base_url() . '/images/' . $aux['file_name'];
-            if (isset($_POST['producto_id'])) {
-                echo "se fue por el editar";
-                $this->productoModel->editarProducto($producto, $_POST['producto_id']);
-            } else {echo "se fue por el agregar";
-                
-                $this->productoModel->agregarProducto($producto);
-            }
+            $this->productoModel->agregarProducto($producto);
             redirect('miCuenta');
         }
+        }else{redirect(base_url());}
+    }
+    function guardarEditarImagen() {
+        $data['sideSelect']=2;
+        $data['activo'] = 2;
+        $usuarioActual = $this->session->all_userdata();
+        if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1){
+        $config['upload_path'] = './images/';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size'] = '100';
+        $config['max_width'] = '800';
+        $config['max_height'] = '600';
+        $producto = $_POST['producto'];
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload()) {
+            $aux = $this->upload->data();
+            $producto['imagen'] = base_url() . '/images/' . $aux['file_name'];
+        }
+            $this->load->model('productoModel');
+            $this->productoModel->editarProducto($producto,$producto['producto_id']);
+            redirect('miCuenta');
         }else{redirect(base_url());}
     }
 
@@ -343,6 +359,7 @@ class MiCuenta extends CI_Controller {
         $data['sideSelect']=5;
         $data['activo'] = 2;
         $this->load->model('usuariosModel');
+        $this->load->model('productoModel');
         $usuarioActual = $this->session->all_userdata();
         if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 1) {
             $usuario = $this->usuariosModel->getUsuario($usuarioActual['usuario_id']);
@@ -353,6 +370,7 @@ class MiCuenta extends CI_Controller {
             $data['menu'] = 'menuUsuario';
             $data['usuarioActual'] = $usuarioActual;
             $data['usuario'] = $usuario;
+            $data['ciudades'] = $this->productoModel->cargarCiudad();
             $this->load->view('plantilla', $data);
         } else {
             redirect(base_url());
@@ -406,10 +424,9 @@ class MiCuenta extends CI_Controller {
                 $usuario=$_POST['usuario'];
                 if($aux['file_name']!=""){
                     $usuario['avatar'] = base_url() . '/images/' . $aux['file_name'];
-                }else{
-                    $usuario['avatar'] = base_url() . '/images/avatar.jpg';
                 }
                 $usuario['usuario_id']=$usuarioActual['usuario_id'];
+                $usuario['id_ciudad'] = $this->input->post('ciudad');
                 $this->usuariosModel->setUsuario($usuario);
                 $this->session->set_userdata('nombre', $usuario['nombre']);
                 $this->session->set_userdata('avatar', $usuario['avatar']);
@@ -430,14 +447,14 @@ class MiCuenta extends CI_Controller {
         redirect('miCuenta');
     }
     function seguraSQL($str){
-        if((stripos($str,"'")!==false)||(stripos($str," from ")!==false)
+        if((stripos($str,"' ")!==false)||(stripos($str," from ")!==false)
                 ||(stripos($str," drop ")!==false)||(stripos($str," delete ")!==false)
                 ||(stripos($str," alter ")!==false)||(stripos($str," where ")!==false)||(stripos($str," and ")!==false)
                 ||(stripos($str,"<")!==false)||(stripos($str,">")!==false)
-                ||(stripos($str," = ")!==false)){
+                ||(stripos($str,"=")!==false)){
+            $this->form_validation->set_message('seguraSQL', 'Su Ingreso esta considerado como un ataque a nuestra Base de datos');
             return FALSE;
         }else{
-            $this->form_validation->set_message('seguraSQL', 'Su Ingreso esta considerado como un ataque a nuestra Base de datos');
             return TRUE;
         }
     }

@@ -62,6 +62,6 @@
                             <tr><td><h2>Ningun Producto En La Base de datos</h2></td></tr>
         <?php endif; ?>
 </table>
-<h2 class ="paginacion" align ="center"><?php echo $paginacion; ?></h2>
+<h2 class ="paginacion"><?php echo $paginacion; ?></h2>
 <div style="clear: both;">&nbsp;</div>
 </div>
