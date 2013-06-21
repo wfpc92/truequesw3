@@ -8,6 +8,7 @@ class Productos extends CI_Controller {
     function Productos() {
         parent::__construct();
         $this->load->model('productoModel');
+        $this->load->model('usuariosModel');
         $this->load->library('pagination');
         $this->load->library('image_lib');
     }
@@ -94,6 +95,8 @@ class Productos extends CI_Controller {
             $data['sesion'] = 'sesionLogin';
             $data['menu'] = 'menuEstandar';
         }
+        $usuario_db = $this->usuariosModel->getUsuarioCiudad($id);
+        $data['usuario'] = $usuario_db;
         $this->load->view('plantilla', $data);
     }
 

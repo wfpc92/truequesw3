@@ -102,6 +102,21 @@ class usuariosModel extends CI_Model {
         $consulta->free_result();
         return $data;
     }
+    
+    function getUsuarioCiudad($id) {
+        $data = array();
+        $this->db->select('usuario_id,usuarios.nombre as nombre,apellido,email,id_ciudad,avatar,cuidad.nombre as ciudad');
+        $this->db->from('usuarios');
+        $this->db->join('cuidad', 'cuidad.id = usuarios.id_ciudad');
+        $this->db->where('usuario_id', $id);
+        $this->db->limit(1);
+        $consulta = $this->db->get();
+        if ($consulta->num_rows() > 0) {
+            $data = $consulta->row();
+        }
+        $consulta->free_result();
+        return $data;
+    }
 
     function setUsuario($data) {
         $this->db->where('usuario_id', $data['usuario_id']);

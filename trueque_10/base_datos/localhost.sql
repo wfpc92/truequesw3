@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.1
+-- version 3.3.9
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 05-06-2013 a las 16:45:47
--- Versión del servidor: 5.5.24-log
--- Versión de PHP: 5.3.13
+-- Tiempo de generación: 21-06-2013 a las 02:01:46
+-- Versión del servidor: 5.5.8
+-- Versión de PHP: 5.3.5
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -19,6 +18,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `trueque`
 --
+CREATE DATABASE `trueque` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `trueque`;
 
 -- --------------------------------------------------------
 
@@ -33,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `categoria` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 --
--- Volcado de datos para la tabla `categoria`
+-- Volcar la base de datos para la tabla `categoria`
 --
 
 INSERT INTO `categoria` (`categoria_id`, `nombre`) VALUES
@@ -67,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `cuidad` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=79 ;
 
 --
--- Volcado de datos para la tabla `cuidad`
+-- Volcar la base de datos para la tabla `cuidad`
 --
 
 INSERT INTO `cuidad` (`id`, `nombre`) VALUES
@@ -165,13 +166,23 @@ CREATE TABLE IF NOT EXISTS `permuta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `permuta`
+-- Volcar la base de datos para la tabla `permuta`
 --
 
 INSERT INTO `permuta` (`producto_recibe`, `producto_solicita`, `fechapermuta`) VALUES
 (1, 100, '2013-06-05'),
 (2, 101, '2013-06-05'),
-(2, 101, '2013-06-05');
+(2, 101, '2013-06-05'),
+(3, 68, '2013-06-10'),
+(4, 4, '2013-06-10'),
+(21, 7, '0000-00-00'),
+(8, 114, '2013-06-10'),
+(5, 8, '2013-06-10'),
+(7, 5, '2013-06-10'),
+(9, 7, '2013-06-10'),
+(10, 115, '2013-06-20'),
+(69, 12, '0000-00-00'),
+(12, 10, '2013-06-20');
 
 -- --------------------------------------------------------
 
@@ -191,23 +202,23 @@ CREATE TABLE IF NOT EXISTS `producto` (
   PRIMARY KEY (`producto_id`),
   KEY `nombre` (`nombre`),
   KEY `fk_usuario_producto` (`usuario_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=114 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=116 ;
 
 --
--- Volcado de datos para la tabla `producto`
+-- Volcar la base de datos para la tabla `producto`
 --
 
 INSERT INTO `producto` (`producto_id`, `nombre`, `descripcion`, `categoria_id`, `imagen`, `fechaingreso`, `usuario_id`, `estado_publicacion`) VALUES
 (1, 'Camara Antigua Kodak', 'Camara con proceso de  placa húmeda con colodión húmedo. Es necesario que el fotógrafo prepare artesanalmente las placas, en un cuarto oscuro de  estudios fotográficos.', 1, 'http://localhost/trueque_10//images/camara.jpg', '2013-04-02', 25, 0),
-(2, 'Pelicula Avengers', 'Formato : DVD.\r\nPelícula estadounidense de superhéroes de 2012 escrita y dirigida por Joss Whedon. Fue producida por Marvel Studios y distribuida por Walt Disney Pictures, y basada en el cómic homónimo de Marvel Comics. Es parte del Universo Cinematográfico de Marvel, que enlaza varias películas de superhéroes de Marvel como Iron Man (2008), El Increíble Hulk (2008), Iron Man 2 (2010), Thor (2011) y Capitán América: el primer vengador (2011)', 5, 'http://localhost/trueque_10//images/avengers.jpg', '2013-06-03', 13, 0),
-(3, 'PC de Escritorio HP Pavilion a6200la', 'Procesador base: Pentium E2140 (C) de 1,6 GHz: Bus frontal a 800 MHz, Socket 775.\r\nConjunto de chips: Intel 945GC\r\nPlaca base: Fabricante: ECS, Nombre de la placa base: 945GCT-HM, Nombre de la placa base HP/Compaq: Livermore8-GL6', 6, 'http://localhost/trueque_10//images/campu3.jpg', '2013-05-26', 13, 1),
-(4, 'Aletas BioFuse', 'Diseñadas usando materiales y tecnologías actuales, y testadas por nuestros atletas, son el complemento ideal para cualquier sesión de entrenamiento.\r\nPensadas para incrementar la velocidad en el agua, Mejora la fuerza de las piernas y la flexibilidad de los tobillos, Dos tipos de densidades: pala densa, calzante más suave y cómodo, 100% silicona.\r\nCon robustos pero flexibles accesorios y dispositivos de ayuda al entrenamiento que trabajan junto con tu cuerpo en el agua para incrementar tu fuerza, resistencia o para darte una visión clara de tu línea de nado.', 7, 'http://localhost/trueque_10//images/aletas.jpg', '2013-06-03', 13, 1),
-(5, 'Olla arrocera antiaderente UNIVERSAL', 'Detalles:  Marca Universal, Vasija De aluminio con interior antiadherente , con Asas y perilla termorresistente, Tapa En vidrio templado, Capacidad1.5 libras, Contiene Vaporera / cuchara y taza medidora de plástico', 8, 'http://localhost/trueque_10//images/arroz.jpg', '2013-05-13', 13, 1),
-(7, 'Muñeca Emily pratz', 'Aún se encuentra en su estuche, viene con dos mudas de ropa y una colección de zapatos, Es una muñeca articulada y tiene Como accesorios un bolso  para cada vestido, unos aretes y un anillo.', 10, 'http://localhost/trueque_10//images/barbie.jpg', '2013-05-31', 13, 1),
-(8, 'Cien años de soledad', 'El libro se encuentra en muy buen estado, no se ha escrito nada sobre él y es el libro original. El libro trata de  una novela del escritor colombiano y Premio Nobel de Literatura en 1982, Gabriel García Márquez. Considerada una obra maestra de la literatura hispanoamericana y universal, es una de las obras más traducidas y leídas en español.', 11, 'http://localhost/trueque_10//images/100.jpg', '2013-05-22', 13, 1),
-(9, 'Licor Cuarenta Y Tres', 'Es un licor español, de color dorado, confeccionado, según la leyenda, a partir de 43 distintos cítricos, frutas y especias del mediterráneo. Su sabor es dulce, y muy versátil, variando enormemente según la mezcla con la que se tome. Contiene un 31% de volumen de alcohol etílico.', 12, 'http://localhost/trueque_10//images/43.jpg', '2013-04-18', 13, 1),
-(10, 'Acordeón', 'Formado por dos cajas armónicas de madera convenientemente estacionada  revestidas externamente en celuloide y unidas entre sí por un fuelle de cartón, piel y tela. Una de las cajas lleva un teclado que se ejecuta con la mano derecha. La otra lleva una serie de botones y se ejecuta con la mano izquierda.', 13, 'http://localhost/trueque_10//images/acordeon.jpg', '2013-06-03', 13, 1),
-(12, 'MONTEREY 298 SS', 'Lancha súper deportiva, muy rápida. Navegación radical ideal para deportes acuáticos, y salidas de media travesía. Yachting Spain tours s. l. ofrece los detalles de buena fe pero no los garantiza, el comprador debería de realizar una inspección en su propio interés. . Color blanco', 14, 'http://localhost/trueque_10//images/barcoElegante.jpg', '2013-04-19', 13, 1),
+(2, 'Pelicula Avengers', 'Formato : DVD.\r\nPelícula estadounidense de superhéroes de 2012 escrita y dirigida por Joss Whedon. Fue producida por Marvel Studios y distribuida por Walt Disney Pictures, y basada en el cómic homónimo de Marvel Comics. Es parte del Universo Cinematográfico de Marvel, que enlaza varias películas de superhéroes de Marvel como Iron Man (2008), El Increíble Hulk (2008), Iron Man 2 (2010), Thor (2011) y Capitán América: el primer vengador (2011)', 5, 'http://localhost/trueque_10//images/avengers.jpg', '2013-06-03', 13, 1),
+(3, 'PC de Escritorio HP Pavilion a6200la', 'Procesador base: Pentium E2140 (C) de 1,6 GHz: Bus frontal a 800 MHz, Socket 775.\r\nConjunto de chips: Intel 945GC\r\nPlaca base: Fabricante: ECS, Nombre de la placa base: 945GCT-HM, Nombre de la placa base HP/Compaq: Livermore8-GL6', 6, 'http://localhost/trueque_10//images/campu3.jpg', '2013-05-26', 17, 0),
+(4, 'Aletas BioFuse', 'Diseñadas usando materiales y tecnologías actuales, y testadas por nuestros atletas, son el complemento ideal para cualquier sesión de entrenamiento.\r\nPensadas para incrementar la velocidad en el agua, Mejora la fuerza de las piernas y la flexibilidad de los tobillos, Dos tipos de densidades: pala densa, calzante más suave y cómodo, 100% silicona.\r\nCon robustos pero flexibles accesorios y dispositivos de ayuda al entrenamiento que trabajan junto con tu cuerpo en el agua para incrementar tu fuerza, resistencia o para darte una visión clara de tu línea de nado.', 7, 'http://localhost/trueque_10//images/aletas.jpg', '2013-06-03', 13, 0),
+(5, 'Olla arrocera antiaderente UNIVERSAL', 'Detalles:  Marca Universal, Vasija De aluminio con interior antiadherente , con Asas y perilla termorresistente, Tapa En vidrio templado, Capacidad1.5 libras, Contiene Vaporera / cuchara y taza medidora de plástico', 8, 'http://localhost/trueque_10//images/arroz.jpg', '2013-05-13', 13, 0),
+(7, 'Muñeca Emily pratz', 'Aún se encuentra en su estuche, viene con dos mudas de ropa y una colección de zapatos, Es una muñeca articulada y tiene Como accesorios un bolso  para cada vestido, unos aretes y un anillo.', 10, 'http://localhost/trueque_10//images/barbie.jpg', '2013-05-31', 13, 0),
+(8, 'Cien años de soledad', 'El libro se encuentra en muy buen estado, no se ha escrito nada sobre él y es el libro original. El libro trata de  una novela del escritor colombiano y Premio Nobel de Literatura en 1982, Gabriel García Márquez. Considerada una obra maestra de la literatura hispanoamericana y universal, es una de las obras más traducidas y leídas en español.', 11, 'http://localhost/trueque_10//images/100.jpg', '2013-05-22', 13, 0),
+(9, 'Licor Cuarenta Y Tres', 'Es un licor español, de color dorado, confeccionado, según la leyenda, a partir de 43 distintos cítricos, frutas y especias del mediterráneo. Su sabor es dulce, y muy versátil, variando enormemente según la mezcla con la que se tome. Contiene un 31% de volumen de alcohol etílico.', 12, 'http://localhost/trueque_10//images/43.jpg', '2013-04-18', 27, 0),
+(10, 'Acordeón', 'Formado por dos cajas armónicas de madera convenientemente estacionada  revestidas externamente en celuloide y unidas entre sí por un fuelle de cartón, piel y tela. Una de las cajas lleva un teclado que se ejecuta con la mano derecha. La otra lleva una serie de botones y se ejecuta con la mano izquierda.', 13, 'http://localhost/trueque_10//images/acordeon.jpg', '2013-06-03', 13, 0),
+(12, 'MONTEREY 298 SS', 'Lancha súper deportiva, muy rápida. Navegación radical ideal para deportes acuáticos, y salidas de media travesía. Yachting Spain tours s. l. ofrece los detalles de buena fe pero no los garantiza, el comprador debería de realizar una inspección en su propio interés. . Color blanco', 14, 'http://localhost/trueque_10//images/barcoElegante.jpg', '2013-04-19', 31, 0),
 (13, 'Call Of Duty World at War', 'Contiene un nuevo y amplio arsenal de armas con las que deberemos enfrentarnos a un grupo de enemigos que amenazan el plante. En total, tendremos más de 70 nuevas armas, desde rifles de asalto hasta lásers, rifles de francotirador y prismáticos de visión nocturna. incluye gráficos mejorados y cinemáticas de alta calidad. Además, las partidas estarán enriquecidas con efectos especiales y batallas muy realistas', 15, 'http://localhost/trueque_10//images/callofduty.jpg', '2013-04-16', 13, 1),
 (21, 'Ferrania Rondine', 'Pequeña cámara italiana fabricada por Ferrania en 1948. Con objetivo del tipo meniscus Linear 75 mm f 8,8. Una velocidad de 1/75 sg. más pose. Un visor reflex y otro deportivo abatible. Utiliza película en rollo del tipo 127 para negativos de 4x6,5 cms.', 1, 'http://localhost/trueque_10//images/camara2.jpg', '2013-01-30', 14, 1),
 (22, 'Casa Hermosa Placilla', 'Claros del Bosque\r\nLocación - Curauma, cuartos - 4  ,Baños – 3, Garajes – 2.Excelente Casa ubicada en sector de Curauma, Living y comedor separados, Amplia cocina, Bar, 5 dormitorios (principal en suite) 1 Oficina, 2 baños completos, 1/2 baño Visita, Lavandería, 2, Invernadero/observatorio, Patio servicio, Amplia terraza de pino Oregón ( 25 M2 aprox.), Piscina revestida en azulejos. Quincho, mesón, Parrilla, Horno de barro, Estacionamiento 2 autos con portón eléctrico Cerco eléctrico, alarma Riego automático, Calefacción Central.', 3, 'http://localhost/trueque_10//images/casaHermosaPlacilla.jpg', '2013-04-10', 14, 1),
@@ -254,7 +265,7 @@ INSERT INTO `producto` (`producto_id`, `nombre`, `descripcion`, `categoria_id`, 
 (65, 'Flauta dulce Yamaha YRS-23', 'Sistema: Alemán. Construcción: Agujero doble. Realización: 3 piezas. Acabado de la superficie: Blanco. Cabeza: Cabezal de plástico. Material: Plástico. Afinación: Do - La = 442 Hz. Característica: Fácil mantenimiento y robusta, ¡Ideal para principiantes!. Accesorios: Funda , Tabla de digitación.', 13, 'http://localhost/trueque_10//images/flauta.jpg', '2013-06-04', 16, 1),
 (66, 'Chevrolet Aveo 2012', 'Chevrolet aveo año 2012 totalmente nuevo tapiceria de tela perfecto estado', 14, 'http://localhost/trueque_10//images/chevrolet-aveo-2012_MLV-F-TUC_43221542_1.jpg', '2013-06-04', 16, 1),
 (67, 'WarCraft PC', 'Las poderosas razas de la Alianza y la Orda continúan su feroz guerra, en esta tercera entrega de una de las sagas de estrategia más populares de PC y ahora lo tendrás en tu pc, para que armes tus estrategias y seas el mejor en tu raza. Vistosos escenarios y mapeados completamente tridimensionales. Incluye elementos y situaciones más propias de estrategia. Para edades superiores a los 12 años. Totalmente en español.', 15, 'http://localhost/trueque_10//images/craft.jpg', '2013-06-03', 16, 1),
-(68, 'Carroza Antigua', 'Preciosa carroza antigua de hojalata. Años 30s. Muy grande.Posiblemente repintado de epoca, y posible manufactura española. A reparar rueda trasera y precisara reparo, limpieza y restauración porque seguro que faltaran complementos. Muy bonita, tal cual salida de una casa catalana antigua.', 1, 'http://localhost/trueque_10//images/carroosa.jpg', '2013-04-25', 17, 1),
+(68, 'Carroza Antigua', 'Preciosa carroza antigua de hojalata. Años 30s. Muy grande.Posiblemente repintado de epoca, y posible manufactura española. A reparar rueda trasera y precisara reparo, limpieza y restauración porque seguro que faltaran complementos. Muy bonita, tal cual salida de una casa catalana antigua.', 1, 'http://localhost/trueque_10//images/carroosa.jpg', '2013-04-25', 13, 0),
 (69, 'Nikon Coolpix P1', 'proporciona compatibilidad con las cámaras Coolpix P1 y P2 utilizando Nikon Wireless Camera Setup Utility v2.1 para conectarse inalámbricamente a sistemas con Windows Vista (versión de 32 bits). Esta actualización permite la descarga e instalación desde sistemas enumerados de Macintosh, pero la actualización no es para sistemas Macintosh. Puedes actualizar el firmware de la cámara a través de un sistema Mac para uso con sistemas Windows Vista. La conexión inalámbrica a ordenadores Macintosh basados en Intel no está garantizada con este firmware.', 2, 'http://localhost/trueque_10//images/cam3.jpg', '2013-03-13', 17, 1),
 (70, 'Nikon Coolpix P100', 'Su cuerpo esta diseñado para un buen agarre. Sus fotos son de buena calidad, nítida resolución para captar los detalles + finos, recortar de forma creativa y producir buenas ampliaciones.\r\nSus 10.3 MP te permite crear impresiones de 16'' x 20''. Su 26x de zoom óptico gran angular te permite captar paisajes de enormes dimensiones, en 1ros. planos de la acción tienen lugar en el campo de béisbol o fútbol. Posee un sensor CMOS de nueva iluminación trasera. Ráfaga de disparo rapido de aprox. 120fps. para imágenes de hasta 1.1 MP.', 2, 'http://localhost/trueque_10//images/cam4.jpg', '2013-06-04', 17, 1),
 (71, 'Casa Finca', 'Bella casa en condominio jardines de curauma, condominio cerrado con portón eléctrico y cito fono. características: primer piso: hall de acceso, baño de visita, dormitorio matrimonial con amplios closet y baño en suite con vanitorios de mármol, cocina amplia con despensa, horno, cocina y campana empotrada y comedor de diario. segundo piso: sala de estar, 2 dormitorios con closet, baño de visita completa, patio amplio con pasto, quincho y terrazas con hermoso techo de madera bodega', 3, 'http://localhost/trueque_10//images/casaFinca.jpg', '2013-06-04', 17, 1),
@@ -299,7 +310,9 @@ INSERT INTO `producto` (`producto_id`, `nombre`, `descripcion`, `categoria_id`, 
 (110, 'Warcraft III: Reign of Chaos', 'Tercera parte de uno de los juegos de estrategia en tiempo real más importante que existen. Esta tercera parte ofrece un remozado aspecto 3D además de incluir elementos propios de los RPG, más bandos y una historia más elaborada, lo que se intentará unir a las virtudes que han hecho grande esta saga.', 15, 'http://localhost/trueque_10//images/craft1.jpg', '2013-06-04', 25, 1),
 (111, 'Timbales', 'Se intercambian 9 tambores y 1 timbal, con las siguientes características: • tambor cadete 35, 5 Ø x 18 cm. (14 Ø x 7 ). - casco de madera. - aros de nylon rojo. - casco de madera. - 6 varillas de tensión cromadas. - bordonero ajustable. - parches de plástico • timbal cofradia 38 Ø x 40 cm. (15 Ø x 16 ). - casco de madera. - aros de nylon rojo. - casco de madera. - 6 varillas de tensión cromadas. - parche de plástico. los tambores van sin correaje. (solo dispongo de 4 incluidos)', 13, 'http://localhost/trueque_10//images/timbales.jpg', '2013-06-04', 25, 1),
 (112, 'Sheridan es un licor de café. Para ocasiones especiales', 'Sheridan es un licor de cafe producido en Dublin por Thomas Sheridan & Sons. Fue introducido en 1994 y su botella caracteristica y combinacion the licor de leche blanco y licor de cafe y sabores a whisky lo han convertido en una de las bebidas premium mas famosas del mundo. Es mas rico que el Baylies. UN REGALO SUMAMENTE ESPECIAL o para disfrutarlo en familia.\r\n\r\nNota: Se hacen entregas en el DF y área metropolitana o en alguna estacion del metro de cualquier linea\r\n\r\nTiempo de respuesta 4 horas desde que lo solicitas hasta la entrega dependiendo del lugar de entrega. Si la zona es centrica el tiempo baja a 3 horas.', 12, 'http://localhost/trueque_10//images/sheridanhome_0.jpg', '2013-06-04', 25, 1),
-(113, 'Mitos Griegos', 'Esta es la recopilacion de los mitos griegos mas conocidos. La historia del Rey Midas, quien sucumbe ante la terrible fuerza de su ambicion o Narciso, quien se enamora de su propia imagen al descubrir su reflejo en el agua. Tambien hay hombres que se convierten en animales, dioses que se casan con mortales.', 11, 'http://localhost/trueque_10//images/mitos.jpg', '2013-06-04', 25, 1);
+(113, 'Mitos Griegos', 'Esta es la recopilacion de los mitos griegos mas conocidos. La historia del Rey Midas, quien sucumbe ante la terrible fuerza de su ambicion o Narciso, quien se enamora de su propia imagen al descubrir su reflejo en el agua. Tambien hay hombres que se convierten en animales, dioses que se casan con mortales.', 11, 'http://localhost/trueque_10//images/mitos.jpg', '2013-06-04', 25, 1),
+(114, 'marranito', 'este es un marranito muy bonito y rechonchito', 9, 'http://localhost/trueque_10//images/bicicleta1.jpg', '2013-06-11', 13, 0),
+(115, 'Carro', 'es un carro de alta calidad', 14, 'http://localhost/trueque_10//images/bicicleta2.jpg', '2013-06-21', 13, 0);
 
 -- --------------------------------------------------------
 
@@ -314,6 +327,11 @@ CREATE TABLE IF NOT EXISTS `telefono` (
   PRIMARY KEY (`telefono_id`),
   KEY `fk_usuario_telefono` (`usuario_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Volcar la base de datos para la tabla `telefono`
+--
+
 
 -- --------------------------------------------------------
 
@@ -332,30 +350,36 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `avatar` varchar(124) NOT NULL DEFAULT 'http://localhost/trueque_10/images/avatar.jpg',
   PRIMARY KEY (`usuario_id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=32 ;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Volcar la base de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`usuario_id`, `nombre`, `apellido`, `email`, `contrasena`, `nivel`, `id_ciudad`, `avatar`) VALUES
-(12, 'Alexis', 'Ruano', 'alexis@gmail.com', '3c75ccfafda2150b5c25b6e290f1ba0975444cbf', 0, 0, 'http://localhost/trueque_10/images/avatar.jpg'),
-(13, 'Edward', 'Giraldo', 'edward@gmail.com', 'fac21fc04e980f366260130b2e5aa2fe32fecb26', 1, 0, 'http://localhost/trueque_10/images/avatar.jpg'),
-(14, 'Paola', 'Martinez', 'paola@gmail.com', '5e7960ae59608c00deb29ea1d233a7b8ddf65d73', 1, 0, 'http://localhost/trueque_10/images/avatar.jpg'),
-(15, 'Andrea', 'Zambrano', 'andrea@gmail.com', '08dd0d9cba826ebae188f009be71e66297a2f1ae', 1, 0, 'http://localhost/trueque_10/images/avatar.jpg'),
-(16, 'Elkin', 'Hurtado', 'elkin@gmail.com', '848708b1171f92833aff70e5b9f872f6a16146e0', 1, 0, 'http://localhost/trueque_10/images/avatar.jpg'),
-(17, 'Andres', 'Castillo', 'andresf@gmail.com', '280c93e72eeeb4eadf92e9d0dceb7c501a068e66', 1, 0, 'http://localhost/trueque_10/images/avatar.jpg'),
-(18, 'Andres', 'Florez', 'andressteven@gmail.com', '02b81dfb78aed264e808f86f3ab4b3e3d4a91921', 1, 0, 'http://localhost/trueque_10/images/avatar.jpg'),
-(19, 'Karen', 'Bolaños', 'karen@gmail.com', 'eee82986f34d650e5554e2850f7408368587b0fb', 1, 0, 'http://localhost/trueque_10//images/110811-203306.jpg'),
-(20, 'Silvana', 'Garcia', 'silvana@gmail.com', '826a3326d0bf1bd93071029d3ef7aa8f8cc517d6', 1, 0, 'http://localhost/trueque_10/images/avatar.jpg'),
-(21, 'Diana', 'Hoyos', 'diana@hotmail.com', '77772f8b65d7855969f9edf0507ab9131df2b665', 1, 0, 'http://localhost/trueque_10/images/avatar.jpg'),
-(22, 'Susana', 'Meneses', 'susana@gmail.com', 'd33c5d30450d32d2f4d15b17f7a87edf5401f957', 1, 0, 'http://localhost/trueque_10/images/avatar.jpg'),
-(23, 'Cristian', 'Martinez', 'cristian@gmail.com', '53b0fb369195f17959fdf71074bd72c3e5867ac0', 1, 0, 'http://localhost/trueque_10/images/avatar.jpg'),
-(24, 'Santiago', 'Torres', 'santiago@gmail.com', 'c6c5b6c3b52f1d55e910816691e2b1936ef2d763', 1, 0, 'http://localhost/trueque_10/images/avatar.jpg'),
-(25, 'Juan Manuel', 'Bravo', 'jmanuel@gmail.com', '18da790128fb74a04f7981e9560f21bb83736dde', 1, 0, 'http://localhost/trueque_10/images/avatar.jpg');
+(12, 'Alexis', 'Ruano', 'alexis@gmail.com', '3c75ccfafda2150b5c25b6e290f1ba0975444cbf', 0, 1, 'http://localhost/trueque_10/images/avatar.jpg'),
+(13, 'Edward', 'Giraldo', 'edward@gmail.com', 'fac21fc04e980f366260130b2e5aa2fe32fecb26', 1, 3, 'http://localhost/trueque_10/images/bicicleta1.jpg'),
+(14, 'Paola', 'Martinez', 'paola@gmail.com', '5e7960ae59608c00deb29ea1d233a7b8ddf65d73', 1, 2, 'http://localhost/trueque_10/images/avatar.jpg'),
+(15, 'Andrea', 'Zambrano', 'andrea@gmail.com', '08dd0d9cba826ebae188f009be71e66297a2f1ae', 1, 4, 'http://localhost/trueque_10/images/avatar.jpg'),
+(16, 'Elkin', 'Hurtado', 'elkin@gmail.com', '848708b1171f92833aff70e5b9f872f6a16146e0', 1, 6, 'http://localhost/trueque_10/images/avatar.jpg'),
+(17, 'Andres', 'Castillo', 'andresf@gmail.com', '280c93e72eeeb4eadf92e9d0dceb7c501a068e66', 1, 5, 'http://localhost/trueque_10/images/avatar.jpg'),
+(18, 'Andres', 'Florez', 'andressteven@gmail.com', '02b81dfb78aed264e808f86f3ab4b3e3d4a91921', 1, 2, 'http://localhost/trueque_10/images/avatar.jpg'),
+(19, 'Karen', 'Bolaños', 'karen@gmail.com', 'eee82986f34d650e5554e2850f7408368587b0fb', 1, 1, 'http://localhost/trueque_10//images/110811-203306.jpg'),
+(20, 'Silvana', 'Garcia', 'silvana@gmail.com', '826a3326d0bf1bd93071029d3ef7aa8f8cc517d6', 1, 8, 'http://localhost/trueque_10/images/avatar.jpg'),
+(21, 'Diana', 'Hoyos', 'diana@hotmail.com', '77772f8b65d7855969f9edf0507ab9131df2b665', 1, 7, 'http://localhost/trueque_10/images/avatar.jpg'),
+(22, 'Susana', 'Meneses', 'susana@gmail.com', 'd33c5d30450d32d2f4d15b17f7a87edf5401f957', 1, 9, 'http://localhost/trueque_10/images/avatar.jpg'),
+(23, 'Cristian', 'Martinez', 'cristian@gmail.com', '53b0fb369195f17959fdf71074bd72c3e5867ac0', 1, 2, 'http://localhost/trueque_10/images/avatar.jpg'),
+(24, 'Santiago', 'Torres', 'santiago@gmail.com', 'c6c5b6c3b52f1d55e910816691e2b1936ef2d763', 1, 1, 'http://localhost/trueque_10/images/avatar.jpg'),
+(25, 'Juan Manuel', 'Bravo', 'jmanuel@gmail.com', '18da790128fb74a04f7981e9560f21bb83736dde', 1, 2, 'http://localhost/trueque_10/images/avatar.jpg'),
+(26, 'yohanna', 'Zuniga', 'yohannazg31@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 1, 3, 'http://localhost/trueque_10/images/avatar.jpg'),
+(27, 'wilian', 'pantoja', 'wfpantoja@gmail.com', '451f10b4dd910d986c4059b0fd96c6a035c99a70', 1, 8, 'http://localhost/trueque_10/images/avatar.jpg'),
+(28, 'alexis', 'ruano', 'waruano9212@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 1, 9, 'http://localhost/trueque_10/images/avatar.jpg'),
+(29, 'yohanna', 'zuniga', 'yo_hanita_31@hotmail.com', '0d78e42deb92f7cbbf75c4a306a483402a492b8b', 1, 6, 'http://localhost/trueque_10/images/avatar.jpg'),
+(30, 'Wilson Libardo', 'Pantoja Yepez', 'wpantoja@gmail.com', '20eef7c9fdb34a8b90833c04ed9c22b6fa09638f', 1, 2, 'http://localhost/trueque_10/images/avatar.jpg'),
+(31, 'wilian unciauca', 'unicauca', 'wfpc92@unicauca.edu.co', '33bb8af3bca8894deb228a10fb1b36922cac8913', 1, 1, 'http://localhost/trueque_10/images/avatar.jpg');
 
 --
--- Restricciones para tablas volcadas
+-- Filtros para las tablas descargadas (dump)
 --
 
 --
@@ -377,7 +401,3 @@ ALTER TABLE `producto`
 --
 ALTER TABLE `telefono`
   ADD CONSTRAINT `fk_usuario_telefono` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`usuario_id`);
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

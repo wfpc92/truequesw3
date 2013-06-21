@@ -84,7 +84,6 @@ class PermutaModel extends CI_Model {
     }
     function hacerPermuta($peticion){
         list($recibe, $solicita, $usu_recibe, $usu_solicita) = explode(".", $peticion);  
-        
         $query = $this->db->query('UPDATE permuta SET fechapermuta = CURRENT_TIMESTAMP WHERE producto_recibe = '.$recibe.' AND producto_solicita = '.$solicita); 
         $query1=  $this->db->query('update producto set usuario_id='.$usu_solicita.', estado_publicacion = 0 where producto_id='.$recibe);
         $query2=  $this->db->query('update producto set usuario_id='.$usu_recibe.', estado_publicacion = 0 where producto_id='.$solicita);
