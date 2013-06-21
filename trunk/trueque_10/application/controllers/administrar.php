@@ -212,7 +212,7 @@ public function  estadisticasPublicaciones(){
                 array('Enero',$reporte[0]),array('Febrero',$reporte[1]),array('Marzo',$reporte[2]),
                 array('Abril',$reporte[3]),array('Mayo',$reporte[4]),array('Junio',$reporte[5]),
                 array('Julio',$reporte[6]),array('Agosto',$reporte[7]),array('Septiembre',$reporte[8]),
-                array('Octubre',$reporte[9]),array('Noviembre',$reporte[10]),array('Diciembre',$reporte[12])));
+                array('Octubre',$reporte[9]),array('Noviembre',$reporte[10]),array('Diciembre',$reporte[11])));
             $data['reporte']= json_encode($series_data);
          }
          else{
