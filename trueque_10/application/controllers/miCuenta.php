@@ -115,17 +115,21 @@ class MiCuenta extends CI_Controller {
 
             $this->load->view('plantilla', $data);
         } else {
-            $data['mensajeAprobacion'] = 'Para Truequear un Producto </br> debes 
-                <a href=\'http://localhost/trueque_10/usuarios/registrar\'>Registrarte</a>
-                o Iniciar Sesion';
-            $data['contenido']='estandar/error';
-            if($usuarioActual['usuario_nivel'] == 0){
+            
+            if(isset($usuarioActual['nombre'])&& $usuarioActual['usuario_nivel'] == 0){
                 $data['sidebar'] = 'sidebarAdministrar';
                 $data['sesion'] = 'sesionUsuario';
                 $data['usuarioActual']=$usuarioActual;
                 $data['mensajeAprobacion'] = 'Tu Como Administrador </br> No Puedes 
                 Truequear Productos. <a href=\'http://localhost/trueque_10\'>Volver</a>';
+            }else{
+                echo "<h1>entro por el else </h1>";
+                $data['sesion']='sesionLogin';
+                $data['mensajeAprobacion'] = 'Para Truequear un Producto <br/> debes 
+                <a href=\'http://localhost/trueque_10/usuarios/registrar\'>Registrarte</a>
+                o Iniciar Sesion';
             }
+            $data['contenido']='estandar/error';
             $this->load->view('plantilla', $data);
         }
     }
