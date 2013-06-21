@@ -8,7 +8,7 @@
                             <h2>Mis Productos</h2>
 				<ul>
                                         <li <?php if (isset($sideSelect) && $sideSelect==0){echo "class=\"seleccionar\"";}?>><?php echo anchor('miCuenta','Listos Para Truequear')?></li>
-					<li <?php if (isset($sideSelect) && $sideSelect==1){echo "class=\"seleccionar\"";}?>><?php echo anchor('miCuenta/productosNoPublicados','No Truequeables')?></li>
+					<li <?php if (isset($sideSelect) && $sideSelect==1){echo "class=\"seleccionar\"";}?>><?php echo anchor('miCuenta/productosNoPublicados','Almacenados')?></li>
                                         <li <?php if (isset($sideSelect) && $sideSelect==2){echo "class=\"seleccionar\"";}?>><?php echo anchor('miCuenta/publicarProducto','Crear un Producto')?></li>
                                 </ul>
                             <br/>

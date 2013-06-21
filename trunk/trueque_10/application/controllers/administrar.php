@@ -98,8 +98,32 @@ class Administrar extends CI_Controller {
         $data['sideSelect']=0;
         $this->load->model('usuariosModel');
         $id = $this->input->post('id');
-        $this->usuariosModel->borrarUsuario($id);
-        redirect('administrar');
+        $data['titulo'] = "administrar";
+	$data['activo'] = 2;
+        $data['sideSelect']=0;
+        $usuarioActual = $this->session->all_userdata();
+        if (isset($usuarioActual['nombre']) && $usuarioActual['usuario_nivel'] == 0) {
+            $ok=$this->usuariosModel->borrarUsuario($id);
+            $data['title'] = 'Mensaje Confirmacion';
+            $data['sesion'] = 'sesionUsuario';
+            if($ok==TRUE){
+                $data['contenido'] = 'estandar/exito';
+                $data['mensajeAprobacion']='El Usuario Fue Eliminado con Exito <br/>
+                    <a href=\'http://localhost/trueque_10/administrar\'>Volver</a>';
+            }
+            else{
+                $data['contenido'] = 'estandar/error';
+                $data['mensajeAprobacion']='Error al Eliminar Usuario, Tiene Productos Asociados <br/>
+                    <a href=\'http://localhost/trueque_10/administrar\'>Volver</a>';
+            }
+            $data['usuarioActual'] = $usuarioActual;
+            $data['menu'] = 'menuAdministrador';
+            $data['sidebar'] = 'sidebarAdministrar';
+            
+            $this->load->view('plantilla', $data);
+        } else {
+            redirect(base_url());
+        }     
     }
     public function  estadisticasTrueque(){
         $data['sideSelect']=1;
@@ -109,7 +133,12 @@ class Administrar extends CI_Controller {
             $this->load->model('permutaModel');
             $data['title'] = 'Estadistica Trueques';
             $data['sesion'] = 'sesionUsuario';
-            $data['contenido'] = 'administrador/estadisticasTrueque';
+            if($_POST['tipo_grafica']==0){
+                $data['contenido'] = 'administrador/estadisticasTrueque';
+            }
+            else{
+                $data['contenido'] = 'administrador/estadisticasTortaTrueque';
+            }
             $data['usuarioActual'] = $usuarioActual;
             $data['menu'] = 'menuAdministrador';
             $data['sidebar'] = 'sidebarAdministrar';
@@ -121,7 +150,11 @@ class Administrar extends CI_Controller {
          if ($this->form_validation->run() == TRUE) {
             $anio=$_POST['anio'];
             $reporte=$this->permutaModel->crearReportes($anio);
-            $series_data[]=array('name'=> $anio,'data'=>$reporte);
+            $series_data[]=array('name'=>'Trueques','data'=>array(
+                array('Enero',$reporte[0]),array('Febrero',$reporte[1]),array('Marzo',$reporte[2]),
+                array('Abril',$reporte[3]),array('Mayo',$reporte[4]),array('Junio',$reporte[5]),
+                array('Julio',$reporte[6]),array('Agosto',$reporte[7]),array('Septiembre',$reporte[8]),
+                array('Octubre',$reporte[9]),array('Noviembre',$reporte[10]),array('Diciembre',$reporte[11])));
             $data['reporte']= json_encode($series_data);
          }
          else{
@@ -158,7 +191,12 @@ public function  estadisticasPublicaciones(){
             $this->load->model('permutaModel');
             $data['title'] = 'Estadistica Trueques';
             $data['sesion'] = 'sesionUsuario';
-            $data['contenido'] = 'administrador/estadisticasPublicaciones';
+            if($_POST['tipo_grafica']==0){
+                $data['contenido'] = 'administrador/estadisticasPublicaciones';
+            }
+            else{
+                $data['contenido'] = 'administrador/estadisticasTortaPublicaciones';
+            }
             $data['usuarioActual'] = $usuarioActual;
             $data['menu'] = 'menuAdministrador';
             $data['sidebar'] = 'sidebarAdministrar';
@@ -170,7 +208,11 @@ public function  estadisticasPublicaciones(){
          if ($this->form_validation->run() == TRUE) {
             $anio=$_POST['anio'];
             $reporte=$this->permutaModel->crearReportesPublicaciones($anio);
-            $series_data[]=array('name'=> $anio,'data'=>$reporte);
+            $series_data[]=array('name'=>'Publicaciones','data'=>array(
+                array('Enero',$reporte[0]),array('Febrero',$reporte[1]),array('Marzo',$reporte[2]),
+                array('Abril',$reporte[3]),array('Mayo',$reporte[4]),array('Junio',$reporte[5]),
+                array('Julio',$reporte[6]),array('Agosto',$reporte[7]),array('Septiembre',$reporte[8]),
+                array('Octubre',$reporte[9]),array('Noviembre',$reporte[10]),array('Diciembre',$reporte[12])));
             $data['reporte']= json_encode($series_data);
          }
          else{

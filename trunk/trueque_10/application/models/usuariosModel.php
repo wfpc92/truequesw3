@@ -3,18 +3,13 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-//
 class usuariosModel extends CI_Model {
 
-    //este es el constructor de la clase
     function __construct() {
-        /* se hace el llamado al constructor del padre */
         parent::__construct();
     }
 
-    /* obtener la lista de los libros desde la base de datos */
-
-    function getUsuarios($limit,$start) {
+    function getUsuarios($limit, $start) {
         $this->db->limit($limit, $start);
         $data = $this->db->get('usuarios');
         if ($data->num_rows() > 0) {
@@ -23,10 +18,11 @@ class usuariosModel extends CI_Model {
             return FALSE;
         }
     }
+
     function getEmails($str) {
-        $email=mysql_real_escape_string($str);
+        $email = mysql_real_escape_string($str);
         $this->db->limit(1);
-        $this->db->where('email',$email);
+        $this->db->where('email', $email);
         $data = $this->db->get('usuarios');
         if ($data->num_rows() > 0) {
             return $data;
@@ -34,10 +30,9 @@ class usuariosModel extends CI_Model {
             return FALSE;
         }
     }
+
     function numUsuarios() {
-        /* dentro de la variable data se van a guardar las tuplas correspondientes a la consulta get sobre la tabla usuarios en la base de datos */
-        $data = $this->db->get('usuarios');
-        /* se comprueba si se obtiene algun resultado y se retorna */
+         $data = $this->db->get('usuarios');
         if ($data->num_rows() > 0) {
             return $data->num_rows();
         } else {
@@ -51,8 +46,8 @@ class usuariosModel extends CI_Model {
     }
 
     public function login($str1, $str2) {
-        $email=mysql_real_escape_string($str1);
-        $contrasena=mysql_real_escape_string($str2);
+        $email = mysql_real_escape_string($str1);
+        $contrasena = mysql_real_escape_string($str2);
         $where = array(
             'email' => $email,
             'contrasena' => sha1($contrasena)
@@ -65,8 +60,8 @@ class usuariosModel extends CI_Model {
             return FALSE;
         }
     }
-    
-    public function login_reactivacion($email, $contrasena){
+
+    public function login_reactivacion($email, $contrasena) {
         $where = array(
             'email' => $email,
             'contrasena' => $contrasena
@@ -79,9 +74,9 @@ class usuariosModel extends CI_Model {
             return FALSE;
         }
     }
-    
-    public function obtenerContrasena($receptor){
-        $this->db->select('contrasena')->from('usuarios')->where('email',$receptor);
+
+    public function obtenerContrasena($receptor) {
+        $this->db->select('contrasena')->from('usuarios')->where('email', $receptor);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
             return $query->first_row('array');
@@ -124,14 +119,19 @@ class usuariosModel extends CI_Model {
     }
 
     function borrarUsuario($id) {
-        $this->db->where('usuario_id', $id);
-        $this->db->limit(1);
-        $this->db->delete('usuarios');
-        return TRUE;
+            $this->db->where('usuario_id', $id);
+            $this->db->limit(1);
+            $this->db->delete('usuarios');
+            if($this->db->_error_message()){
+                return FALSE;
+            }
+            else {
+                return TRUE;
+            }
     }
-    
-    function cambiarContrasena($usuario_id, $nuevacontrasena){
-        $query = $this->db->query('UPDATE usuarios SET contrasena = \''.sha1($nuevacontrasena).'\' WHERE usuario_id = '.$usuario_id);    
+
+    function cambiarContrasena($usuario_id, $nuevacontrasena) {
+        $query = $this->db->query('UPDATE usuarios SET contrasena = \'' . sha1($nuevacontrasena) . '\' WHERE usuario_id = ' . $usuario_id);
     }
 
 }

@@ -9,7 +9,9 @@
     <h3>Ingrese el Año del que desea ver el reporte de Publicaciones:</h3><br></br>
         <?php echo form_open('administrar/estadisticasPublicaciones');
         echo form_error('anio');
-        echo form_input('anio',  set_value('anio'));?>
+        echo form_input('anio',  set_value('anio'));
+        $opciones = array(0 => 'Barras',1 => 'Torta',);
+        echo form_dropdown('tipo_grafica',$opciones,0);?>
         <input id = "anio" type="submit" value="Seleccionar" />
        <?php
        echo form_close();
