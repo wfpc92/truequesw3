@@ -56,8 +56,14 @@ class Permutas extends CI_Controller {
         $data['sesion']='sesionUsuario';
         $data['sidebar']='sidebarMiCuenta';
         $data['contenido']='estandar/exito';
-        $data['mensajeAprobacion']='Trueque realizado correctamente   <br/>
-            Haz tu donaci&oacute;n voluntaria <a href=\'http://localhost/trueque_10/miCuenta/donacion\'>aqu&iacute;</a>.';
+        list($recibe, $solicita, $usu_recibe, $usu_solicita) = explode(".", $peticion);  
+        $id_producto = $solicita;
+        $id_usuario = $usu_recibe;
+        $data['mensajeAprobacion']=
+           'Trueque realizado correctamente.  <br/>
+            Puedes ver tu nuevo producto truequeado <a href=\'http://localhost/trueque_10/productos/verProducto/'.$id_producto.'\'>aqu&iacute;</a>.   <br/> 
+            El producto Truequeado ya aparece en la lista de tus productos, ver <a href=\'http://localhost/trueque_10/miCuenta/productosNoPublicados\'>aqu&iacute;</a>.    <br/>
+            Haz tu donaci&oacute;n voluntaria <a href=\'http://localhost/trueque_10/miCuenta/donacion\'>aqu&iacute;</a>.</h2> ';
         $this->load->view('plantilla',$data);
     }
     
