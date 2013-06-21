@@ -386,15 +386,15 @@ INSERT INTO `usuarios` (`usuario_id`, `nombre`, `apellido`, `email`, `contrasena
 -- Filtros para la tabla `permuta`
 --
 ALTER TABLE `permuta`
-  ADD CONSTRAINT `fk_producto_recibe` FOREIGN KEY (`producto_recibe`) REFERENCES `producto` (`producto_id`),
-  ADD CONSTRAINT `fk_producto_solicita` FOREIGN KEY (`producto_solicita`) REFERENCES `producto` (`producto_id`),
-  ADD CONSTRAINT `fk_sol_rec` FOREIGN KEY (`producto_solicita`) REFERENCES `producto` (`producto_id`);
+  ADD CONSTRAINT `fk_producto_recibe` FOREIGN KEY (`producto_recibe`) REFERENCES `producto` (`producto_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_producto_solicita` FOREIGN KEY (`producto_solicita`) REFERENCES `producto` (`producto_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_sol_rec` FOREIGN KEY (`producto_solicita`) REFERENCES `producto` (`producto_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `producto`
 --
 ALTER TABLE `producto`
-  ADD CONSTRAINT `fk_usuario_producto` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`usuario_id`);
+  ADD CONSTRAINT `fk_usuario_producto` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`usuario_id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `telefono`
