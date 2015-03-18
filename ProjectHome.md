@@ -1,0 +1,1 @@
+en este proyecto se quiere realizar una aplicación web que permita realizar intercambios virtuales.
